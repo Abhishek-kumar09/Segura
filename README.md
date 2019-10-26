@@ -1,4 +1,4 @@
-# segura_manegerial
+# Segura
 
 A new Flutter project.
 
