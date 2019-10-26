@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:segura_manegerial/registration_screen.dart';
 import 'welcome_screen.dart';
+import 'loginScreen.dart';
 void main() =>runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
+      theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.white,
-      ),      
-      home: WelcomeScreen(),
+      ),
+      initialRoute: WelcomeScreen.id,
+      routes: {
+        WelcomeScreen.id : (context) => WelcomeScreen(),
+        LoginScreen.id : (context) => LoginScreen(),
+        RegistrationScreen.id : (context) => RegistrationScreen(),
+      },
     );
   }
 }
