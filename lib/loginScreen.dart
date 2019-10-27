@@ -16,15 +16,16 @@ class _LoginScreenState extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            child: Image.asset('assets/seguraLight.jpeg'),
-            constraints: BoxConstraints(maxHeight: 150),
-          ),
+              child: Image.asset('assets/seguraLight.jpeg'),
+              constraints: BoxConstraints(maxHeight: 150),
+            ),
           SizedBox(height: 20,)
 ,          Text('Bacause your stuff is not just "stuff"',),
           SizedBox(
             height: 48.0,
           ),
           TextField(
+            keyboardType: TextInputType.emailAddress,
             onChanged: (value) {
               //Do something with the user input.
             },
@@ -75,28 +76,28 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 24.0,
           ),
-          Hero(
-            tag: 'login',
-                      child: Padding(
+          Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
                 color: Colors.lightBlueAccent,
                 borderRadius: BorderRadius.all(Radius.circular(30.0)),
                 elevation: 5.0,
-                child: MaterialButton(
-                  onPressed: () {
-                    //Implement login functionality.
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Log In',
-                    style: TextStyle(color: Colors.white),
+                child: Hero(
+                  tag: 'login',
+                                  child: MaterialButton(
+                    onPressed: () {
+                      //Implement login functionality.
+                    },
+                    minWidth: 200.0,
+                    height: 42.0,
+                    child: Text(
+                      'Log In',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

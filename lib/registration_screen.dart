@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatefulWidget {
-    static String id = 'loginScreen';
+    static String id = 'RegistrationScreen';
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -25,6 +25,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           height: 48.0,
         ),
         TextField(
+                      keyboardType: TextInputType.emailAddress,
           onChanged: (value) {
             //Do something with the user input.
           },
