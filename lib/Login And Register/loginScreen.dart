@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:segura_manegerial/colors_and_constatnts.dart';
+import 'package:segura_manegerial/Constants%20And%20Colors/colors_and_constatnts.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'loginScreen';
@@ -12,15 +12,23 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-          body: Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Container(
+          Hero(
+            tag: 'logo',
+            child: Container(
               child: Image.asset('assets/seguraLight.jpeg'),
               constraints: BoxConstraints(maxHeight: 150),
             ),
-          SizedBox(height: 20,)
-,          Text('Bacause your stuff is not just "stuff"',),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            'Bacause your stuff is not just "stuff"',
+            style: TextStyle(fontWeight: FontWeight.w800),
+          ),
           SizedBox(
             height: 48.0,
           ),
@@ -38,11 +46,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: BorderRadius.all(Radius.circular(32.0)),
               ),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+                borderSide:
+                    BorderSide(color: Colors.lightBlueAccent, width: 1.0),
                 borderRadius: BorderRadius.all(Radius.circular(32.0)),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                borderSide:
+                    BorderSide(color: Colors.lightBlueAccent, width: 2.0),
                 borderRadius: BorderRadius.all(Radius.circular(32.0)),
               ),
             ),
@@ -64,11 +74,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: BorderRadius.all(Radius.circular(32)),
               ),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+                borderSide:
+                    BorderSide(color: Colors.lightBlueAccent, width: 1.0),
                 borderRadius: BorderRadius.all(Radius.circular(32.0)),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+                borderSide:
+                    BorderSide(color: Colors.lightBlueAccent, width: 2.0),
                 borderRadius: BorderRadius.all(Radius.circular(32.0)),
               ),
             ),
@@ -77,27 +89,27 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 24.0,
           ),
           Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.0),
-              child: Material(
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                elevation: 5.0,
-                child: Hero(
-                  tag: 'login',
-                                  child: MaterialButton(
-                    onPressed: () {
-                      //Implement login functionality.
-                    },
-                    minWidth: 200.0,
-                    height: 42.0,
-                    child: Text(
-                      'Log In',
-                      style: TextStyle(color: Colors.white),
-                    ),
+            padding: EdgeInsets.symmetric(vertical: 16.0),
+            child: Material(
+              color: Colors.lightBlueAccent,
+              borderRadius: BorderRadius.all(Radius.circular(30.0)),
+              elevation: 5.0,
+              child: Hero(
+                tag: 'login',
+                child: MaterialButton(
+                  onPressed: () {
+                    //Implement login functionality.
+                  },
+                  minWidth: 200.0,
+                  height: 42.0,
+                  child: Text(
+                    'Log In',
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
             ),
+          ),
         ],
       ),
     );

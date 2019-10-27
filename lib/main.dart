@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:segura_manegerial/detailgrab.dart';
-import 'package:segura_manegerial/registration_screen.dart';
-import 'welcome_screen.dart';
-import 'loginScreen.dart';
-import 'detailgrab.dart';
-void main() =>runApp(MyApp());
+import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/detailgrab.dart';
+import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
+import 'Welcome Page/welcome_screen.dart';
+import 'Login And Register/loginScreen.dart';
+import 'Custom Function And Widgets/detailgrab.dart';
+
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -13,14 +14,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.white,
       ),
-      // initialRoute: WelcomeScreen.id,
-      home: WelcomeScreen(),
+      initialRoute: WelcomeScreen.id,
       routes: {
-        WelcomeScreen.id : (context) => WelcomeScreen(),
-        LoginScreen.id : (context) => LoginScreen(),
-        RegistrationScreen.id : (context) => RegistrationScreen(),
+        WelcomeScreen.id: (context) => WelcomeScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
       },
     );
   }
 }
-
