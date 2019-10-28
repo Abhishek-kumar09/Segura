@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'colors_and_constatnts.dart';
+import '../Constants And Colors/colors_and_constatnts.dart';
+
 String hint;
 
 InputDecoration inputDecoration = InputDecoration(
