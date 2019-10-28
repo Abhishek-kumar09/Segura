@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Constants%20And%20Colors/colors_and_constatnts.dart';
+import '../Custom Function And Widgets/Widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'loginScreen';
@@ -100,28 +101,14 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 24.0,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
-            child: Material(
-              color: Colors.lightBlueAccent,
-              borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              elevation: 5.0,
-              child: Hero(
-                tag: 'login',
-                child: MaterialButton(
-                  onPressed: () {
-                    //Implement login functionality.
-                  },
-                  minWidth: 200.0,
-                  height: 42.0,
-                  child: Text(
-                    'Log In',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          RoundedButton(
+            text: 'Login',
+            logo: 'login',
+            colour: Colors.lightBlueAccent,
+            onpressed: () {
+              //After Login
+            },
+          )
         ],
       ),
     );
