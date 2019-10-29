@@ -1,8 +1,14 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
+import 'package:segura_manegerial/Welcome%20Page/welcome_screen.dart';
 // import 'package:segura_manegerial/Constants%20And%20Colors/colors_and_constatnts.dart';
-
+import 'package:segura_manegerial/services/firebase_authentication.dart';
+import 'package:segura_manegerial/ManagerPage/manager.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import '../Custom Function And Widgets/Widgets.dart';
+import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'loginScreen';
@@ -11,109 +17,120 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String email,password;
-  
+  Auth _auth = new Auth();
+  String email, password;
+  bool showSpinner = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Hero(
-            tag: 'logo',
-            child: Container(
-              child: Image.asset('assets/seguraLight.jpeg'),
-              constraints: BoxConstraints(maxHeight: 150),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            'Bacause your stuff is not just "stuff"',
-            style: TextStyle(fontWeight: FontWeight.w800),
-          ),
-          SizedBox(
-            height: 48.0,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: TextField(
-              keyboardType: TextInputType.emailAddress,
-              onChanged: (value) {
-                //Do something with the user input.
-              },
-              decoration: InputDecoration(
-                icon: Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Icon(Icons.person),
-                ),
-                hintText: 'Enter your email',
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.lightBlueAccent, width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+              child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Hero(
+              tag: 'logo',
+              child: Container(
+                child: Image.asset('assets/seguraLight.jpeg'),
+                constraints: BoxConstraints(maxHeight: 150),
               ),
             ),
-          ),
-          SizedBox(
-            height: 8.0,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: TextField(
-              obscureText: true,
-              onChanged: (value) {
-                //Do something with the user input.
-              },
-              decoration: InputDecoration(
-                icon: Padding(
-                  padding: const EdgeInsets.only(left: 10.0),
-                  child: Icon(Icons.vpn_key),
-                ),
-                hintText: 'Enter your password.',
-                contentPadding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.lightBlueAccent, width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
-                ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Bacause your stuff is not just "stuff"',
+              style: TextStyle(fontWeight: FontWeight.w800),
+            ),
+            SizedBox(
+              height: 48.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (value) {
+                  //Do something with the user input.
+                  email = value;
+                },
+                decoration: buildLoginInputDecoration('Enter Email',Icons.person),
+                validator: (value) =>
+                    value.isEmpty ? 'Email can\'t be empty' : null,
+                onSaved: (value) => email = value.trim(),
               ),
             ),
-          ),
-          SizedBox(
-            height: 24.0,
-          ),
-          RoundedButton(
-            text: 'Login',
-            logo: 'login',
-            colour: Colors.lightBlueAccent,
-            onpressed: () {
-              //After Login
-            },
-          )
-        ],
+            SizedBox(
+              height: 8.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: TextFormField(
+                obscureText: true,
+                onChanged: (value) {
+                  //Do something with the user input.
+                  password = value;
+                },
+                decoration: buildLoginInputDecoration('Enter Password',Icons.lock),
+                validator: (value) =>
+                    value.isEmpty ? 'Password can\'t be empty' : null,
+                onSaved: (value) => password = value.trim(),
+              ),
+            ),
+            SizedBox(
+              height: 24.0,
+            ),
+            RoundedButton(
+              text: 'Login',
+              logo: 'login',
+              colour: Colors.lightBlueAccent,
+              onpressed: () async {
+                setState(() {
+                 showSpinner = true; 
+                });
+                try {
+                  String user = await _auth.signIn(email, password);
+                  if (user != null) {
+                    print(email);
+                    Navigator.pushNamed(context, Manager.id);
+                  }
+                } catch (e) {
+                  // Alert(context: context, title: "Segura for Owner", desc: "Email or passWord incorrect").show();
+                  Alert(
+                    context: context,
+                    type: AlertType.warning,
+                    title: "Login Alert",
+                    desc: "Wrong email or password",
+                    buttons: [
+                      DialogButton(
+                        child: Text(
+                          "Back",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        color: Colors.lightBlueAccent,
+                      ),
+                      DialogButton(
+                        child: Text(
+                          "New User",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        onPressed: () => Navigator.pushNamed(context, RegistrationScreen.id),
+                        gradient: LinearGradient(colors: [
+                          Color.fromRGBO(116, 116, 191, 1.0),
+                          Color.fromRGBO(52, 138, 199, 1.0)
+                        ]),
+                      )
+                    ],
+                  ).show();
+                }
+                setState(() {
+                 showSpinner = false; 
+                });
+              },
+            )
+          ],
+        ),
       ),
     );
   }
