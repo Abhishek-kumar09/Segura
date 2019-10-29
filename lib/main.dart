@@ -4,6 +4,7 @@ import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dar
 import 'Welcome Page/welcome_screen.dart';
 import 'Login And Register/loginScreen.dart';
 import 'Custom Function And Widgets/detailgrab.dart';
+import 'ManagerPage/manager.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
+        Manager.id: (context) => Manager(),
       },
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Constants%20And%20Colors/colors_and_constatnts.dart';
 import '../Custom Function And Widgets/Widgets.dart';
+import '../ManagerPage/manager.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'loginScreen';
@@ -107,6 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
             colour: Colors.lightBlueAccent,
             onpressed: () {
               //After Login
+              Navigator.pushNamed(context, Manager.id);
             },
           )
         ],
