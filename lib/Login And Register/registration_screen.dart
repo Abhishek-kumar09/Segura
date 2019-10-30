@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../Custom Function And Widgets/Widgets.dart';
 // import 'package:segura_manegerial/main.dart';
 import '../ManagerPage/manager.dart';
@@ -8,6 +9,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // // import 'package:cloud_firestore/cloud_firestore.dart';
 
+
 class RegistrationScreen extends StatefulWidget {
   static String id = 'RegistrationScreen';
 
@@ -16,6 +18,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+
   String email,password,firstName,lastName,business,confirmPassword;
   bool showSpinner = false;
   Auth _auth = new Auth();
@@ -26,10 +29,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String labelPassword = "Enter Your Password";
   String labelConfirmPassword = "Confirm Password";
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
               child: Padding(
@@ -182,12 +187,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ],
             ),
+
           ),
         ),
       ),
     );
   }
 }
+
 
 
 

@@ -1,3 +1,4 @@
+
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
@@ -10,6 +11,7 @@ import '../Custom Function And Widgets/Widgets.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+
 class LoginScreen extends StatefulWidget {
   static String id = 'loginScreen';
   @override
@@ -17,13 +19,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
   Auth _auth = new Auth();
   String email, password;
   bool showSpinner = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
+
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
               child: Column(
@@ -135,3 +140,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
