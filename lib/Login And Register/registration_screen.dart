@@ -6,6 +6,7 @@ import '../ManagerPage/manager.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 import 'package:segura_manegerial/services/firebase_authentication.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:segura_manegerial/fireStoreCloud/registration_cloud.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // // import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -175,6 +176,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                      try {
                    String user = await _auth.signUp(email, password);
                    if(user != null && confirmPassword == password) {
+                     RegistrationDataBase.pushUserInfo(firstName, lastName, business, email, password);
                      Navigator.pushNamed(context, Manager.id);
                    }                  
                   } catch (e) {
