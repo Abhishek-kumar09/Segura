@@ -4,6 +4,7 @@ import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dar
 import 'Welcome Page/welcome_screen.dart';
 import 'Login And Register/loginScreen.dart';
 import 'package:segura_manegerial/ManagerPage/manager.dart';
+import 'package:segura_manegerial/services/phone_auth.dart';
 // import 'Custom Function And Widgets/detailgrab.dart';
 
 void main() => runApp(MyApp());
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.white,
       ),
-      initialRoute: WelcomeScreen.id,
+      home: PhoneAuth(),
+      // initialRoute: WelcomeScreen.id,
       routes: {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         LoginScreen.id: (context) => LoginScreen(),
