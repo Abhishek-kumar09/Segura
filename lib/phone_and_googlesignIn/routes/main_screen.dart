@@ -36,7 +36,11 @@ class MainScreen extends StatelessWidget {
               child: Text("Sign out", style: theme.textTheme.button),
               onPressed: () async {
                 await GoogleSignIn().signOut();
+                googleUser.clearAuthCache();
+                print('SignedOut');
+                // await GoogleSignIn().disconnect();
                 await FirebaseAuth.instance.signOut();
+                print('signedOut from FireBase');
                 Navigator.of(context).pushAndRemoveUntil(
                   CupertinoPageRoute(builder: (context) => AuthScreen()),
                   (route) => false,

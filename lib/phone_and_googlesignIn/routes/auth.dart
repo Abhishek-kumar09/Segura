@@ -27,8 +27,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   void initState() {
-    _updateRefreshing(true);
-    performsignin();
+    performsignin();    
     super.initState();
   }
   void performsignin() async {
