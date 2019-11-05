@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   String user = await _auth.signIn(email, password);
                   if (user != null) {
                     print(email);
-                    Navigator.pushNamed(context, Manager.id);
+                   // TODO: Navigator.pushNamed(context, Manager.id);
                   }
                 } catch (e) {
                   // Alert(context: context, title: "Segura for Owner", desc: "Email or passWord incorrect").show();

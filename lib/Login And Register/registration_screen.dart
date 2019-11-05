@@ -20,14 +20,16 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
 
-  String email,password,firstName,lastName,business,confirmPassword;
+  String email,password,firstName,lastName,business,confirmPassword,phone;
+
   bool showSpinner = false;
   Auth _auth = new Auth();
-  String labelBusiness = "Enter Your Buisness";
-  String labelFirstName = "Enter Your FirstName";
-  String labelLastName = "Enter Your LastName";
-  String labelEmail = "Enter Your Email";
-  String labelPassword = "Enter Your Password";
+  String labelBusiness = "Business";
+  String labelFirstName = "FirstName";
+  String labelLastName = "LastName";
+  String labelPhone = "Phone Number";
+  String labelEmail = "Email";
+  String labelPassword = "Password";
   String labelConfirmPassword = "Confirm Password";
 
 
@@ -39,7 +41,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
               child: Padding(
-          padding: EdgeInsets.only(top: 100.0, left: 18.0, right: 18.0),
+          padding: EdgeInsets.only(top: 10.0, left: 18.0, right: 18.0),
           child: Center(
             child: ListView(
               children: <Widget>[
@@ -59,7 +61,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     setState(() {
                       if (value == "") {
-                        labelFirstName = "Enter FirstName";
+                        labelFirstName = "Enter Your FirstName";
                       } else {
                         labelFirstName = "";
                       }
@@ -85,6 +87,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       lastName = value;                  
                   },
                   decoration: buildRegisterInputDecoration(labelLastName),
+                ),
+                SizedBox(
+                  height: 8.0,
+                ),
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      if (value == "") {
+                        labelPhone = "Enter Your phoneNumber";
+                      } else {
+                        labelPhone = "";
+                      }
+                    });
+                    value.trim();
+                      phone = value;                  
+                  },
+                  decoration: buildRegisterInputDecoration(labelPhone),
                 ),
                 SizedBox(
                   height: 8.0,
@@ -177,7 +196,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                    String user = await _auth.signUp(email, password);
                    if(user != null && confirmPassword == password) {
                      RegistrationDataBase.pushUserInfo(firstName, lastName, business, email, password);
-                     Navigator.pushNamed(context, Manager.id);
+                     // TODO:Navigator.pushNamed(context, Manager.id);
                    }                  
                   } catch (e) {
                     print(e);
@@ -196,13 +215,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 }
-
-
-
-
-
-
-
 
 
 

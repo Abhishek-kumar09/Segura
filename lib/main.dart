@@ -1,11 +1,10 @@
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-// import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/detailgrab.dart';
-import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
-import 'Welcome Page/welcome_screen.dart';
-import 'Login And Register/loginScreen.dart';
 import 'package:segura_manegerial/ManagerPage/manager.dart';
-// import 'Custom Function And Widgets/detailgrab.dart';
+// import 'package:segura_manegerial/phone_and_googlesignIn/routes/auth.dart';
+// import 'package:segura_manegerial/phone_and_googlesignIn/routes/main_screen.dart';
+// import 'package:segura_manegerial/services/phone_auth.dart';
 
 
 void main() => runApp(MyApp());
@@ -14,18 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      title: 'Phone Auth',
       theme: ThemeData.light().copyWith(
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      initialRoute: WelcomeScreen.id,
-      routes: {
-        WelcomeScreen.id: (context) => WelcomeScreen(),
-        LoginScreen.id: (context) => LoginScreen(),
-        RegistrationScreen.id: (context) => RegistrationScreen(),
-        Manager.id : (context) => Manager()
+            primaryColor: Colors.blueGrey[600],
+            accentColor: Colors.deepOrange[200],
+          ),
+      home: ManagerPage(),
 
-      },
     );
   }
 }
