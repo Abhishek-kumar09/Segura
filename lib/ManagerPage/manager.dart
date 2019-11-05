@@ -49,25 +49,7 @@ class _ManagerPageState extends State<ManagerPage> {
             new GridContainer(),
             new GridContainer(),
             new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
-            new GridContainer(),
+            
           ],
         ),
       ),
@@ -85,7 +67,7 @@ class GridContainer extends StatelessWidget {
     return AnimatedContainer(
       duration: Duration(seconds: 2),
       margin: EdgeInsets.all(10),
-      child: RawMaterialButton(onPressed: () {}, child: Text('hello')),
+      child: RawMaterialButton(onPressed: () { }, child: Text('gridContainer')),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
@@ -105,12 +87,13 @@ class Aaa extends StatefulWidget {
 int height = 100;
 
 class _AaaState extends State<Aaa> {
+  
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: Duration(seconds: 2),
       margin: EdgeInsets.all(10),
-      child: Text('fuck'),
+      child: Text('I am Aaa'),
       decoration: BoxDecoration(
         color: Colors.pink,
         borderRadius: BorderRadius.circular(20),
