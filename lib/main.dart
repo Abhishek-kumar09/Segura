@@ -1,9 +1,11 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:segura_manegerial/ManagerPage/manager.dart';
 // import 'package:segura_manegerial/phone_and_googlesignIn/routes/auth.dart';
 // import 'package:segura_manegerial/phone_and_googlesignIn/routes/main_screen.dart';
 // import 'package:segura_manegerial/services/phone_auth.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.deepOrange[200],
           ),
       home: ManagerPage(),
+
     );
   }
 }

@@ -1,4 +1,4 @@
-# segura_manegerial
+# Segura
 
 A new Flutter project.
 
@@ -14,3 +14,9 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+## Maintainers
+Abhishek Kumar <br>
+Harshit Dandriyal<br>
+Naman Sharma
+## Your PR matters
+if you come up with the issues and suggestions, feel free to make PR.

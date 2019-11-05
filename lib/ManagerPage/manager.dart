@@ -6,8 +6,10 @@ class ManagerPage extends StatefulWidget {
   _ManagerPageState createState() => _ManagerPageState();
 }
 
+
 class _ManagerPageState extends State<ManagerPage> {
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
