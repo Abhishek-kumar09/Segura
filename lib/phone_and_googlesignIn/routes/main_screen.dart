@@ -5,16 +5,20 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:segura_manegerial/phone_and_googlesignIn/routes/auth.dart';
 class MainScreen extends StatelessWidget {
   final GoogleSignInAccount googleUser;
-  final FirebaseUser firebaseUser;
+ final FirebaseUser firebaseUser;
+ // final String phone;
+  //final phoneNumber = firebaseUser.phoneNumber;
 
   const MainScreen(
       {Key key, @required this.googleUser, @required this.firebaseUser})
       : assert(googleUser != null),
         assert(firebaseUser != null),
         super(key: key);
-
+     
+  
   @override
   Widget build(BuildContext context) {
+
     final theme = Theme.of(context);
     return Scaffold(
       body: Center(
@@ -35,11 +39,15 @@ class MainScreen extends StatelessWidget {
             FlatButton(
               child: Text("Sign out", style: theme.textTheme.button),
               onPressed: () async {
+                //  String phone =firebaseUser.phoneNumber.toString();
+                //  print(phone);
                 await GoogleSignIn().signOut();
                 googleUser.clearAuthCache();
                 print('SignedOut');
                 // await GoogleSignIn().disconnect();
+                await firebaseUser.delete();
                 await FirebaseAuth.instance.signOut();
+                
                 print('signedOut from FireBase');
                 Navigator.of(context).pushAndRemoveUntil(
                   CupertinoPageRoute(builder: (context) => AuthScreen()),

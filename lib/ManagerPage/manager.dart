@@ -13,6 +13,7 @@ class _ManagerPageState extends State<ManagerPage> {
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
+            
             SliverAppBar(
                 pinned: true,
                 backgroundColor: Colors.teal[800],
@@ -49,7 +50,6 @@ class _ManagerPageState extends State<ManagerPage> {
             new GridContainer(),
             new GridContainer(),
             new GridContainer(),
-            
           ],
         ),
       ),
@@ -67,8 +67,9 @@ class GridContainer extends StatelessWidget {
     return AnimatedContainer(
       duration: Duration(seconds: 2),
       margin: EdgeInsets.all(10),
-      child: RawMaterialButton(onPressed: () { }, child: Text('gridContainer')),
+      child: RawMaterialButton(onPressed: () {}, child: Text('gridContainer')),
       decoration: BoxDecoration(
+        color: Colors.lightBlueAccent,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: Colors.black12,
@@ -87,10 +88,10 @@ class Aaa extends StatefulWidget {
 int height = 100;
 
 class _AaaState extends State<Aaa> {
-  
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
+      
       duration: Duration(seconds: 2),
       margin: EdgeInsets.all(10),
       child: Text('I am Aaa'),
@@ -102,6 +103,38 @@ class _AaaState extends State<Aaa> {
           width: 5,
         ),
       ),
+    );
+  }
+}
+
+class AnimatedGridContainer extends StatefulWidget {
+  @override
+  _AnimatedGridContainerState createState() => _AnimatedGridContainerState();
+}
+
+class _AnimatedGridContainerState extends State<AnimatedGridContainer>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      width: 100,
+      color: Colors.greenAccent,
+      child: Text('AnimatedGrid'),      
     );
   }
 }
