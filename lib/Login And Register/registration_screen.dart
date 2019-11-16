@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../Custom Function And Widgets/Widgets.dart';
 // import 'package:segura_manegerial/main.dart';
 import '../ManagerPage/manager.dart';
@@ -18,7 +19,9 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+
   String email,password,firstName,lastName,business,confirmPassword,phone;
+
   bool showSpinner = false;
   Auth _auth = new Auth();
   String labelBusiness = "Business";
@@ -29,10 +32,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String labelPassword = "Password";
   String labelConfirmPassword = "Confirm Password";
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
               child: Padding(
@@ -203,6 +208,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ],
             ),
+
           ),
         ),
       ),
