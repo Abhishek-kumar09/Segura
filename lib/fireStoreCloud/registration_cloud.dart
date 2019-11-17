@@ -12,4 +12,27 @@ class RegistrationDataBase {
       'password' : password
     });     
   }
+  
+  static List<String> getUserInfo() {
+    List<String> list = new List<String>();
+   // var detail;
+      _registrationData.collection('owner').document('+919354472907').get().then((doc){
+        try {
+          if(doc.exists) {
+          print(doc.data);
+          var detail =  doc.data['Name'];  
+          print(detail);
+          list.add(detail);         
+          //list.add();
+          print(list);
+        }
+        else {
+          print('Document does not exist!');          
+        }
+        } catch (e) {
+          print(e);
+        }
+     });
+     return list;
+  }
 }
