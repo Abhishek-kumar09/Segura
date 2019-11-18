@@ -1,37 +1,46 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:segura_manegerial/fireStoreCloud/registration_cloud.dart';
+//import 'package:segura_manegerial/fireStoreCloud/registration_cloud.dart';
 
-//  import 'package:cloud_firestore/cloud_firestore.dart';
 TextStyle title = TextStyle(fontWeight: FontWeight.w800, fontSize: 25,color: Colors.white70);
 TextStyle bigNumeric = TextStyle(fontWeight: FontWeight.w900, fontSize: 50);
 
 class MyProfile extends StatefulWidget {
+  const MyProfile({@required this.name,@required this.business,this.email ,this.bagCollected,this.earnings,this.photo,this.city,this.phone});
+  final String name;
+  final String business;
+  final String photo;
+  final String city;
+  final int bagCollected;
+  final int earnings;
+  final String phone;
+  final String email;
+
   @override
   _MyProfileState createState() => _MyProfileState();
 }
 
 
 class _MyProfileState extends State<MyProfile> {
-  @override
-  void initState() {
-    RegistrationDataBase.getUserInfo();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   RegistrationDataBase.getUserInfo();
+  //   super.initState();
+  // }
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-           
+          return <Widget>[           
             SliverAppBar(
                 //pinned: true,
                 backgroundColor: Colors.teal[800],
                 expandedHeight: 200.0,
                 flexibleSpace: FlexibleSpaceBar(
-                    title: Text('John Doe '),
+                    title: Text(widget.name),
                     background: Image.network(
                       "https://cdn.vox-cdn.com/thumbor/wI3iu8sNbFJSQB4yMLsoPMNzIHU=/0x0:3368x3368/1200x800/filters:focal(1188x715:1726x1253)/cdn.vox-cdn.com/uploads/chorus_image/image/62994726/AJ_Finn_author_photo_color_photo_courtesy_of_the_author.0.jpg",
+                      
                       fit: BoxFit.cover,
                     )),
                 actions: <Widget>[
@@ -48,18 +57,21 @@ class _MyProfileState extends State<MyProfile> {
             SizedBox(
               height: 12,
             ),
-            Text('The London Times', style: title),
-            MyStats(),
+            Text(widget.business, style: title),
+            MyStats(business: widget.business,
+            city: widget.city,
+            phone: widget.phone,
+            email: widget.email,),
             SizedBox(
               height: 12,
             ),
             StatsCard(
                 colour: Colors.blue[400],
-                title: 25,
+                title: widget.bagCollected,
                 subTitle: "Bags Collected 🤝"),
             StatsCard(
               colour: Colors.blue[600],
-              title: 200,
+              title: widget.earnings,
               subTitle: " Dollars made 💰",
             ),
             StatsCard(
@@ -108,6 +120,16 @@ class StatsCard extends StatelessWidget {
 }
 
 class MyStats extends StatelessWidget {
+  const MyStats({this.business,this.city,this.email,this.phone})
+  :assert(business != null),
+  assert(city != null),
+  assert(email != null),
+  assert(phone != null);
+
+  final String business;
+  final String city;
+  final String phone;
+  final String email;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -139,12 +161,12 @@ class MyStats extends StatelessWidget {
                  crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("The Segura WorkShop",style: Theme.of(context).textTheme.display1),
+                  Text("The $business",style: Theme.of(context).textTheme.display1),
                   SizedBox(height: 10,),
-                  Text("in Delhi Ncr",style: title),
+                  Text("in $city",style: title),
                   SizedBox(height: 10,),
-                  Text('abhi@segura.com',style: Theme.of(context).textTheme.subhead),
-                  Text('+919354472908',style: Theme.of(context).textTheme.subhead,),
+                  Text(email,style: Theme.of(context).textTheme.subhead),
+                  Text(phone,style: Theme.of(context).textTheme.subhead,),
                   Text('Rating: 🌟️🌟️🌟️🌟️🌟️') ,SizedBox(height: 15)         ,                      
                 ],
               ),

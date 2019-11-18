@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:segura_manegerial/Main%20Page/my_orders.dart';
 import 'package:segura_manegerial/Main%20Page/my_profile.dart';
+import 'package:segura_manegerial/Main%20Page/my_profile.dart' ;
 
 
 import 'package:segura_manegerial/fireStoreCloud/owner_details.dart';
@@ -61,10 +63,85 @@ class _MainPageState extends State<MainPage>
         children: <Widget>[
           Widget1(),
           Text('HelloGuys2'),
-          MyProfile()
+          ProfileBuider()         
         ],
       ),
+    );
+  }  
+}
+
+
+
+class ProfileBuider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('/owner/+919354472907/ownerDetails').snapshots(),      
+      builder: (context, snapshot) {
+        if(!snapshot.hasData) {return Center(child: CircularProgressIndicator(backgroundColor: Colors.pink,));}
+        final userdetails = snapshot.data.documents;
+        Widget myprofile;
+        for(var userdetail in userdetails) {
+        final name = userdetail.data['name'].toString();        
+        final business = userdetail.data['business'].toString();
+        final photo = userdetail.data['photoURL'];
+        final city = userdetail.data['city'];
+        final bagCollected = userdetail.data['bagsCollected'];
+        final earnings = userdetail.data['earnings'];
+        final phone = userdetail.data['phone'];
+        final email = userdetail.data['email'];
+        myprofile =  MyProfile(name: name,photo: photo,business: business,city: city,bagCollected: bagCollected,earnings: earnings,phone: phone,email:email);
+        }
+        return Scaffold(
+            body: myprofile,
+        );
+        // return CircularProgressIndicator(backgroundColor: Colors.teal,);
+      }
     );
   }
 }
 
+
+
+
+
+// Future<Widget> buildMyProfile() async {
+//   Widget builtWidgetProfile;
+//   final db = Firestore.instance;
+//    await db.collection('owner').document('+919354472907').get().then(
+//     (doc) {
+//       if(doc.exists) {
+//         final name = doc.data['name'].toString();        
+//         final business = doc.data['business'].toString();
+//         final photo = doc.data['photoURL'];
+//         final city = doc.data['city'];
+//         final bagCollected = doc.data['bagCollected'];
+//         final earnings = doc.data['earnings'];
+//         print(name);
+//         builtWidgetProfile = MyProfile(name: name,business: business,photo: photo,city: city,bagCollected: bagCollected,earnings: earnings,);       
+//       }
+//       return builtWidgetProfile;
+//     }
+//   ).catchError((e) {
+//     print(e);
+//     return CircularProgressIndicator();
+//   });
+//   return builtWidgetProfile;
+// }
+// class AA extends StatefulWidget {
+//   @override
+//   _AAState createState() => _AAState();
+// }
+
+// class _AAState extends State<AA> {
+//   @override
+//   void initState() async{
+//    await  buildMyProfile();
+//     super.initState();
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(      
+//     );
+//   }
+// }

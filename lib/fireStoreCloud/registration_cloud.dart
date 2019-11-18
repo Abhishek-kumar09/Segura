@@ -20,10 +20,9 @@ class RegistrationDataBase {
         try {
           if(doc.exists) {
           print(doc.data);
-          var detail =  doc.data['Name'];  
-          print(detail);
-          list.add(detail);         
-          //list.add();
+          var name =  doc.data['Name'];
+          print(name);
+          list.add(name);
           print(list);
         }
         else {
