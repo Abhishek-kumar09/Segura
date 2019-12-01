@@ -42,6 +42,7 @@ class MainScreen extends StatelessWidget {
                 //  String phone =firebaseUser.phoneNumber.toString();
                 //  print(phone);
                 await GoogleSignIn().signOut();
+                
                 googleUser.clearAuthCache();
                 print('SignedOut');
                 // await GoogleSignIn().disconnect();

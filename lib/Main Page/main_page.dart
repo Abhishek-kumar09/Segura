@@ -90,7 +90,8 @@ class ProfileBuider extends StatelessWidget {
         final earnings = userdetail.data['earnings'];
         final phone = userdetail.data['phone'];
         final email = userdetail.data['email'];
-        myprofile =  MyProfile(name: name,photo: photo,business: business,city: city,bagCollected: bagCollected,earnings: earnings,phone: phone,email:email);
+        final shop = userdetail.data['shop'];
+        myprofile =  MyProfile(name: name,photo: photo,business: business,city: city,bagCollected: bagCollected,earnings: earnings,phone: phone,email:email,shop: shop,);
         }
         return Scaffold(
             body: myprofile,

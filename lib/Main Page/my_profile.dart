@@ -1,12 +1,14 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
+import 'package:segura_manegerial/onpressedevents/crud.dart';
 //import 'package:segura_manegerial/fireStoreCloud/registration_cloud.dart';
 
 TextStyle title = TextStyle(fontWeight: FontWeight.w800, fontSize: 25,color: Colors.white70);
 TextStyle bigNumeric = TextStyle(fontWeight: FontWeight.w900, fontSize: 50);
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({@required this.name,@required this.business,this.email ,this.bagCollected,this.earnings,this.photo,this.city,this.phone});
+  const MyProfile({@required this.name,@required this.business,this.email ,this.bagCollected,this.earnings,this.photo,this.city,this.phone,@required this.shop});
   final String name;
   final String business;
   final String photo;
@@ -15,6 +17,7 @@ class MyProfile extends StatefulWidget {
   final int earnings;
   final String phone;
   final String email;
+  final String shop;
 
   @override
   _MyProfileState createState() => _MyProfileState();
@@ -61,7 +64,9 @@ class _MyProfileState extends State<MyProfile> {
             MyStats(business: widget.business,
             city: widget.city,
             phone: widget.phone,
-            email: widget.email,),
+            email: widget.email,
+            name: widget.name,
+            shop: widget.shop,),
             SizedBox(
               height: 12,
             ),
@@ -120,16 +125,17 @@ class StatsCard extends StatelessWidget {
 }
 
 class MyStats extends StatelessWidget {
-  const MyStats({this.business,this.city,this.email,this.phone})
+  const MyStats({this.business,this.city,this.email,this.phone,@required this.name,this.shop})
   :assert(business != null),
   assert(city != null),
   assert(email != null),
   assert(phone != null);
-
   final String business;
   final String city;
+  final String name;
   final String phone;
   final String email;
+  final String shop;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -177,7 +183,8 @@ class MyStats extends StatelessWidget {
              left: 280,
              
              child: FloatingActionButton(
-               onPressed: (){//TODO : onpressed
+               onPressed: (){ 
+                 Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen(business: business,city: city,name: name,shop: shop,)));
                },
                backgroundColor: Colors.white70,
                mini: true,
@@ -189,6 +196,7 @@ class MyStats extends StatelessWidget {
     );
   }
 }
+
 
 class BottomLineClipper extends CustomClipper<Path> {
   @override

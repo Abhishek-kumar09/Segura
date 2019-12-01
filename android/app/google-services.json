@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "172194535918-7td8ovp5h1eqe86eqvtgnbdgsqouarop.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.segura_manegerial",
+            "certificate_hash": "417274dba43dae8c3112b1c584858bd137bf38e1"
+          }
+        },
+        {
+          "client_id": "172194535918-jpgr0o0gq8tnth2djgosk036gjkul5se.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.segura_manegerial",
+            "certificate_hash": "7bd9c6f556d5c8b3685739d2f0f53aace89adda9"
+          }
+        },
+        {
           "client_id": "172194535918-63lgq5no625h3b8im4b003vmie801eb9.apps.googleusercontent.com",
           "client_type": 3
         }

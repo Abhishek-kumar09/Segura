@@ -1,11 +1,6 @@
-
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
-// import 'package:segura_manegerial/Welcome%20Page/welcome_screen.dart';
-// import 'package:segura_manegerial/Constants%20And%20Colors/colors_and_constatnts.dart';
 import 'package:segura_manegerial/services/firebase_authentication.dart';
-import 'package:segura_manegerial/ManagerPage/manager.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import '../Custom Function And Widgets/Widgets.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
