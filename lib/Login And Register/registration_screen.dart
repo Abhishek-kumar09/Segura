@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:segura_manegerial/onpressedevents/crud.dart';
 
 import '../Custom Function And Widgets/Widgets.dart';
-// import 'package:segura_manegerial/main.dart';
-import '../ManagerPage/manager.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 import 'package:segura_manegerial/services/firebase_authentication.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:segura_manegerial/fireStoreCloud/registration_cloud.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// // import 'package:cloud_firestore/cloud_firestore.dart';
-
 
 class RegistrationScreen extends StatefulWidget {
+  RegistrationScreen({this.name,this.city,this.business,this.shop});
+
+  final String name;
+  final String city;
+  final String business;
+  final String shop;
   static String id = 'RegistrationScreen';
 
   @override
@@ -19,209 +21,135 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-
-  String email,password,firstName,lastName,business,confirmPassword,phone;
-
+  String userCity, userShop, firstName, lastName, business;
+  CRUD crud = new CRUD();
   bool showSpinner = false;
-  Auth _auth = new Auth();
+  //Auth _auth = new Auth();
   String labelBusiness = "Business";
   String labelFirstName = "FirstName";
-  String labelLastName = "LastName";
-  String labelPhone = "Phone Number";
-  String labelEmail = "Email";
-  String labelPassword = "Password";
-  String labelConfirmPassword = "Confirm Password";
-
+  String labelCity = "Enter City you have shop in";
+  String labelShopName = "Enter Shop Name";
+  String photoUrl; //TODO: work on it
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-
+      backgroundColor: Colors.black12,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
-              child: Padding(
+        child: Padding(
           padding: EdgeInsets.only(top: 10.0, left: 18.0, right: 18.0),
           child: Center(
             child: ListView(
               children: <Widget>[
-                Hero(
-                  tag: 'logo',
-                  child: Container(
-                    height: 150.0,
-                    child: Image.asset('assets/seguraLight.jpeg'),
-                  ),
-                ),
+                SizedBox(height: 10,),
+                Center(
+                    child: CircleAvatar(
+                  minRadius: 30,
+                  maxRadius: 60,
+                  backgroundImage: NetworkImage(
+                      'https://cdn.vox-cdn.com/thumbor/wI3iu8sNbFJSQB4yMLsoPMNzIHU=/0x0:3368x3368/1200x800/filters:focal(1188x715:1726x1253)/cdn.vox-cdn.com/uploads/chorus_image/image/62994726/AJ_Finn_author_photo_color_photo_courtesy_of_the_author.0.jpg'),
+                )),
                 SizedBox(
                   height: 48.0,
                 ),
-                TextField(
+                TextFormField(
+                  initialValue: widget.name,
                   onChanged: (value) {
-                    //Do something with the user input.
-
                     setState(() {
                       if (value == "") {
-                        labelFirstName = "Enter Your FirstName";
+                        labelFirstName = "Enter Your Name";
                       } else {
                         labelFirstName = "";
                       }
                     });
                     value.trim();
-                      firstName = value;                  
+                    firstName = (value == null) ? widget.name : value;
                   },
                   decoration: buildRegisterInputDecoration(labelFirstName),
                 ),
+                
                 SizedBox(
                   height: 8.0,
                 ),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      if (value == "") {
-                        labelLastName = "Enter Your LastName";
-                      } else {
-                        labelLastName = "";
-                      }
-                    });
-                    value.trim();
-                      lastName = value;                  
-                  },
-                  decoration: buildRegisterInputDecoration(labelLastName),
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      if (value == "") {
-                        labelPhone = "Enter Your phoneNumber";
-                      } else {
-                        labelPhone = "";
-                      }
-                    });
-                    value.trim();
-                      phone = value;                  
-                  },
-                  decoration: buildRegisterInputDecoration(labelPhone),
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                TextField(
+                TextFormField(
+                  initialValue: widget.business,
                   onChanged: (value) {
                     //Do something with the user input.
                     setState(() {
                       if (value == "") {
-                        labelBusiness = "Enter Your Buisness";
+                        labelBusiness = "Enter Your Business";
                       } else {
                         labelBusiness = "";
                       }
                     });
                     value.trim();
-                      business = value;                  
+                    business = (value == null) ? widget.business : value;
                   },
                   decoration: buildRegisterInputDecoration(labelBusiness),
                 ),
                 SizedBox(
                   height: 8.0,
                 ),
-                TextField(
+                TextFormField(
+                  initialValue: widget.city,
                   keyboardType: TextInputType.emailAddress,
                   onChanged: (value) {
                     setState(() {
                       if (value == "") {
-                        labelEmail = "Enter Your Email";
+                        labelCity = "Enter Your City";
                       } else {
-                        labelEmail = "";
+                        labelCity = "";
                       }
                     });
                     value.trim();
-                      email = value;                  
+                    userCity = (value == null) ? widget.city : value;
                   },
-                  decoration: buildRegisterInputDecoration(labelEmail),
+                  decoration: buildRegisterInputDecoration(labelCity),
                 ),
                 SizedBox(
                   height: 8.0,
                 ),
-                TextField(
-                  obscureText: true,
+                TextFormField(
+                  initialValue: widget.shop,
                   onChanged: (value) {
                     setState(() {
                       if (value == "") {
-                        labelPassword = "Enter Your Password";
+                        labelShopName = "Enter Your Shop";
                       } else {
-                        labelPassword = "";
+                        labelShopName = "";
                       }
                     });
                     //Do something with the user input.
-                      value.trim();
-                      password = value;                  
-                  },
-                  decoration: buildRegisterInputDecoration(labelPassword),
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                TextField(              
-                  obscureText: true,
-                  onChanged: (value) {
                     value.trim();
-                    setState(() {                      
-                      if (value == "") {
-                        labelConfirmPassword = "Enter Your Password Again";
-                      } else if(value != password) {
-                        labelConfirmPassword = "Password Doesn\'t match";
-                      }
-                      else {
-                        labelConfirmPassword = "";
-                      }
-                    }); 
-                    confirmPassword =value;                     
+                    userShop = (value == null) ? widget.shop : value;
                   },
-                  decoration: buildRegisterInputDecoration(labelConfirmPassword),
+                  decoration: buildRegisterInputDecoration(labelShopName),
                 ),
                 SizedBox(
-                  height: 24.0,
+                  height: 80,
                 ),
                 RoundedButton(
-                  colour: Colors.blueAccent,
-                  text: 'Register',
-                  logo: 'register',
-                  onpressed: () async{
-                    setState(() {
-                     showSpinner =true; 
-                    });
-                     try {
-                   String user = await _auth.signUp(email, password);
-                   if(user != null && confirmPassword == password) {
-                     RegistrationDataBase.pushUserInfo(firstName, lastName, business, email, password);
-                     // TODO:Navigator.pushNamed(context, Manager.id);
-                   }                  
-                  } catch (e) {
-                    print(e);
-                  }
-                  setState(() {
-                   showSpinner = false; 
-                  });
-                  },
-                ),
+                    colour: Colors.blue,
+                    text: 'Update Details',
+                    logo : 'update',
+                    onpressed: ()  {
+                      firstName = (firstName == null) ? widget.name : firstName;
+                      userCity = (userCity == null) ? widget.city : userCity;
+                      business = (business == null) ? widget.business : business;
+                      userShop = (userShop == null) ? widget.shop : userShop;
+                       crud.updateProfile(firstName, userCity, business, userShop);
+                       Navigator.pop(context);
+                    },
+                  ),
               ],
             ),
-
           ),
         ),
       ),
     );
   }
 }
-
-
-
-
-
-
-
 
 // import 'package:flutter/material.dart';
 // import 'package:segura_manegerial/Welcome%20Page/welcome_screen.dart';
@@ -316,15 +244,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 //               colour: Colors.blueAccent,
 //               text: 'Register',
 //               logo: 'register',
-//               onpressed: () async {                
+//               onpressed: () async {
 //                 try {
 //                  String user = await _auth.signUp(email, password);
 //                  if(user != null) {
 //                    Navigator.pushNamed(context, WelcomeScreen.id);
-//                  }                  
+//                  }
 //                 } catch (e) {
 //                   print(e);
-//                 }                
+//                 }
 //               },
 //             )
 //           ],
