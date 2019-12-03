@@ -1,7 +1,11 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
 import 'package:segura_manegerial/onpressedevents/crud.dart';
+import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
+import 'package:segura_manegerial/phone_and_googlesignIn/routes/global.dart';
 //import 'package:segura_manegerial/fireStoreCloud/registration_cloud.dart';
 
 TextStyle title = TextStyle(fontWeight: FontWeight.w800, fontSize: 25,color: Colors.white70);
@@ -50,7 +54,11 @@ class _MyProfileState extends State<MyProfile> {
                   IconButton(
                     icon: const Icon(Icons.add_circle),
                     tooltip: 'Add new entry',
-                    onPressed: () {/* ... */},
+                    onPressed: () async {
+                      // GoogleSignInAccount g =await Globalk.getGoogleUser();
+                      // print(g.email);
+                      print(Globalk.firebaseUser);
+                    },
                   ),
                 ]),
           ];

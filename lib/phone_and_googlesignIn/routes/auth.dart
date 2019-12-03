@@ -54,8 +54,8 @@ class _AuthScreenState extends State<AuthScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  GoogleSignInAccount _googleUser;
-  FirebaseUser _firebaseUser;
+   GoogleSignInAccount _googleUser;
+   FirebaseUser _firebaseUser;
 
   // PhoneVerificationFailed
   verificationFailed(AuthException authException) {
@@ -281,12 +281,8 @@ class _AuthScreenState extends State<AuthScreen> {
         // as the user is already verified with Firebase from both
         // Google and phone number methods
         // Example: authenticate with your own API, use the data gathered
-        // to post your profile/user, etc.
-        String  phone = user.phoneNumber;
-        String name = user.displayName;
-        Globalk(phone,name);
-        print("name from GlobalK" + Globalk.name);        
-        print("phone from Globalk" + Globalk.phoneNu);
+        // to post your profile/user, etc.        
+        Globalk(_googleUser,user);
         Navigator.of(context).pushReplacement(CupertinoPageRoute(
           builder: (context) => MainScreen(
             googleUser: _googleUser,
