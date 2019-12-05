@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:segura_manegerial/onpressedevents/orderdetail.dart';
 
 class Widget1 extends StatefulWidget {
+  Widget1({@required this.phoneNumber});
+  final String phoneNumber;
   @override
   _Widget1State createState() => _Widget1State();
 }
@@ -11,7 +14,7 @@ class _Widget1State extends State<Widget1> {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance
-            .collection('/owner/+919354472907/myOrders')
+            .collection('/owner/${widget.phoneNumber}/myOrders')
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -60,6 +63,9 @@ class _WidgetListState extends State<WidgetList> {
         borderRadius: BorderRadius.circular(252),
         elevation: 10,
         child: ListTile(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ExtendedOrderDetail(name: widget.name,noofBags: widget.bagCount,phone: widget.phone,)));
+          },
           leading: CircleAvatar(backgroundColor: Color(0xFF000000)),
           title: Text(widget.name),
           subtitle: Text(widget.phone),
