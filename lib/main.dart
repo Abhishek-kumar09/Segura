@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
-import 'package:segura_manegerial/onpressedevents/orderdetail.dart';
 import 'package:segura_manegerial/phone_and_googlesignIn/routes/auth.dart';
 
 void main() async {

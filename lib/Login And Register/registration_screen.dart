@@ -3,9 +3,7 @@ import 'package:segura_manegerial/onpressedevents/crud.dart';
 
 import '../Custom Function And Widgets/Widgets.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
-import 'package:segura_manegerial/services/firebase_authentication.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:segura_manegerial/fireStoreCloud/registration_cloud.dart';
 
 class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({this.name,this.city,this.business,this.shop});
