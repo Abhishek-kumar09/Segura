@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/onpressedevents/crud.dart';
-
 import '../Custom Function And Widgets/Widgets.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  RegistrationScreen({this.name,this.city,this.business,this.shop});
+  RegistrationScreen({this.name, this.city, this.business, this.shop});
 
   final String name;
   final String city;
@@ -40,106 +39,90 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           child: Center(
             child: ListView(
               children: <Widget>[
-                SizedBox(height: 10,),
+                SizedBox(height: 10),
                 Center(
                     child: CircleAvatar(
-                  minRadius: 30,
-                  maxRadius: 60,
-                  backgroundImage: NetworkImage(
-                      'https://cdn.vox-cdn.com/thumbor/wI3iu8sNbFJSQB4yMLsoPMNzIHU=/0x0:3368x3368/1200x800/filters:focal(1188x715:1726x1253)/cdn.vox-cdn.com/uploads/chorus_image/image/62994726/AJ_Finn_author_photo_color_photo_courtesy_of_the_author.0.jpg'),
-                )),
-                SizedBox(
-                  height: 48.0,
-                ),
+                        minRadius: 30,
+                        maxRadius: 60,
+                        backgroundImage: NetworkImage(
+                            'https://cdn.vox-cdn.com/thumbor/wI3iu8sNbFJSQB4yMLsoPMNzIHU=/0x0:3368x3368/1200x800/filters:focal(1188x715:1726x1253)/cdn.vox-cdn.com/uploads/chorus_image/image/62994726/AJ_Finn_author_photo_color_photo_courtesy_of_the_author.0.jpg'))),
+                SizedBox(height: 48.0),
                 TextFormField(
-                  initialValue: widget.name,
-                  onChanged: (value) {
-                    setState(() {
-                      if (value == "") {
-                        labelFirstName = "Enter Your Name";
-                      } else {
-                        labelFirstName = "";
-                      }
-                    });
-                    value.trim();
-                    firstName = (value == null) ? widget.name : value;
-                  },
-                  decoration: buildRegisterInputDecoration(labelFirstName),
-                ),
-                
-                SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                  initialValue: widget.business,
-                  onChanged: (value) {
-                    //Do something with the user input.
-                    setState(() {
-                      if (value == "") {
-                        labelBusiness = "Enter Your Business";
-                      } else {
-                        labelBusiness = "";
-                      }
-                    });
-                    value.trim();
-                    business = (value == null) ? widget.business : value;
-                  },
-                  decoration: buildRegisterInputDecoration(labelBusiness),
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                  initialValue: widget.city,
-                  keyboardType: TextInputType.emailAddress,
-                  onChanged: (value) {
-                    setState(() {
-                      if (value == "") {
-                        labelCity = "Enter Your City";
-                      } else {
-                        labelCity = "";
-                      }
-                    });
-                    value.trim();
-                    userCity = (value == null) ? widget.city : value;
-                  },
-                  decoration: buildRegisterInputDecoration(labelCity),
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                TextFormField(
-                  initialValue: widget.shop,
-                  onChanged: (value) {
-                    setState(() {
-                      if (value == "") {
-                        labelShopName = "Enter Your Shop";
-                      } else {
-                        labelShopName = "";
-                      }
-                    });
-                    //Do something with the user input.
-                    value.trim();
-                    userShop = (value == null) ? widget.shop : value;
-                  },
-                  decoration: buildRegisterInputDecoration(labelShopName),
-                ),
-                SizedBox(
-                  height: 80,
-                ),
-                RoundedButton(
-                    colour: Colors.blue,
-                    text: 'Update Details',
-                    logo : 'update',
-                    onpressed: ()  {
-                      firstName = (firstName == null) ? widget.name : firstName;
-                      userCity = (userCity == null) ? widget.city : userCity;
-                      business = (business == null) ? widget.business : business;
-                      userShop = (userShop == null) ? widget.shop : userShop;
-                       crud.updateProfile(firstName, userCity, business, userShop);
-                       Navigator.pop(context);
+                    initialValue: widget.name,
+                    onChanged: (value) {
+                      setState(() {
+                        if (value == "") {
+                          labelFirstName = "Enter Your Name";
+                        } else {
+                          labelFirstName = "";
+                        }
+                      });
+                      value.trim();
+                      firstName = (value == null) ? widget.name : value;
                     },
-                  ),
+                    decoration: buildRegisterInputDecoration(labelFirstName)),
+                SizedBox(height: 8.0),
+                TextFormField(
+                    initialValue: widget.business,
+                    onChanged: (value) {
+                      //Do something with the user input.
+                      setState(() {
+                        if (value == "") {
+                          labelBusiness = "Enter Your Business";
+                        } else {
+                          labelBusiness = "";
+                        }
+                      });
+                      value.trim();
+                      business = (value == null) ? widget.business : value;
+                    },
+                    decoration: buildRegisterInputDecoration(labelBusiness)),
+                SizedBox(height: 8.0),
+                TextFormField(
+                    initialValue: widget.city,
+                    keyboardType: TextInputType.emailAddress,
+                    onChanged: (value) {
+                      setState(() {
+                        if (value == "") {
+                          labelCity = "Enter Your City";
+                        } else {
+                          labelCity = "";
+                        }
+                      });
+                      value.trim();
+                      userCity = (value == null) ? widget.city : value;
+                    },
+                    decoration: buildRegisterInputDecoration(labelCity)),
+                SizedBox(height: 8.0),
+                TextFormField(
+                    initialValue: widget.shop,
+                    onChanged: (value) {
+                      setState(() {
+                        if (value == "") {
+                          labelShopName = "Enter Your Shop";
+                        } else {
+                          labelShopName = "";
+                        }
+                      });
+                      //Do something with the user input.
+                      value.trim();
+                      userShop = (value == null) ? widget.shop : value;
+                    },
+                    decoration: buildRegisterInputDecoration(labelShopName)),
+                SizedBox(height: 80),
+                RoundedButton(
+                  colour: Colors.blue,
+                  text: 'Update Details',
+                  logo: 'update',
+                  onpressed: () {
+                    firstName = (firstName == null) ? widget.name : firstName;
+                    userCity = (userCity == null) ? widget.city : userCity;
+                    business = (business == null) ? widget.business : business;
+                    userShop = (userShop == null) ? widget.shop : userShop;
+                    crud.updateProfile(firstName, userCity, business, userShop);
+                    Navigator.pop(context);
+                  },
+                ),
               ],
             ),
           ),

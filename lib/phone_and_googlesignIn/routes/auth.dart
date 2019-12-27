@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
 import 'package:segura_manegerial/phone_and_googlesignIn/logger.dart';
 import 'package:segura_manegerial/phone_and_googlesignIn/widgets/google_sign_in_btn.dart';
 import 'package:segura_manegerial/phone_and_googlesignIn/routes/main_screen.dart';
@@ -282,13 +283,15 @@ class _AuthScreenState extends State<AuthScreen> {
         // Google and phone number methods
         // Example: authenticate with your own API, use the data gathered
         // to post your profile/user, etc.        
-        Globalk(_googleUser,user);
         Navigator.of(context).pushReplacement(CupertinoPageRoute(
-          builder: (context) => MainScreen(
-            googleUser: _googleUser,
-            firebaseUser: user,            
-          ),
-        ));
+          builder: (context) => 
+          EditProfile(
+            googleSignInAccount: _googleUser,
+            user: user,            
+          )));
+        //   EditProfile()
+        // // ));
+        // Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditProfile(googleSignInAccount: _googleUser,user: user,)));
       } else {
         setState(() {
           this.status = AuthStatus.SMS_AUTH;

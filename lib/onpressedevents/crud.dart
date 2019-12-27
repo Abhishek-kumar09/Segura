@@ -1,11 +1,14 @@
 //import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 
 class CRUD {
-  final DocumentReference doc = Firestore.instance
-      .collection('/owner/+919354472907/ownerDetails')
-      .document('+919354472907');
-  void add() {
+
+  void add() async {
+        final phone =  await AuthCheck.getPhone();
+   final DocumentReference doc = Firestore.instance
+      .collection('/owner/$phone/ownerDetails')
+      .document('$phone');
     doc.setData({
       'name': 'Priyanshu',
       'city': 'Delhi',
@@ -19,7 +22,35 @@ class CRUD {
     });
   }
 
-  void updateProfile(String name, String city, String business, String shop) {
+  static void setProfile(String name, String city, String business,
+      String altPhone, String imageURL,String email) async {
+      final phone =  await AuthCheck.getPhone();
+   final DocumentReference doc = Firestore.instance
+      .collection('/owner/$phone/ownerDetails')
+      .document('$phone');
+    doc.setData({
+      'name': name,
+      'city': city,
+      'altphone': altPhone,
+      'business': business,
+      'imageURL': imageURL,
+      'earning': 0,
+      'capacity': 10,
+      'available': 10,
+      'phone': phone,
+      'email': email
+    }).whenComplete(() {
+      print("document added");
+    }).catchError((onError) {
+      print(onError);
+    });
+  }
+
+  void updateProfile(String name, String city, String business, String shop) async{
+            final phone =  await AuthCheck.getPhone();
+   final DocumentReference doc = Firestore.instance
+      .collection('/owner/$phone/ownerDetails')
+      .document('$phone');
     doc
         .updateData({
           'name': name,
@@ -36,7 +67,11 @@ class CRUD {
         });
   }
 
-  void delete() {
+  void delete() async {
+            final phone =  await AuthCheck.getPhone();
+   final DocumentReference doc = Firestore.instance
+      .collection('/owner/$phone/ownerDetails')
+      .document('$phone');
     doc.delete().whenComplete(() {
       print('document deleted !');
     });
