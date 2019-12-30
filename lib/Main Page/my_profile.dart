@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
-import 'package:segura_manegerial/phone_and_googlesignIn/routes/global.dart';
+
 
 TextStyle title = TextStyle(fontWeight: FontWeight.w800, fontSize: 25,color: Colors.white70);
 TextStyle bigNumeric = TextStyle(fontWeight: FontWeight.w900, fontSize: 50);
@@ -51,7 +51,7 @@ class _MyProfileState extends State<MyProfile> {
                     onPressed: () async {
                       // GoogleSignInAccount g =await Globalk.getGoogleUser();
                       // print(g.email);
-                      print(Globalk.firebaseUser);
+                      //print(Globalk.firebaseUser);
                     },
                   ),
                 ]),

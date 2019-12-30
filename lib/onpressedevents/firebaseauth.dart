@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthCheck {
@@ -17,28 +16,31 @@ class AuthCheck {
     try {
       if (await isLogged()) {
         SharedPreferences pref = await SharedPreferences.getInstance();
-        
+
         final user = await getUser();
         pref.setString('phoneNumber', user.phoneNumber);
         pref.setString('name', user.displayName);
         pref.setString('photo', user.photoUrl);
-        pref.setString('email', user.email);
+        //pref.setString('email', user.email);
         pref.setBool('isLoggedIn', await isLogged());
       }
     } catch (e) {
       print(e);
     }
   }
-  static final GoogleSignIn googleSignIn = GoogleSignIn();
+
+  //static final GoogleSignIn googleSignIn = GoogleSignIn();
   static Future<bool> isLogged() async {
     try {
-      return await googleSignIn.isSignedIn();
+      final FirebaseUser user = await getUser();
+      //print(user.displayName);
+      return user != null;
     } catch (e) {
       return false;
     }
   }
 
-  static  Future<String> getDisplayName() async {
+  static Future<String> getDisplayName() async {
     if (await checkValue()) {
       SharedPreferences pref = await SharedPreferences.getInstance();
       return pref.getString('name');
@@ -50,7 +52,7 @@ class AuthCheck {
 
   static Future<String> getPhone() async {
     if (await checkValue()) {
-     SharedPreferences pref = await SharedPreferences.getInstance();
+      SharedPreferences pref = await SharedPreferences.getInstance();
       return pref.getString('phoneNumber');
     } else {
       FirebaseUser user = await getUser();

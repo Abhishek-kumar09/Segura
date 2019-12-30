@@ -4,23 +4,23 @@ import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 
 class CRUD {
 
-  void add() async {
-        final phone =  await AuthCheck.getPhone();
-   final DocumentReference doc = Firestore.instance
-      .collection('/owner/$phone/ownerDetails')
-      .document('$phone');
-    doc.setData({
-      'name': 'Priyanshu',
-      'city': 'Delhi',
-      'earning': 10,
-      'phone': '+917048940630',
-      'business': 'Mauj'
-    }).whenComplete(() {
-      print("document added");
-    }).catchError((onError) {
-      print(onError);
-    });
-  }
+  // void add() async {
+  //       final phone =  await AuthCheck.getPhone();
+  //  final DocumentReference doc = Firestore.instance
+  //     .collection('/owner/$phone/ownerDetails')
+  //     .document('$phone');
+  //   doc.setData({
+  //     'name': 'Priyanshu',
+  //     'city': 'Delhi',
+  //     'earning': 10,
+  //     'phone': '+917048940630',
+  //     'business': 'Mauj'
+  //   }).whenComplete(() {
+  //     print("document added");
+  //   }).catchError((onError) {
+  //     print(onError);
+  //   });
+  // }
 
   static void setProfile(String name, String city, String business,
       String altPhone, String imageURL,String email) async {

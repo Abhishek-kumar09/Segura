@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
-import 'package:segura_manegerial/phone_and_googlesignIn/routes/auth.dart';
+import 'package:segura_manegerial/phone_auth_myVs/homepage.dart';
+import 'package:segura_manegerial/phone_auth_myVs/phone_auth.dart';
 
-void main() async {
+
+void main() {
+  void mainFunction() async {
   WidgetsFlutterBinding.ensureInitialized();
   final bool islogged = await AuthCheck.isLogged();
   String phone = islogged ? await AuthCheck.getPhone() : '';
@@ -13,7 +15,10 @@ void main() async {
     initialRoute: islogged ? '/' : '/loginScreen',
     phone: phone,
   ));
+  }
+  mainFunction();
 }
+
 
 class MyApp extends StatelessWidget {
   MyApp({@required this.initialRoute, this.phone});
@@ -31,8 +36,10 @@ class MyApp extends StatelessWidget {
       initialRoute: initialRoute,
       routes: {
         '/': (context) => MainPage(phone: phone),
+       '/homepage': (BuildContext context) => MyHome(),
+
         // '/e': (context) => EditProfile(),
-        '/loginScreen': (context) => AuthScreen()
+        '/loginScreen': (context) => PhoneAuth()
       },
     );
   }

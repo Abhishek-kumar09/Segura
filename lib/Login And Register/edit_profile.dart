@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cache_image/cache_image.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
@@ -9,8 +8,9 @@ import 'package:segura_manegerial/onpressedevents/crud.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 
 class EditProfile extends StatelessWidget {
-  EditProfile({@required this.googleSignInAccount,@required this.user});
-  final GoogleSignInAccount googleSignInAccount;
+  EditProfile({@required this.user});
+  //  EditProfile({@required this.googleSignInAccount,@required this.user});
+  // final GoogleSignInAccount googleSignInAccount;
   final FirebaseUser user;
   String name, city, business, alternateNo;
   @override
@@ -81,7 +81,7 @@ class EditProfile extends StatelessWidget {
                   Alert(context: context, title: "Segura Says", desc: "Please Fill the Form Correctly",type: AlertType.warning,style: AlertStyle(backgroundColor: Colors.white)).show();
                 }
                 else {
-                  CRUD.setProfile(name, city, business, alternateNo, 'imageURL',googleSignInAccount.email);
+                  CRUD.setProfile(name, city, business, alternateNo, 'imageURL','user.email');
                   Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
     MainPage(phone: user.phoneNumber)), (Route<dynamic> route) => false);
                 }
