@@ -9,11 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:segura_manegerial/main.dart';
+import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+
+      final bool islogged = await AuthCheck.isLogged();
+  String phone = islogged ? await AuthCheck.getPhone() : '';
+  print(islogged);
+    await tester.pumpWidget(MyApp(initialRoute: islogged ? '/' : '/loginScreen',
+    phone: phone,));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:segura_manegerial/Main%20Page/my_orders.dart';
 import 'package:segura_manegerial/Main%20Page/my_profile.dart';
-import 'package:segura_manegerial/fireStoreCloud/owner_details.dart';
-
-//import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({@required this.phone});
@@ -20,7 +17,6 @@ class _MainPageState extends State<MainPage>
   @override
   void initState() {
     super.initState();
-    CustomerDetails.getCustomerDetails();
     _tabController = TabController(
       vsync: this,
       length: 3,
@@ -60,7 +56,7 @@ class _MainPageState extends State<MainPage>
       body: TabBarView(
         controller: _tabController,
         children: <Widget>[
-          Widget1(phoneNumber: widget.phone,),
+          MyOrders(phoneNumber: widget.phone,),
           Text('HelloGuys2'),
           ProfileBuider(widget.phone)         
         ],

@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
-import 'package:segura_manegerial/onpressedevents/orderdetail.dart';
-import 'package:segura_manegerial/phone_and_googlesignIn/routes/auth.dart';
+import 'package:segura_manegerial/phone_auth_myVs/homepage.dart';
+import 'package:segura_manegerial/phone_auth_myVs/phone_auth.dart';
 
-void main() async {
-  AuthCheck _auth = new AuthCheck();
-  final bool islogged = await _auth.isLogged();
-  final String phone = await _auth.getPhone();
+
+void main() {
+  void mainFunction() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final bool islogged = await AuthCheck.isLogged();
+  String phone = islogged ? await AuthCheck.getPhone() : '';
   print(islogged);
-  runApp(MyApp(initialRoute: islogged ? '/' : '/loginScreen',phone: phone,));
+  runApp(MyApp(
+    initialRoute: islogged ? '/' : '/loginScreen',
+    phone: phone,
+  ));
+  }
+  mainFunction();
 }
 
-class MyApp extends StatelessWidget {
 
-  MyApp({@required this.initialRoute,this.phone});
+class MyApp extends StatelessWidget {
+  MyApp({@required this.initialRoute, this.phone});
   final String initialRoute;
   final String phone;
   @override
@@ -22,14 +29,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Phone Auth',
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.blue[100],
-        primaryColor: Colors.blueGrey[600],
-        accentColor: Colors.deepOrange[200],
-      ),
-     initialRoute: initialRoute,
+          scaffoldBackgroundColor: Colors.blue[100],
+          errorColor: Colors.red,
+          primaryColor: Colors.black,
+          accentColor: Colors.blue[900]),
+      initialRoute: initialRoute,
       routes: {
-        '/' : (context) => MainPage(phone: phone,),
-        '/loginScreen' : (context) => AuthScreen()
+        '/': (context) => MainPage(phone: phone),
+       '/homepage': (BuildContext context) => MyHome(),
+
+        // '/e': (context) => EditProfile(),
+        '/loginScreen': (context) => PhoneAuth()
       },
     );
   }

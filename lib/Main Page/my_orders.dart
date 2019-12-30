@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:segura_manegerial/onpressedevents/orderdetail.dart';
 
-class Widget1 extends StatefulWidget {
-  Widget1({@required this.phoneNumber});
+class MyOrders extends StatefulWidget {
+  MyOrders({@required this.phoneNumber});
   final String phoneNumber;
   @override
-  _Widget1State createState() => _Widget1State();
+  _MyOrdersState createState() => _MyOrdersState();
 }
 
-class _Widget1State extends State<Widget1> {
+class _MyOrdersState extends State<MyOrders> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(

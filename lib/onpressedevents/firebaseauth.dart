@@ -1,34 +1,36 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-SharedPreferences pref;
-
 class AuthCheck {
-  Future<bool> checkValue() async {
-    pref = await SharedPreferences.getInstance();
+  static Future<bool> checkValue() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.containsKey('phoneNumber');
   }
 
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  Future<FirebaseUser> getUser() async {
+  static FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  static Future<FirebaseUser> getUser() async {
     return await _firebaseAuth.currentUser();
   }
 
-  Future<Null> addSharedPref() async {
+  static Future<Null> addSharedPref() async {
     try {
       if (await isLogged()) {
-        pref = await SharedPreferences.getInstance();
+        SharedPreferences pref = await SharedPreferences.getInstance();
+
         final user = await getUser();
         pref.setString('phoneNumber', user.phoneNumber);
         pref.setString('name', user.displayName);
         pref.setString('photo', user.photoUrl);
+        //pref.setString('email', user.email);
+        pref.setBool('isLoggedIn', await isLogged());
       }
     } catch (e) {
       print(e);
     }
   }
 
-  Future<bool> isLogged() async {
+  //static final GoogleSignIn googleSignIn = GoogleSignIn();
+  static Future<bool> isLogged() async {
     try {
       final FirebaseUser user = await getUser();
       //print(user.displayName);
@@ -38,9 +40,9 @@ class AuthCheck {
     }
   }
 
-  Future<String> getDisplayName() async {
+  static Future<String> getDisplayName() async {
     if (await checkValue()) {
-      pref = await SharedPreferences.getInstance();
+      SharedPreferences pref = await SharedPreferences.getInstance();
       return pref.getString('name');
     } else {
       FirebaseUser user = await getUser();
@@ -48,13 +50,24 @@ class AuthCheck {
     }
   }
 
-  Future<String> getPhone() async {
+  static Future<String> getPhone() async {
     if (await checkValue()) {
-      pref = await SharedPreferences.getInstance();
+      SharedPreferences pref = await SharedPreferences.getInstance();
       return pref.getString('phoneNumber');
     } else {
       FirebaseUser user = await getUser();
       return user.phoneNumber;
     }
   }
+
+  // static  Future<String> getEmail() async {
+  //   if(await checkValue()) {
+  //     pref = await SharedPreferences.getInstance();
+  //     return pref.getString('email');
+  //   }
+  //   else {
+  //     FirebaseUser user = await getUser();
+  //     return  user.email;
+  //   }
+  // }
 }

@@ -1,12 +1,6 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
-import 'package:segura_manegerial/onpressedevents/crud.dart';
-import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
-import 'package:segura_manegerial/phone_and_googlesignIn/routes/global.dart';
-//import 'package:segura_manegerial/fireStoreCloud/registration_cloud.dart';
+
 
 TextStyle title = TextStyle(fontWeight: FontWeight.w800, fontSize: 25,color: Colors.white70);
 TextStyle bigNumeric = TextStyle(fontWeight: FontWeight.w900, fontSize: 50);
@@ -57,7 +51,7 @@ class _MyProfileState extends State<MyProfile> {
                     onPressed: () async {
                       // GoogleSignInAccount g =await Globalk.getGoogleUser();
                       // print(g.email);
-                      print(Globalk.firebaseUser);
+                      //print(Globalk.firebaseUser);
                     },
                   ),
                 ]),
@@ -224,30 +218,30 @@ class BottomLineClipper extends CustomClipper<Path> {
 
 
 
-class BottomWaveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = new Path();
-    path.lineTo(0.0, size.height - 20);
+// class BottomWaveClipper extends CustomClipper<Path> {
+//   @override
+//   Path getClip(Size size) {
+//     var path = new Path();
+//     path.lineTo(0.0, size.height - 20);
 
-    var firstControlPoint = Offset(size.width / 4, size.height);
-    var firstEndPoint = Offset(size.width / 2.25, size.height - 30.0);
-    path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
-        firstEndPoint.dx, firstEndPoint.dy);
+//     var firstControlPoint = Offset(size.width / 4, size.height);
+//     var firstEndPoint = Offset(size.width / 2.25, size.height - 30.0);
+//     path.quadraticBezierTo(firstControlPoint.dx, firstControlPoint.dy,
+//         firstEndPoint.dx, firstEndPoint.dy);
 
-    var secondControlPoint =
-        Offset(size.width - (size.width / 3.25), size.height - 65);
-    var secondEndPoint = Offset(size.width, size.height - 40);
-    path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
-        secondEndPoint.dx, secondEndPoint.dy);
+//     var secondControlPoint =
+//         Offset(size.width - (size.width / 3.25), size.height - 65);
+//     var secondEndPoint = Offset(size.width, size.height - 40);
+//     path.quadraticBezierTo(secondControlPoint.dx, secondControlPoint.dy,
+//         secondEndPoint.dx, secondEndPoint.dy);
 
-    path.lineTo(size.width, size.height - 40);
-    path.lineTo(size.width, 0.0);
-    path.close();
+//     path.lineTo(size.width, size.height - 40);
+//     path.lineTo(size.width, 0.0);
+//     path.close();
 
-    return path;
-  }
+//     return path;
+//   }
 
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
+//   @override
+//   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+// }

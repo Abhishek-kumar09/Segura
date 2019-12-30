@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:segura_manegerial/Login%20And%20Register/loginScreen.dart';
-import '../Constants And Colors/colors_and_constatnts.dart';
 import '../Login And Register/registration_screen.dart';
-import '../Login And Register/loginScreen.dart';
 import '../Custom Function And Widgets/Widgets.dart';
+Color primaryColor = Color(0xFF4597C9);
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'WelcomeScreen';
@@ -39,7 +37,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             text: 'Login',
             colour: Colors.lightBlueAccent,
             onpressed: () {
-              Navigator.pushNamed(context, LoginScreen.id);
+             //TODO: 
             },
           ),
           RoundedButton(
