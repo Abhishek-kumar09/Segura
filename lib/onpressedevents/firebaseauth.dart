@@ -43,6 +43,7 @@ class AuthCheck {
   static Future<String> getDisplayName() async {
     if (await checkValue()) {
       SharedPreferences pref = await SharedPreferences.getInstance();
+      print("Name displayed from Shared Pref");
       return pref.getString('name');
     } else {
       FirebaseUser user = await getUser();
