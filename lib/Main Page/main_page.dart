@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:segura_manegerial/Main%20Page/my_orders.dart';
 import 'package:segura_manegerial/Main%20Page/my_profile.dart';
+import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({@required this.phone});
@@ -19,7 +20,7 @@ class _MainPageState extends State<MainPage>
     super.initState();
     _tabController = TabController(
       vsync: this,
-      length: 3,
+      length: 2,
     )..addListener(() {});
   }
 
@@ -27,16 +28,18 @@ class _MainPageState extends State<MainPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GradientAppBar(
-        gradient: LinearGradient(colors: [Colors.blue[600],Color(0xFF060233)],begin: Alignment.topCenter,end: Alignment.bottomCenter),
+        gradient: LinearGradient(colors: [Colors.blue[800],darkblue],begin: Alignment.topLeft,end: Alignment.bottomRight),
         elevation: 10,
         // centerTitle: true,
-        leading: Image.asset('assets/logo1.png'),
+        leading: Padding(          
+          padding: const EdgeInsets.all(10.0),
+          child: CircleAvatar(backgroundImage: AssetImage('assets/logo1.png'),backgroundColor: Colors.white,)
+        ),
         primary: true,
         title: Text('SEGURA OWNER',),
         bottom: TabBar(          
           tabs: <Widget>[
             Tab(child: Text('MY ORDERS')),
-            Tab(child: Text('MY SPACE')),
             Tab(child: Text('MYSELF'))
           ],
           indicatorColor: Colors.blue[700], controller: _tabController,
@@ -57,7 +60,6 @@ class _MainPageState extends State<MainPage>
         controller: _tabController,
         children: <Widget>[
           MyOrders(phoneNumber: widget.phone,),
-          Text('HelloGuys2'),
           ProfileBuider(widget.phone)         
         ],
       ),
@@ -81,10 +83,10 @@ final String phoneNumber;
         for(var userdetail in userdetails) {
         final name = userdetail.data['name'].toString();        
         final business = userdetail.data['business'].toString();
-        final photo = userdetail.data['photoURL'];
+        final photo = userdetail.data['imageURL'];
         final city = userdetail.data['city'];
         final bagCollected = userdetail.data['bagsCollected'];
-        final earnings = userdetail.data['earnings'];
+        final earnings = userdetail.data['earning'];
         final phone = userdetail.data['phone'];
         final email = userdetail.data['email'];
         final shop = userdetail.data['shop'];

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-
+  double iconSize = 32;
+  Color darkblue =  Color(0xFF060233);
+  
   InputDecoration buildLoginInputDecoration(String hintText,IconData icon) {
     
     return InputDecoration(
@@ -49,7 +50,22 @@ import 'package:flutter/material.dart';
               );
   }
 
+  TextStyle mainTextstyle() => TextStyle(
+      color: Colors.blue[900], fontWeight: FontWeight.bold, fontSize: 30);
 
+  TextStyle subTextStyle() => TextStyle(
+      color: Colors.blue[900], fontWeight: FontWeight.normal, fontSize: 26);
+
+  BoxDecoration boxDecoration() {
+    return BoxDecoration(
+      boxShadow: [BoxShadow(color: Colors.black,blurRadius: 10)],
+      border:
+          Border.all(color: Colors.blue, style: BorderStyle.solid, width: 2),
+      borderRadius: BorderRadius.only(
+          topRight: Radius.circular(50), topLeft: Radius.circular(50)),
+      color: Colors.white,
+    );
+  }
 
 
   

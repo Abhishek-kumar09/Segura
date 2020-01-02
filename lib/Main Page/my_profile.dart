@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 
 TextStyle title = TextStyle(fontWeight: FontWeight.w800, fontSize: 25,color: Colors.white70);
 TextStyle bigNumeric = TextStyle(fontWeight: FontWeight.w900, fontSize: 50);
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({@required this.name,@required this.business,this.email ,this.bagCollected,this.earnings,this.photo,this.city,this.phone,@required this.shop});
+  const MyProfile({@required this.name,@required this.business,this.email ,this.bagCollected,this.earnings,@required this.photo,this.city,this.phone,@required this.shop});
   final String name;
   final String business;
   final String photo;
@@ -16,7 +17,6 @@ class MyProfile extends StatefulWidget {
   final String phone;
   final String email;
   final String shop;
-
   @override
   _MyProfileState createState() => _MyProfileState();
 }
@@ -39,10 +39,31 @@ class _MyProfileState extends State<MyProfile> {
                 expandedHeight: 200.0,
                 flexibleSpace: FlexibleSpaceBar(
                     title: Text(widget.name),
-                    background: Image.network(
-                      "https://cdn.vox-cdn.com/thumbor/wI3iu8sNbFJSQB4yMLsoPMNzIHU=/0x0:3368x3368/1200x800/filters:focal(1188x715:1726x1253)/cdn.vox-cdn.com/uploads/chorus_image/image/62994726/AJ_Finn_author_photo_color_photo_courtesy_of_the_author.0.jpg",                      
-                      fit: BoxFit.cover,
-                    )),
+                    background: !(widget.photo == null || widget.photo == '') ? CachedNetworkImage(
+                                imageUrl: widget.photo,
+                                fit: BoxFit.cover,
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  height: 140,
+                                  width: 140,
+                                  decoration: BoxDecoration(                                    
+                                    image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                        colorFilter: ColorFilter.mode(
+                                            Colors.white10, BlendMode.color)),
+                                  ),
+                                ),
+                                placeholder: (context, url) =>
+                                    Center(
+                                      child: Container(
+                                        height: 60,
+                                        width: 60,
+                                        child: CircularProgressIndicator()),
+                                    ),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              ): Image.asset('assets/defaultUser.png')),
                 actions: <Widget>[
                   IconButton(
                     icon: const Icon(Icons.add_circle),
@@ -180,9 +201,8 @@ class MyStats extends StatelessWidget {
             ),
            // SizedBox(height: 600,)
            Positioned(
-             top: 380,
-             left: 280,
-             
+             top: 100,
+             left: 280,             
              child: FloatingActionButton(
                onPressed: (){ 
                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen(business: business,city: city,name: name,shop: shop,)));

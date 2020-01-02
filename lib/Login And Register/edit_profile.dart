@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path/path.dart' as Path;
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
 import 'package:segura_manegerial/onpressedevents/crud.dart';
 import 'package:image_picker/image_picker.dart';
@@ -157,16 +158,10 @@ class _EditProfileState extends State<EditProfile> {
                 decoration:
                     buildRegisterInputDecoration('Alternate Contact No.')),
             SizedBox(height: 24.0),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40,vertical: 20),
-                          child: MaterialButton(                        
-                autofocus: true,
-                height: 50,
-                color: Colors.blue[900],
-                child: Text('Go',style: TextStyle(color: Colors.white),),
-                elevation: 10,
-                splashColor: Colors.blue,
-                onPressed: () async {
+            RoundedButton(
+              colour: Colors.blue,
+              text: "Save Details",
+              onpressed: () async {
                   if (name == null ||
                       name == '' ||
                       city == null ||
@@ -192,8 +187,7 @@ class _EditProfileState extends State<EditProfile> {
                                 MainPage(phone: widget.user.phoneNumber)),
                         (Route<dynamic> route) => false);
                   }
-                },
-              ),
+                }
             )
           ],
         ),

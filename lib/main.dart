@@ -21,7 +21,7 @@ void main() {
   print(islogged);
   runApp(MyApp(
     //initialRoute: islogged ? '/' : '/loginScreen',
-    initialRoute: islogged ? '/e' : '/loginScreen',
+    initialRoute: islogged ? '/' : '/loginScreen',
     phone: phone,
   ));
   }

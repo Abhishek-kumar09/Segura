@@ -38,7 +38,8 @@ class CRUD {
       'capacity': 10,
       'available': 10,
       'phone': phone,
-      'email': email
+      'email': email,
+      'bagsCollected' : 0
     }).whenComplete(() {
       print("document added");
     }).catchError((onError) {
