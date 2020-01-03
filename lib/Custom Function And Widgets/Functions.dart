@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
   double iconSize = 32;
   Color darkblue =  Color(0xFF060233);
+  Color golden = Color(0xFFFFD700);
   
   InputDecoration buildLoginInputDecoration(String hintText,IconData icon) {
     
@@ -58,6 +59,7 @@ import 'package:flutter/material.dart';
 
   BoxDecoration boxDecoration() {
     return BoxDecoration(
+    
       boxShadow: [BoxShadow(color: Colors.black,blurRadius: 10)],
       border:
           Border.all(color: Colors.blue, style: BorderStyle.solid, width: 2),

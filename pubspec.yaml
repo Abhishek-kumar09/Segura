@@ -21,7 +21,7 @@ dependencies:
   firebase_storage: ^3.1.0
   image_picker: ^0.6.2+3
   cached_network_image: ^2.0.0-rc
-  splashscreen: ^1.2.0
+  url_launcher: ^5.4.1
 
 
 
@@ -42,5 +42,3 @@ flutter:
 
   assets:
    - assets/
-   - assets/images/
-   - data/

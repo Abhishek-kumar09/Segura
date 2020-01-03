@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ExtendedOrderDetail extends StatefulWidget {
   ExtendedOrderDetail(
@@ -46,7 +47,7 @@ class _ExtendedOrderDetailState extends State<ExtendedOrderDetail> {
           ),
           (widget.isPremium)
                       ? Positioned(top: 180,
-                        child: RowWithIcon(iconSize: iconSize,icon: Icons.star,text: "Its A Premium Order",colour: Colors.amber[400],textColor: Colors.white,))
+                        child: RowWithIcon(iconSize: iconSize,icon: Icons.star,text: "Its A Premium Order",colour: golden,textColor: Colors.white,))
                       : Container(),
           Container(
               margin: EdgeInsets.only(top: 220),
@@ -54,28 +55,38 @@ class _ExtendedOrderDetailState extends State<ExtendedOrderDetail> {
               height: double.infinity,
               decoration: boxDecoration(),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,                
                 children: <Widget>[
+                  SizedBox(height: 50,),
                   Text(
                     widget.name,
                     style: mainTextstyle(),
                   ),
-                  // (widget.noofBags == 1) ? Text('${widget.noofBags} Bags') : Text('${widget.noofBags} Bag'),
-                  Text(
-                    '${widget.noofBags} Bags',
+                  SizedBox(height: 10),
+                  // (widget.noofBags == 1) ? Text('${widget.noofBags} Bags') : Text('${widget.noofBags} Bag 👜️ '),
+                  Text('${widget.noofBags} Bags 💼️ ',
                     style: subTextStyle(),
                   ),
-                  Icon(Icons.call,
-                      color: Colors.green,
-                      semanticLabel: "Call the Customer",
-                      size: iconSize),
                   (widget.acceptStatus)
                       ? Text(
-                          'The Order is accepted',
+                          '✔️ The Order is accepted',
                           style: subTextStyle(),
                         )
-                      : Text("please accept the order", style: subTextStyle()),                  
+                      : Text("please accept the order ", style: subTextStyle()),                  
                   (widget.isDone) ? RowWithIcon(iconSize: iconSize,icon: Icons.done,text: "The Order is Successfully accomplished",colour: Colors.green,) :Text('The Order awaits customer'),
+                  Padding(
+                    padding: EdgeInsets.only(top: 130),
+                                      child: MaterialButton(
+                      padding: EdgeInsets.all(8),
+                      color: Colors.green,
+                       shape: CircleBorder(),
+                       onPressed: () => launch('tel:${widget.phone}'),
+                      child: Icon(Icons.call,
+                          color: Colors.white,
+                          semanticLabel: "Call the Customer",
+                          size: iconSize),
+                    ),
+                  ),
                 ],
               )),
         ],

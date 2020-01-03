@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
 import 'package:segura_manegerial/Main%20Page/my_orders.dart';
 import 'package:segura_manegerial/Main%20Page/my_profile.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
@@ -23,6 +24,11 @@ class _MainPageState extends State<MainPage>
       length: 2,
     )..addListener(() {});
   }
+  _onPressed() {
+      showDialog(context: context,
+        builder: (context)=>Dialog(child: Text('data \n he')));
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +41,11 @@ class _MainPageState extends State<MainPage>
           padding: const EdgeInsets.all(10.0),
           child: CircleAvatar(backgroundImage: AssetImage('assets/logo1.png'),backgroundColor: Colors.white,)
         ),
+        actions: [PopupMenuButton<Widget>(
+  itemBuilder: (BuildContext context) => <PopupMenuEntry<Widget>>[
+    const PopupMenuItem<Widget>(child: RowWithIcon(icon: Icons.person_outline,text: ' Sign Out',iconSize: 16,colour: Colors.black,))
+  ],
+)]   ,
         primary: true,
         title: Text('SEGURA OWNER',),
         bottom: TabBar(          

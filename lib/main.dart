@@ -1,12 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 import 'package:segura_manegerial/phone_auth_myVs/homepage.dart';
 import 'package:segura_manegerial/phone_auth_myVs/phone_auth.dart';
-import 'package:splashscreen/splashscreen.dart';
-
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +17,6 @@ void main() {
   String phone = islogged ? await AuthCheck.getPhone() : '';
   print(islogged);
   runApp(MyApp(
-    //initialRoute: islogged ? '/' : '/loginScreen',
     initialRoute: islogged ? '/' : '/loginScreen',
     phone: phone,
   ));
