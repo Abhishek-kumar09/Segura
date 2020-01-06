@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
 import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
-import 'homepage.dart';
 
 class PhoneAuth extends StatelessWidget {
   @override
@@ -153,12 +153,18 @@ class _MyAppPageState extends State<MyAppPage> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(10),
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: 'Enter Phone Number Eg. +910000000000'),
-                onChanged: (value) {
-                  this.phoneNo = value;
-                },
+              child: Row(
+                children: <Widget>[
+                  Container(decoration: BoxDecoration(border: Border.all(width: 1,color: darkblue,style: BorderStyle.solid)),child: Text("+91")),
+                  SizedBox(width: 5),
+                  TextField(
+                    decoration: InputDecoration(
+                        hintText: 'Enter Phone Number'),
+                    onChanged: (value) {
+                      this.phoneNo = "+91$value";
+                    },
+                  ),
+                ],
               ),
             ),
             (errorMessage != ''

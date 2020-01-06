@@ -6,7 +6,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({this.name, this.city, this.business, this.shop});
-
+  
   final String name;
   final String city;
   final String business;

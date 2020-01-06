@@ -46,6 +46,7 @@ class AuthCheck {
       print("Name displayed from Shared Pref");
       return pref.getString('name');
     } else {
+      print("not used shared pref");
       FirebaseUser user = await getUser();
       return user.displayName;
     }

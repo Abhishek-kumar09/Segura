@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
 import 'package:segura_manegerial/onpressedevents/extended_order_details.dart';
+import 'package:segura_manegerial/onpressedevents/modal_bottom_sheet.dart';
 
 class MyOrders extends StatelessWidget {
   MyOrders({@required this.phoneNumber});
@@ -10,8 +11,22 @@ class MyOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(splashColor: Colors.teal[800],
-        backgroundColor: Colors.green,elevation: 10,child: Icon(Icons.add,color: Colors.green[900],size: iconSize),onPressed: (){},mini: true,tooltip: "Tap to add customers"),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+            //showModalBottomSheet(context: context,builder: (context) => AddOfflineCustomer() );
+            showModalBottomSheet<void>(
+  isScrollControlled: true,
+  context: context,
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(40.0),
+        topRight: Radius.circular(40.0)),
+  ),
+  builder: (BuildContext context) => AddOfflineCustomer()
+);
+        },
+        splashColor: Colors.teal[800],
+        backgroundColor: Colors.green,elevation: 10,child: Icon(Icons.add,color: Colors.green[900],size: iconSize),mini: true,tooltip: "Tap to add customers"),
           body: StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance
               .collection('/owner/$phoneNumber/myOrders')
@@ -50,7 +65,7 @@ class SingleOrderCard extends StatelessWidget {
   
   final String phone;
   final String name;
-  final String bagCount;
+  final int bagCount;
   final bool isPremium;
   final bool isDone;
   final String photo;
@@ -73,8 +88,7 @@ class SingleOrderCard extends StatelessWidget {
           leading: CircleAvatar(backgroundColor: Color(0xFF000000)),
           title: Text(name,style: TextStyle(color: Colors.white)),
           subtitle: Text(phone,style: TextStyle(color: Colors.white),),
-          trailing: Text("$bagCount bags"),   
-              
+          trailing: Text("$bagCount bags"),                 
         ),
       ),
     );

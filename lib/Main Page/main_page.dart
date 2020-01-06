@@ -24,11 +24,7 @@ class _MainPageState extends State<MainPage>
       length: 2,
     )..addListener(() {});
   }
-  _onPressed() {
-      showDialog(context: context,
-        builder: (context)=>Dialog(child: Text('data \n he')));
-  }
-  
+
 
   @override
   Widget build(BuildContext context) {

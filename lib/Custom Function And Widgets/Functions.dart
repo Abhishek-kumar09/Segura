@@ -29,6 +29,17 @@ import 'package:flutter/material.dart';
             );
   }
 
+InputDecoration addCustomerdecoration() {
+return InputDecoration(
+  border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue,width: 5)),
+  enabledBorder:  OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Colors.blueAccent, width: 1.0),
+                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                )
+);
+}
+
 
   InputDecoration buildRegisterInputDecoration(String labelText) {
     return InputDecoration(
@@ -52,7 +63,7 @@ import 'package:flutter/material.dart';
   }
 
   TextStyle mainTextstyle() => TextStyle(
-      color: Colors.blue[900], fontWeight: FontWeight.bold, fontSize: 30);
+      color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 34);
 
   TextStyle subTextStyle() => TextStyle(
       color: Colors.blue[900], fontWeight: FontWeight.normal, fontSize: 26);

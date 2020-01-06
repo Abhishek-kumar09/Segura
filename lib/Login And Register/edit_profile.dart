@@ -1,14 +1,10 @@
-import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart' as Path;
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
 import 'package:segura_manegerial/onpressedevents/crud.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 String _uploadedImageUrl = '';
@@ -25,35 +21,6 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   String name, city, business, alternateNo;
-  File _image;
-
-
-  Future getImage() async {
-    await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50)
-        .then((image) {
-      setState(() {
-        _image = image;
-      });
-    });
-  }
-
-  Future uploadImage() async {
-    // print(widget.user.uid);
-    // print(widget.user.phoneNumber);
-    StorageReference storageReference = FirebaseStorage.instance
-        .ref()
-        .child('tests/${Path.basename(_image.path)}}');
-    //.child('manager/${widget.user.phoneNumber}/${Path.basename(_image.path)}}');
-    StorageUploadTask uploadTask = storageReference.putFile(_image);
-    await uploadTask.onComplete;
-    print('File Uploaded');
-    storageReference.getDownloadURL().then((fileURL) {
-      CRUD.updateImageUrl(fileURL);
-      setState(() {
-        _uploadedImageUrl = fileURL;
-      });
-    });
-  }
 
   Future getImageUrl() async {
     _uploadedImageUrl = await CRUD.getUploadedImageUrl();
@@ -118,8 +85,7 @@ class _EditProfileState extends State<EditProfile> {
                     backgroundColor: Colors.blueAccent,
                     child: Icon(Icons.edit, color: Colors.white70),
                     onPressed: () async {
-                      await getImage();
-                      await uploadImage();
+                      await CRUD.uploadImage();
                       setState(() {
                         print(_uploadedImageUrl);
                       });

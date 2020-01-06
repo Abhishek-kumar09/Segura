@@ -24,7 +24,10 @@ void main() {
   mainFunction();
 }
 
-
+const String HomeRoute = '/home';
+const String AboutRoute = '/about';
+const String EpisodesRoute = '/episodes';
+const String EpisodeDetailsRoute = '/episode';
 class MyApp extends StatelessWidget {
   MyApp({@required this.initialRoute, this.phone});
   final String initialRoute;
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.white,
           errorColor: Colors.red,
-          primaryColor: Colors.black,
+          primaryColor: Colors.blue,
           accentColor: Colors.blue[900]),
       initialRoute: initialRoute,
       routes: {

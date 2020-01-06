@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:segura_manegerial/onpressedevents/crud.dart';
+
 
 
 TextStyle title = TextStyle(fontWeight: FontWeight.w800, fontSize: 25,color: Colors.white70);
@@ -28,6 +30,7 @@ class _MyProfileState extends State<MyProfile> {
   //   RegistrationDataBase.getUserInfo();
   //   super.initState();
   // }
+  
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
@@ -63,12 +66,16 @@ class _MyProfileState extends State<MyProfile> {
                                     ),
                                 errorWidget: (context, url, error) =>
                                     Icon(Icons.error),
-                              ): Image.asset('assets/defaultUser.png')),
+                              ): Container(color: Colors.blue[900],child: Icon(Icons.person,color:Colors.white60,size: 200))
+                              // Image.asset('assets/defaultUser.png',fit: BoxFit.cover,colorBlendMode: BlendMode.colorBurn,)
+                              ),
                 actions: <Widget>[
                   IconButton(
                     icon: const Icon(Icons.add_circle),
                     tooltip: 'Add new entry',
-                    onPressed: () async {
+                    onPressed: () async {                    
+                      await CRUD.uploadImage();
+                      setState(() {});
                       // GoogleSignInAccount g =await Globalk.getGoogleUser();
                       // print(g.email);
                       //print(Globalk.firebaseUser);
