@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
-
+  double iconSize = 32;
+  Color darkblue =  Color(0xFF060233);
+  Color golden = Color(0xFFFFD700);
+  
   InputDecoration buildLoginInputDecoration(String hintText,IconData icon) {
     
     return InputDecoration(
@@ -27,6 +29,17 @@ import 'package:flutter/material.dart';
             );
   }
 
+InputDecoration addCustomerdecoration() {
+return InputDecoration(
+  border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue,width: 5)),
+  enabledBorder:  OutlineInputBorder(
+                  borderSide:
+                      BorderSide(color: Colors.blueAccent, width: 1.0),
+                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                )
+);
+}
+
 
   InputDecoration buildRegisterInputDecoration(String labelText) {
     return InputDecoration(
@@ -49,7 +62,23 @@ import 'package:flutter/material.dart';
               );
   }
 
+  TextStyle mainTextstyle() => TextStyle(
+      color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 34);
 
+  TextStyle subTextStyle() => TextStyle(
+      color: Colors.blue[900], fontWeight: FontWeight.normal, fontSize: 26);
+
+  BoxDecoration boxDecoration() {
+    return BoxDecoration(
+    
+      boxShadow: [BoxShadow(color: Colors.black,blurRadius: 10)],
+      border:
+          Border.all(color: Colors.blue, style: BorderStyle.solid, width: 2),
+      borderRadius: BorderRadius.only(
+          topRight: Radius.circular(50), topLeft: Radius.circular(50)),
+      color: Colors.white,
+    );
+  }
 
 
   

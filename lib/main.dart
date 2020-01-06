@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 import 'package:segura_manegerial/phone_auth_myVs/homepage.dart';
 import 'package:segura_manegerial/phone_auth_myVs/phone_auth.dart';
 
-
 void main() {
-  void mainFunction() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // SplashScreen(
+  //   backgroundColor: Colors.blue[900],seconds: 5,image: Image.asset('assets/logo1.png'),
+  // loadingText: Text('Welcome To Segura /n Your Luggage our Segurity'),
+  // loaderColor: Colors.amber,title: Text("Manager in Segura"),
+  // );
+  void mainFunction() async {
   final bool islogged = await AuthCheck.isLogged();
   String phone = islogged ? await AuthCheck.getPhone() : '';
   print(islogged);
@@ -19,26 +24,29 @@ void main() {
   mainFunction();
 }
 
-
+const String HomeRoute = '/home';
+const String AboutRoute = '/about';
+const String EpisodesRoute = '/episodes';
+const String EpisodeDetailsRoute = '/episode';
 class MyApp extends StatelessWidget {
   MyApp({@required this.initialRoute, this.phone});
   final String initialRoute;
   final String phone;
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Phone Auth',
-      theme: ThemeData.dark().copyWith(
-          scaffoldBackgroundColor: Colors.blue[100],
+      theme: ThemeData.light().copyWith(
+          scaffoldBackgroundColor: Colors.white,
           errorColor: Colors.red,
-          primaryColor: Colors.black,
+          primaryColor: Colors.blue,
           accentColor: Colors.blue[900]),
       initialRoute: initialRoute,
       routes: {
         '/': (context) => MainPage(phone: phone),
        '/homepage': (BuildContext context) => MyHome(),
-
-        // '/e': (context) => EditProfile(),
+         '/e': (context)=> EditProfile(),
         '/loginScreen': (context) => PhoneAuth()
       },
     );

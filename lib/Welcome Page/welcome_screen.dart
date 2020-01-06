@@ -33,7 +33,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
           ),
           RoundedButton(
-            logo: 'login',
+            hero: 'login',
             text: 'Login',
             colour: Colors.lightBlueAccent,
             onpressed: () {
@@ -41,7 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             },
           ),
           RoundedButton(
-              logo: 'register',
+              hero: 'register',
               text: 'Register',
               colour: Colors.blueAccent,
               onpressed: () {

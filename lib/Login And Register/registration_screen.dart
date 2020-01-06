@@ -6,7 +6,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class RegistrationScreen extends StatefulWidget {
   RegistrationScreen({this.name, this.city, this.business, this.shop});
-
+  
   final String name;
   final String city;
   final String business;
@@ -31,7 +31,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: Colors.white,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Padding(
@@ -113,7 +113,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 RoundedButton(
                   colour: Colors.blue,
                   text: 'Update Details',
-                  logo: 'update',
+                  hero: 'update',
                   onpressed: () {
                     firstName = (firstName == null) ? widget.name : firstName;
                     userCity = (userCity == null) ? widget.city : userCity;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 
 class MyHome extends StatelessWidget {
   @override
@@ -17,7 +17,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  //FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +32,13 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               'You have pushed the button this many times:',
             ),
-            RaisedButton(
-              child: Text('Logout'),
-              onPressed: () async {
-                await _auth.signOut();
-                Navigator.of(context).pushReplacementNamed('/loginpage');
-              },
-            ),
+            // RaisedButton(
+            //   child: Text('Logout'),
+            //   onPressed: () async {
+            //     await _auth.signOut();
+            //     Navigator.of(context).pushReplacementNamed('/loginpage');
+            //   },
+            // ),
           ],
         ),
       ),

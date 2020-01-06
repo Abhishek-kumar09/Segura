@@ -19,7 +19,11 @@ dependencies:
   firebase_storage_image: ^0.4.0
   shared_preferences: ^0.5.4+6
   firebase_storage: ^3.1.0
-  cache_image: ^1.0.5
+  image_picker: ^0.6.2+3
+  cached_network_image: ^2.0.0-rc
+  url_launcher: ^5.4.1
+
+
 
 
   cupertino_icons: ^0.1.2
@@ -38,5 +42,3 @@ flutter:
 
   assets:
    - assets/
-   - assets/images/
-   - data/
