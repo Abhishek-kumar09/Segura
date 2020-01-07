@@ -1,10 +1,10 @@
+import 'dart:async';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
 import 'package:segura_manegerial/onpressedevents/crud.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-
-
 
 class AddOfflineCustomer extends StatefulWidget {
   @override
@@ -12,13 +12,13 @@ class AddOfflineCustomer extends StatefulWidget {
 }
 
 class _AddOfflineCustomerState extends State<AddOfflineCustomer> {
-  bool isloading =  false;
+  bool isloading = false;
   String _addedCustomer, _customerPhone;
   @override
   Widget build(BuildContext context) {
-    return ModalProgressHUD(      
-      inAsyncCall: isloading ,
-          child: Padding(
+    return ModalProgressHUD(
+      inAsyncCall: isloading,
+      child: Padding(
         padding: MediaQuery.of(context).viewInsets,
         child: Container(
           //color: Color(0xff757575),
@@ -26,7 +26,8 @@ class _AddOfflineCustomerState extends State<AddOfflineCustomer> {
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.blue, width: 5),
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)),
                 color: Colors.white),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -67,11 +68,30 @@ class _AddOfflineCustomerState extends State<AddOfflineCustomer> {
                         isloading = true;
                       });
                       print(_addedCustomer);
-                      CRUD.addOffineCustomer(_addedCustomer, _customerPhone);
-                      setState(() {  
-                        isloading = false;
+                      try {
+                        CRUD.addOffineCustomer(_addedCustomer, _customerPhone);
+                      } catch (e) {
+                        Fluttertoast.showToast(
+                            msg: "Error adding Customer",
+                            backgroundColor: Colors.red,
+                            textColor: Colors.red,
+                            gravity: ToastGravity.BOTTOM,
+                            toastLength: Toast.LENGTH_SHORT);
+                      }
+
+                      Timer(Duration(milliseconds: 500), () {
+                        setState(() {
+                          isloading = false;
+                        });
+                        Fluttertoast.showToast(
+                          msg: "Customer Added Successfully",
+                          backgroundColor: Colors.green,
+                          gravity: ToastGravity.BOTTOM,
+                          textColor: Colors.white,
+                          toastLength: Toast.LENGTH_SHORT,
+                        );
+                        Navigator.pop(context);
                       });
-                      Navigator.pop(context);
                     },
                     colour: Colors.blue,
                     text: "Add Customer",
@@ -85,5 +105,3 @@ class _AddOfflineCustomerState extends State<AddOfflineCustomer> {
     );
   }
 }
-
-
