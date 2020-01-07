@@ -1,5 +1,6 @@
 //import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +9,7 @@ import 'dart:io';
 class CRUD {
 
   static addOffineCustomer(String name,String phoneNo) async {
-    final _phone = await AuthCheck.getPhone();
+    try{final _phone = await AuthCheck.getPhone();
     final DocumentReference _doc = Firestore.instance
     .collection('/owner/$_phone/myOrders').document(phoneNo);
     Firestore.instance.runTransaction((transaction) async{
@@ -21,7 +22,10 @@ class CRUD {
         'isDone' : false,
         'isPremium' : false,
         });
-    }) ;
+    }) ;}
+    catch(e) {
+      Fluttertoast.showToast(msg: "Error adding Customer");
+    }
   }
 
   static void setProfile(String name, String city, String business,
@@ -141,6 +145,25 @@ class CRUD {
       print(e);
     });
     return imageUrl;
+  }
+
+  static void updateCapacity(int newCapacity) async{
+     final phone = await AuthCheck.getPhone();
+    final DocumentReference doc = Firestore.instance
+        .collection('/owner/$phone/ownerDetails')
+        .document('$phone');
+    doc
+        .updateData({
+          'capacity' : newCapacity
+        })
+        .timeout(Duration(seconds: 5))
+        .whenComplete(() {
+          print("Capacity updated");
+        })
+        .catchError((e) {
+          print(e);
+          Fluttertoast.showToast(msg: "Network Error");
+        }).whenComplete((){print('object');});
   }
 }
 

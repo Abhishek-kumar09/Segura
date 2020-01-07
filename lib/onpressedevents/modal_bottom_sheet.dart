@@ -105,3 +105,50 @@ class _AddOfflineCustomerState extends State<AddOfflineCustomer> {
     );
   }
 }
+
+
+
+class ExtendCapacity extends StatefulWidget {
+  final double value;
+  ExtendCapacity(this.value);
+  @override
+  _ExtendCapacityState createState() => _ExtendCapacityState();
+}
+
+class _ExtendCapacityState extends State<ExtendCapacity> {
+  double d, finalValue;
+  // widget.value;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 200,
+      color: darkblue,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Slider(
+            min: (widget.value - 30) > 0 ? widget.value -30 : 0,
+            max: widget.value + 30,
+            activeColor: Colors.blue,
+            inactiveColor: Colors.grey,
+            label: (d == null) ? widget.value.floor().toString(): d.floor().toString(), 
+            divisions: 12,       
+            value: (d == null) ? widget.value: d,
+            onChanged: (newValue) {
+              setState(() {
+                d = newValue;
+                print(d);
+              });            
+            },            
+          ),
+          RoundedButton(colour: Colors.blue,onpressed: (){ 
+              CRUD.updateCapacity((d==null) ? widget.value.floor() : d.floor());
+              Navigator.pop(context);
+              Fluttertoast.showToast(msg: "Capacity Updated");
+            },
+            text: "Confirm Capacity ${(d==null) ? widget.value.floor() : d.floor()}")
+        ],
+      ),      
+    );
+  }
+}

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
   Color golden = Color(0xFFFFD700);
   
   InputDecoration buildLoginInputDecoration(String hintText,IconData icon) {
-    
+        
     return InputDecoration(
               icon: Padding(
                 padding: const EdgeInsets.only(left: 10.0),

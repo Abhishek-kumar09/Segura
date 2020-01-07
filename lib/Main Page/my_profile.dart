@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:segura_manegerial/onpressedevents/crud.dart';
-
+import 'package:segura_manegerial/onpressedevents/modal_bottom_sheet.dart';
 
 
 TextStyle title = TextStyle(fontWeight: FontWeight.w800, fontSize: 25,color: Colors.white70);
 TextStyle bigNumeric = TextStyle(fontWeight: FontWeight.w900, fontSize: 50);
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({@required this.name,@required this.business,this.email ,this.bagCollected,this.earnings,@required this.photo,this.city,this.phone,@required this.shop});
+  const MyProfile({@required this.name,@required this.business,this.email ,this.bagCollected,this.earnings,@required this.photo,this.city,this.phone,@required this.shop,this.capacity});
   final String name;
   final String business;
   final String photo;
@@ -19,6 +19,7 @@ class MyProfile extends StatefulWidget {
   final String phone;
   final String email;
   final String shop;
+  final int capacity;
   @override
   _MyProfileState createState() => _MyProfileState();
 }
@@ -99,6 +100,36 @@ class _MyProfileState extends State<MyProfile> {
             SizedBox(
               height: 12,
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,                  
+                  children: <Widget>[
+                    Center(child: Text("Current Capacity",style: Theme.of(context).textTheme.display2)),
+                    Text('${widget.capacity}',style: Theme.of(context).primaryTextTheme.display2),  
+                    GestureDetector(
+                      child: Container(child: Center(child: Text('Extend Capacity',style: Theme.of(context).primaryTextTheme.display1)),                      
+                      width: double.infinity,
+                      ),
+                      onTap: (){
+                        showModalBottomSheet(
+                        context: context,
+                        builder: (context) => ExtendCapacity(widget.capacity.toDouble()),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40))
+                        ),
+                        elevation: 10,
+                      );},
+                    ),                                     
+                  ],
+                ),
+                height: 200,decoration: BoxDecoration(
+                color: Colors.blue[700],
+                borderRadius: BorderRadius.circular(35),                  
+              ),),
+            ),
+            SizedBox(height: 12),
             StatsCard(
                 colour: Colors.blue[400],
                 title: widget.bagCollected,
@@ -192,7 +223,6 @@ class MyStats extends StatelessWidget {
               margin: EdgeInsets.only(top: 220), 
               padding: EdgeInsets.all(8),              
               child: Column(
-
                  crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -202,7 +232,7 @@ class MyStats extends StatelessWidget {
                   SizedBox(height: 10,),
                   Text(email,style: Theme.of(context).textTheme.subhead),
                   Text(phone,style: Theme.of(context).textTheme.subhead,),
-                  Text('Rating: 🌟️🌟️🌟️🌟️🌟️') ,SizedBox(height: 15)         ,                      
+                  Text('Rating: 🌟️🌟️🌟️🌟️🌟️') ,SizedBox(height: 15),                      
                 ],
               ),
             ),
@@ -217,7 +247,7 @@ class MyStats extends StatelessWidget {
                backgroundColor: Colors.white70,
                mini: true,
                child: Icon(Icons.edit),foregroundColor: Colors.teal[800],),
-               ), 
+               ),
           ],
         ),
       ),

@@ -39,7 +39,8 @@ class _MainPageState extends State<MainPage>
         ),
         actions: [PopupMenuButton<Widget>(
   itemBuilder: (BuildContext context) => <PopupMenuEntry<Widget>>[
-    const PopupMenuItem<Widget>(child: RowWithIcon(icon: Icons.person_outline,text: ' Sign Out',iconSize: 16,colour: Colors.black,))
+    const PopupMenuItem<Widget>(child: 
+    RowWithIcon(icon: Icons.person_outline,text: ' Sign Out',iconSize: 16,colour: Colors.black,))
   ],
 )]   ,
         primary: true,
@@ -52,7 +53,6 @@ class _MainPageState extends State<MainPage>
           indicatorColor: Colors.blue[700], controller: _tabController,
           indicatorSize: TabBarIndicatorSize.tab,
           indicatorWeight: 6,
-          //labelPadding: EdgeInsets.only(bottom: 15,top:25),
           unselectedLabelColor: Colors.lightBlueAccent,
           unselectedLabelStyle:
               TextStyle(fontWeight: FontWeight.bold, shadows: [
@@ -97,7 +97,8 @@ final String phoneNumber;
         final phone = userdetail.data['phone'];
         final email = userdetail.data['email'];
         final shop = userdetail.data['shop'];
-        myprofile =  MyProfile(name: name,photo: photo,business: business,city: city,bagCollected: bagCollected,earnings: earnings,phone: phone,email:email,shop: shop,);
+        final capacity = userdetail.data['capacity'];
+        myprofile =  MyProfile(name: name,photo: photo,business: business,city: city,bagCollected: bagCollected,earnings: earnings,phone: phone,email:email,shop: shop,capacity: capacity,);
         }
         return Scaffold(
             body: myprofile,
