@@ -127,13 +127,14 @@ class CRUD {
     StorageUploadTask uploadTask = storageReference.putFile(_image);
     await uploadTask.onComplete;
     print('File Uploaded');
+    Fluttertoast.showToast(msg: "Image Uploaded");
     storageReference.getDownloadURL().then((fileURL) {
       CRUD.updateImageUrl(fileURL);
     });
   }
     static Future<String> getUploadedImageUrl() async {
     String imageUrl = '';
-    final phone = await AuthCheck.getPhone();
+   try {final phone = await AuthCheck.getPhone();
     final DocumentReference doc = Firestore.instance
         .collection('/owner/$phone/ownerDetails')
         .document('$phone');
@@ -143,7 +144,10 @@ class CRUD {
       }
     }).catchError((e) {
       print(e);
-    });
+    });}
+    catch (e) {
+      Fluttertoast.showToast(msg: "Error Handling Image");
+    }
     return imageUrl;
   }
 

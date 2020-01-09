@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
 import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
+import 'package:segura_manegerial/Main%20Page/my_profile.dart';
 
 class PhoneAuth extends StatelessWidget {
   @override
@@ -61,14 +62,21 @@ class _MyAppPageState extends State<MyAppPage> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return new AlertDialog(
-            shape: Border(bottom: BorderSide(style: BorderStyle.solid,color: Colors.blue,width: 5)),
+            shape: Border(
+                bottom: BorderSide(
+                    style: BorderStyle.solid, color: Colors.blue, width: 5)),
             backgroundColor: Colors.lightBlue[100],
             title: Text('Enter SMS Code'),
             content: Container(
               height: 110,
               child: Column(children: [
                 (errorMessage != ''
-                    ? Center(child: Icon(Icons.warning,color: Colors.yellow,size: 39,))
+                    ? Center(
+                        child: Icon(
+                        Icons.warning,
+                        color: Colors.yellow,
+                        size: 39,
+                      ))
                     : Container()),
                 TextField(
                   textAlign: TextAlign.center,
@@ -92,8 +100,11 @@ class _MyAppPageState extends State<MyAppPage> {
                   _auth.currentUser().then((user) {
                     if (user != null) {
                       Navigator.of(context).pop();
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => EditProfile(user: user)));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => EditProfile(user: user)));
+                          print('user!=null is executed');
                     } else {
+                      print('user == null is executed');
                       signIn();
                     }
                   });
@@ -112,9 +123,11 @@ class _MyAppPageState extends State<MyAppPage> {
       );
       final AuthResult user = await _auth.signInWithCredential(credential);
       final FirebaseUser currentUser = await _auth.currentUser();
+      if(user.additionalUserInfo.isNewUser) print('Its a new User'); else print('Old User');
       assert(user.user.uid == currentUser.uid);
       Navigator.of(context).pop();
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => EditProfile(user: currentUser)));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => EditProfile(user: currentUser)));
     } catch (e) {
       handleError(e);
     }
@@ -131,7 +144,9 @@ class _MyAppPageState extends State<MyAppPage> {
         Navigator.of(context).pop();
         smsOTPDialog(context).then((value) {
           print('verification done');
-        }).catchError((onError){handleError(onError);});
+        }).catchError((onError) {
+          handleError(onError);
+        });
         break;
       default:
         setState(() {
@@ -143,26 +158,39 @@ class _MyAppPageState extends State<MyAppPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+    return Scaffold(      
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Image.asset('assets/seguraWithText.jpeg'),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(8),
               child: Row(
                 children: <Widget>[
-                  Container(decoration: BoxDecoration(border: Border.all(width: 1,color: darkblue,style: BorderStyle.solid)),child: Text("+91")),
+                  Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 2,
+                              color: Colors.blue,
+                              style: BorderStyle.solid)),
+                      child: Text("+91",style: subTextStyle(),)),
                   SizedBox(width: 5),
-                  TextField(
-                    decoration: InputDecoration(
-                        hintText: 'Enter Phone Number'),
-                    onChanged: (value) {
-                      this.phoneNo = "+91$value";
-                    },
+                  Container(
+                    height: 24,
+                    width: 270,
+                    child: TextFormField(style: subTextStyle(),
+                    keyboardType: TextInputType.phone,
+                      decoration: InputDecoration(                        
+                        enabled: true,
+                        hintText: '10 Digit Phone Number',
+                        hintStyle: subTextStyle(),
+                        counterStyle: bigNumeric,
+                        ),
+                      onChanged: (value) {
+                        this.phoneNo = "+91$value";
+                      },
+                    ),
                   ),
                 ],
               ),

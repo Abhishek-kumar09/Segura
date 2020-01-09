@@ -33,9 +33,18 @@ class MyOrders extends StatelessWidget {
               .snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
+              print('no');
               return Center(child: CircularProgressIndicator());
-            }
+            }            
             final orderDetails = snapshot.data.documents;
+            if(orderDetails.length == 0) {
+              return Column(
+                children: <Widget>[
+                  Image.asset('assets/noOrder.jpeg'),
+                  Center(child: Text("Customers will soon reach\n        you through Segura",style:mainTextstyle()))
+                ],
+              );
+            }
             List<SingleOrderCard> list = [];
             for (var order in orderDetails) {
               final nameWidget = SingleOrderCard(

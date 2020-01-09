@@ -22,7 +22,7 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   String name, city, business, alternateNo;
 
-  Future getImageUrl() async {
+  void getImageUrl() async {
     _uploadedImageUrl = await CRUD.getUploadedImageUrl();
     setState(() {
       
