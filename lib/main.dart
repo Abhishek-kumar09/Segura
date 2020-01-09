@@ -18,7 +18,7 @@ void main() {
   String phone = islogged ? await AuthCheck.getPhone() : '';
   print(islogged);
   runApp(MyApp(
-    initialRoute: islogged ? editProfile : loginScreen,
+    initialRoute: islogged ? loginScreen : loginScreen,
     phone: phone,
   ));
   }

@@ -8,8 +8,6 @@ import 'package:segura_manegerial/Main%20Page/main_page.dart';
 import 'package:segura_manegerial/onpressedevents/crud.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-String _uploadedImageUrl = '';
-
 class EditProfile extends StatefulWidget {
   EditProfile({@required this.user});
   //  EditProfile({@required this.googleSignInAccount,@required this.user});
@@ -22,18 +20,19 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   String name, city, business, alternateNo;
+  String photoUrl ='';
 
-  void getImageUrl() async {
-    _uploadedImageUrl = await CRUD.getUploadedImageUrl();
-    setState(() {
+  // void getImageUrl() async {
+  //   _uploadedImageUrl = await CRUD.getUploadedImageUrl();
+  //   setState(() {
       
-    });
-  }
-  @override
-  void initState() {
-    super.initState();
-    getImageUrl();
-  }
+  //   });
+  // }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getImageUrl();
+  // }
   
   @override
   Widget build(BuildContext context) {
@@ -54,12 +53,12 @@ class _EditProfileState extends State<EditProfile> {
                 children: <Widget>[
                   Center(
                       child: Material(
-                          color: Colors.transparent,
-                          borderRadius: BorderRadius.circular(60),
+                          color: Colors.black,                          
+                          borderRadius: BorderRadius.circular(90),
                           elevation: 30,
-                          child: (_uploadedImageUrl != '')
+                          child: (photoUrl != '')
                               ? CachedNetworkImage(
-                                  imageUrl: _uploadedImageUrl,
+                                  imageUrl: photoUrl,
                                   fit: BoxFit.cover,
                                   imageBuilder: (context, imageProvider) =>
                                       Container(
@@ -75,7 +74,7 @@ class _EditProfileState extends State<EditProfile> {
                                     ),
                                   ),
                                   placeholder: (context, url) =>
-                                      CircularProgressIndicator(),
+                                      CircularProgressIndicator(backgroundColor: Colors.white,),
                                   errorWidget: (context, url, error) =>
                                       Icon(Icons.error),
                                 )
@@ -92,13 +91,8 @@ class _EditProfileState extends State<EditProfile> {
                       child: Icon(Icons.edit, color: Colors.white70),
                       onPressed: () async {
                         print('uploading Image...');
-                        var f =await CRUD.uploadImage();
-                        setState(() {
-                          print('insideSetstate');
-                          print(_uploadedImageUrl);
-                          print(f);
-                          print('Out now');
-                        });
+                        photoUrl = await CRUD.getImageOnEditScreen();
+                        setState(() {});
                       },
                     ),
                   ),
@@ -156,7 +150,7 @@ class _EditProfileState extends State<EditProfile> {
                               style: AlertStyle(backgroundColor: Colors.white))
                           .show();
                     } else {
-                      CRUD.setProfile(name, city, business, alternateNo, '',
+                      CRUD.setProfile(name, city, business, alternateNo, photoUrl,
                           'user.email');
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(

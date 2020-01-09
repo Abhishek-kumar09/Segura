@@ -129,12 +129,29 @@ class CRUD {
     print('File Uploaded');
     Fluttertoast.showToast(msg: "Image Uploaded");
     storageReference.getDownloadURL().then((fileURL) {
-      try {
-        CRUD.updateImageUrl(fileURL);
-      } catch (e) {
-        return fileURL;
-      }
+      CRUD.updateImageUrl(fileURL);
+    }).catchError((e){
+      try{Fluttertoast.showToast(msg: e.code);} catch(e){Fluttertoast.showToast(msg : "Error");}
     });
+  }
+
+  static Future<String> getImageOnEditScreen() async {
+    String _url = 'fuck';
+        File _image;
+        await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50)
+        .then((image) {
+          _image =image;
+    });
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('tests/${Path.basename(_image.path)}}');
+        StorageUploadTask uploadTask = storageReference.putFile(_image);
+    await uploadTask.onComplete;
+    Fluttertoast.showToast(msg: "Image Uploaded");
+    await storageReference.getDownloadURL().then((url) {
+      _url =url;
+    }).catchError((e){return '';});
+    return _url;
   }
     static Future<String> getUploadedImageUrl() async {
     String imageUrl = '';

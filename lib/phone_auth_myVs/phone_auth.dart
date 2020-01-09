@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
 import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
+import 'package:segura_manegerial/Main%20Page/main_page.dart';
 import 'package:segura_manegerial/Main%20Page/my_profile.dart';
 
 class PhoneAuth extends StatelessWidget {
@@ -101,7 +102,7 @@ class _MyAppPageState extends State<MyAppPage> {
                     if (user != null) {
                       Navigator.of(context).pop();
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => EditProfile(user: user)));
+                          builder: (context) => MainPage(phone: user.phoneNumber)));
                           print('user!=null is executed');
                     } else {
                       print('user == null is executed');
@@ -123,11 +124,18 @@ class _MyAppPageState extends State<MyAppPage> {
       );
       final AuthResult user = await _auth.signInWithCredential(credential);
       final FirebaseUser currentUser = await _auth.currentUser();
-      if(user.additionalUserInfo.isNewUser) print('Its a new User'); else print('Old User');
       assert(user.user.uid == currentUser.uid);
-      Navigator.of(context).pop();
+      if(user.additionalUserInfo.isNewUser) {
+        print('Its a new User');
+        Navigator.of(context).pop();
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => EditProfile(user: currentUser)));
+        } else{ 
+          print('Old User');
+          Navigator.of(context).pop();
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => MainPage(phone: currentUser.phoneNumber)));
+        }      
     } catch (e) {
       handleError(e);
     }
