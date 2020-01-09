@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
@@ -94,7 +95,7 @@ class SingleOrderCard extends StatelessWidget {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => ExtendedOrderDetail(name: name,noofBags: bagCount,phone: phone,isDone: isDone,isPremium: isPremium,photo: photo,acceptStatus: acceptStatus,)));
           },
-          leading: CircleAvatar(backgroundColor: Color(0xFF000000)),
+          leading: CircleAvatar(backgroundImage: CachedNetworkImageProvider(photo)),
           title: Text(name,style: TextStyle(color: Colors.white)),
           subtitle: Text(phone,style: TextStyle(color: Colors.white),),
           trailing: Text("$bagCount bags"),                 

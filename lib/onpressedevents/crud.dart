@@ -129,7 +129,11 @@ class CRUD {
     print('File Uploaded');
     Fluttertoast.showToast(msg: "Image Uploaded");
     storageReference.getDownloadURL().then((fileURL) {
-      CRUD.updateImageUrl(fileURL);
+      try {
+        CRUD.updateImageUrl(fileURL);
+      } catch (e) {
+        return fileURL;
+      }
     });
   }
     static Future<String> getUploadedImageUrl() async {

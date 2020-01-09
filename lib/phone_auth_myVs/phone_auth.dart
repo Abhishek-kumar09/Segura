@@ -158,62 +158,65 @@ class _MyAppPageState extends State<MyAppPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset('assets/seguraWithText.jpeg'),
-            Padding(
-              padding: EdgeInsets.all(8),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 2,
-                              color: Colors.blue,
-                              style: BorderStyle.solid)),
-                      child: Text("+91",style: subTextStyle(),)),
-                  SizedBox(width: 5),
-                  Container(
-                    height: 24,
-                    width: 270,
-                    child: TextFormField(style: subTextStyle(),
-                    keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(                        
-                        enabled: true,
-                        hintText: '10 Digit Phone Number',
-                        hintStyle: subTextStyle(),
-                        counterStyle: bigNumeric,
-                        ),
-                      onChanged: (value) {
-                        this.phoneNo = "+91$value";
-                      },
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(      
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset('assets/seguraWithText.jpeg'),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 2,
+                                color: Colors.blue,
+                                style: BorderStyle.solid)),
+                        child: Text("+91",style: subTextStyle(),)),
+                    SizedBox(width: 5),
+                    Container(
+                      height: 24,
+                      width: 270,
+                      child: TextFormField(style: subTextStyle(),
+                      keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(                        
+                          enabled: true,
+                          hintText: '10 Digit Phone Number',
+                          hintStyle: subTextStyle(),
+                          counterStyle: bigNumeric,
+                          ),
+                        onChanged: (value) {
+                          this.phoneNo = "+91$value";
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            (errorMessage != ''
-                ? Text(
-                    errorMessage,
-                    style: TextStyle(color: Colors.red),
-                  )
-                : Container()),
-            SizedBox(
-              height: 10,
-            ),
-            RaisedButton(
-              onPressed: () {
-                verifyPhone();
-              },
-              child: Text('Verify'),
-              textColor: Colors.white,
-              elevation: 7,
-              color: Colors.blue,
-            )
-          ],
+              (errorMessage != ''
+                  ? Text(
+                      errorMessage,
+                      style: TextStyle(color: Colors.red),
+                    )
+                  : Container()),
+              SizedBox(
+                height: 10,
+              ),
+              RaisedButton(
+                onPressed: () {
+                  verifyPhone();
+                },
+                child: Text('Verify'),
+                textColor: Colors.white,
+                elevation: 7,
+                color: Colors.blue,
+              )
+            ],
+          ),
         ),
       ),
     );

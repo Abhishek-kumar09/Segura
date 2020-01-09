@@ -39,8 +39,8 @@ class _MainPageState extends State<MainPage>
         ),
         actions: [PopupMenuButton<Widget>(
   itemBuilder: (BuildContext context) => <PopupMenuEntry<Widget>>[
-    const PopupMenuItem<Widget>(child: 
-    RowWithIcon(icon: Icons.person_outline,text: ' Sign Out',iconSize: 16,colour: Colors.black,))
+        const PopupMenuItem<Widget>(child: 
+          RowWithIcon(icon: Icons.person_outline,text: ' Sign Out',iconSize: 16,colour: Colors.black,)),
   ],
 )]   ,
         primary: true,

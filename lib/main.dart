@@ -4,6 +4,7 @@ import 'package:segura_manegerial/Main%20Page/main_page.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 import 'package:segura_manegerial/phone_auth_myVs/homepage.dart';
 import 'package:segura_manegerial/phone_auth_myVs/phone_auth.dart';
+import 'Custom Function And Widgets/Functions.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,17 +18,13 @@ void main() {
   String phone = islogged ? await AuthCheck.getPhone() : '';
   print(islogged);
   runApp(MyApp(
-    initialRoute: islogged ? '/' : '/loginScreen',
+    initialRoute: islogged ? editProfile : loginScreen,
     phone: phone,
   ));
   }
   mainFunction();
 }
 
-const String HomeRoute = '/home';
-const String AboutRoute = '/about';
-const String EpisodesRoute = '/episodes';
-const String EpisodeDetailsRoute = '/episode';
 class MyApp extends StatelessWidget {
   MyApp({@required this.initialRoute, this.phone});
   final String initialRoute;
@@ -44,10 +41,10 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.blue[900]),
       initialRoute: initialRoute,
       routes: {
-        '/': (context) => MainPage(phone: phone),
-       '/homepage': (BuildContext context) => MyHome(),
-         '/e': (context)=> EditProfile(),
-        '/loginScreen': (context) => PhoneAuth()
+        mainScreen: (context) => MainPage(phone: phone),
+       homepage: (BuildContext context) => MyHome(),
+         editProfile: (context)=> EditProfile(),
+        loginScreen: (context) => PhoneAuth()
       },
     );
   }
