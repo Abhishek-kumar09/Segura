@@ -29,7 +29,8 @@ class _MainPageState extends State<MainPage>
 
   void onSelected(choice) async{
   try{await FirebaseAuth.instance.signOut();
-  Navigator.of(context).pushNamedAndRemoveUntil(loginScreen, (Route<dynamic> route)=>false);}
+  Navigator.of(context).pushNamedAndRemoveUntil(loginScreen, (Route<dynamic> route)=>false);
+  Fluttertoast.showToast(msg: "Signed Out");}
   catch (e){
     Fluttertoast.showToast(msg: "Error while SignOut");
   }

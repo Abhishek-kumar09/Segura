@@ -42,12 +42,12 @@ class _EditProfileState extends State<EditProfile> {
         return false;
         },
           child: Scaffold(
-        backgroundColor: Colors.blue[100],
+        backgroundColor: Color(0xffF6F7F9),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView(
             children: <Widget>[
-              SizedBox(height: 50),
+              SizedBox(height: 10),
               Stack(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -55,7 +55,6 @@ class _EditProfileState extends State<EditProfile> {
                       child: Material(
                           color: Colors.black,                          
                           borderRadius: BorderRadius.circular(90),
-                          elevation: 30,
                           child: (photoUrl != '')
                               ? CachedNetworkImage(
                                   imageUrl: photoUrl,
@@ -98,37 +97,36 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ],
               ),
-              SizedBox(height: 48.0),
+              SizedBox(height: 80.0),
               TextFormField(
                   textAlign: TextAlign.center,
                   onChanged: (value) {
                     name = value;
                   },
                   decoration: buildRegisterInputDecoration('Name')),
-              SizedBox(height: 8.0),
+              SizedBox(height: 12.0),
               TextFormField(
                   textAlign: TextAlign.center,
                   onChanged: (value) {
                     business = value;
                   },
                   decoration: buildRegisterInputDecoration('Business')),
-              SizedBox(height: 8.0),
+              SizedBox(height: 12.0),
               TextFormField(
                   textAlign: TextAlign.center,
                   onChanged: (value) {
                     city = value;
                   },
                   decoration: buildRegisterInputDecoration('City')),
-              SizedBox(height: 8.0),
+              SizedBox(height: 12.0),
               TextFormField(
                   textAlign: TextAlign.center,
-                  keyboardType: TextInputType.phone,
                   onChanged: (value) {
                     alternateNo = value;
                   },
                   decoration:
-                      buildRegisterInputDecoration('Alternate Contact No.')),
-              SizedBox(height: 24.0),
+                      buildRegisterInputDecoration('Name of Shop or Hotel')),
+              SizedBox(height: 48.0),
               RoundedButton(
                 colour: Colors.blue,
                 text: "Save Details",
@@ -140,8 +138,7 @@ class _EditProfileState extends State<EditProfile> {
                         business == null ||
                         business == '' ||
                         alternateNo == null ||
-                        alternateNo == '' ||
-                        alternateNo.length != 10) {
+                        alternateNo == '') {
                       Alert(
                               context: context,
                               title: "Segura Says",
