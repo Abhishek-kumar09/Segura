@@ -1,5 +1,6 @@
 //import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +9,7 @@ import 'dart:io';
 class CRUD {
 
   static addOffineCustomer(String name,String phoneNo) async {
-    final _phone = await AuthCheck.getPhone();
+    try{final _phone = await AuthCheck.getPhone();
     final DocumentReference _doc = Firestore.instance
     .collection('/owner/$_phone/myOrders').document(phoneNo);
     Firestore.instance.runTransaction((transaction) async{
@@ -21,7 +22,10 @@ class CRUD {
         'isDone' : false,
         'isPremium' : false,
         });
-    }) ;
+    }) ;}
+    catch(e) {
+      Fluttertoast.showToast(msg: "Error adding Customer");
+    }
   }
 
   static void setProfile(String name, String city, String business,
@@ -123,13 +127,35 @@ class CRUD {
     StorageUploadTask uploadTask = storageReference.putFile(_image);
     await uploadTask.onComplete;
     print('File Uploaded');
+    Fluttertoast.showToast(msg: "Image Uploaded");
     storageReference.getDownloadURL().then((fileURL) {
       CRUD.updateImageUrl(fileURL);
+    }).catchError((e){
+      try{Fluttertoast.showToast(msg: e.code);} catch(e){Fluttertoast.showToast(msg : "Error");}
     });
+  }
+
+  static Future<String> getImageOnEditScreen() async {
+    String _url = 'fuck';
+        File _image;
+        await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50)
+        .then((image) {
+          _image =image;
+    });
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('tests/${Path.basename(_image.path)}}');
+        StorageUploadTask uploadTask = storageReference.putFile(_image);
+    await uploadTask.onComplete;
+    Fluttertoast.showToast(msg: "Image Uploaded");
+    await storageReference.getDownloadURL().then((url) {
+      _url =url;
+    }).catchError((e){return '';});
+    return _url;
   }
     static Future<String> getUploadedImageUrl() async {
     String imageUrl = '';
-    final phone = await AuthCheck.getPhone();
+   try {final phone = await AuthCheck.getPhone();
     final DocumentReference doc = Firestore.instance
         .collection('/owner/$phone/ownerDetails')
         .document('$phone');
@@ -139,8 +165,30 @@ class CRUD {
       }
     }).catchError((e) {
       print(e);
-    });
+    });}
+    catch (e) {
+      Fluttertoast.showToast(msg: "Error Handling Image");
+    }
     return imageUrl;
+  }
+
+  static void updateCapacity(int newCapacity) async{
+     final phone = await AuthCheck.getPhone();
+    final DocumentReference doc = Firestore.instance
+        .collection('/owner/$phone/ownerDetails')
+        .document('$phone');
+    doc
+        .updateData({
+          'capacity' : newCapacity
+        })
+        .timeout(Duration(seconds: 5))
+        .whenComplete(() {
+          print("Capacity updated");
+        })
+        .catchError((e) {
+          print(e);
+          Fluttertoast.showToast(msg: "Network Error");
+        }).whenComplete((){print('object');});
   }
 }
 

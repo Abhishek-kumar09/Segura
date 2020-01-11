@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Login%20And%20Register/registration_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:segura_manegerial/onpressedevents/crud.dart';
-
+import 'package:segura_manegerial/onpressedevents/modal_bottom_sheet.dart';
 
 
 TextStyle title = TextStyle(fontWeight: FontWeight.w800, fontSize: 25,color: Colors.white70);
 TextStyle bigNumeric = TextStyle(fontWeight: FontWeight.w900, fontSize: 50);
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({@required this.name,@required this.business,this.email ,this.bagCollected,this.earnings,@required this.photo,this.city,this.phone,@required this.shop});
+  const MyProfile({@required this.name,@required this.business,this.email ,this.bagCollected,this.earnings,@required this.photo,this.city,this.phone,@required this.shop,this.capacity});
   final String name;
   final String business;
   final String photo;
@@ -19,6 +19,7 @@ class MyProfile extends StatefulWidget {
   final String phone;
   final String email;
   final String shop;
+  final int capacity;
   @override
   _MyProfileState createState() => _MyProfileState();
 }
@@ -41,7 +42,7 @@ class _MyProfileState extends State<MyProfile> {
                 backgroundColor: Colors.teal[800],
                 expandedHeight: 200.0,
                 flexibleSpace: FlexibleSpaceBar(
-                    title: Text(widget.name),
+                    title: Text("${widget.name}"),
                     background: !(widget.photo == null || widget.photo == '') ? CachedNetworkImage(
                                 imageUrl: widget.photo,
                                 fit: BoxFit.cover,
@@ -71,7 +72,7 @@ class _MyProfileState extends State<MyProfile> {
                               ),
                 actions: <Widget>[
                   IconButton(
-                    icon: const Icon(Icons.add_circle),
+                    icon: const Icon(Icons.edit),
                     tooltip: 'Add new entry',
                     onPressed: () async {                    
                       await CRUD.uploadImage();
@@ -89,16 +90,50 @@ class _MyProfileState extends State<MyProfile> {
             SizedBox(
               height: 12,
             ),
-            Text(widget.business, style: title),
-            MyStats(business: widget.business,
+            Text(widget.shop, style: title),
+            MyStats(business: widget.shop,
             city: widget.city,
             phone: widget.phone,
             email: widget.email,
             name: widget.name,
-            shop: widget.shop,),
+            shop: widget.shop,
+            photo: widget.photo,),
             SizedBox(
               height: 12,
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,                  
+                  children: <Widget>[
+                    Center(child: Text("Current Capacity",style: Theme.of(context).textTheme.display2)),
+                    Text('${widget.capacity}',style: Theme.of(context).primaryTextTheme.display2),  
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 50),
+                      child: OutlineButton(
+                        child: Container(child: Center(child: Text('Extend Capacity',style: Theme.of(context).primaryTextTheme.headline)),                      
+                        width: double.infinity,
+                        ),
+                        onPressed: (){
+                          showModalBottomSheet(
+                          context: context,
+                          builder: (context) => ExtendCapacity(widget.capacity.toDouble()),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(40),topRight: Radius.circular(40))
+                          ),
+                          elevation: 10,
+                        );},
+                      ),
+                    ),                                     
+                  ],
+                ),
+                height: 200,decoration: BoxDecoration(
+                color: Colors.blue[700],
+                borderRadius: BorderRadius.circular(35),                  
+              ),),
+            ),
+            SizedBox(height: 12),
             StatsCard(
                 colour: Colors.blue[400],
                 title: widget.bagCollected,
@@ -154,10 +189,9 @@ class StatsCard extends StatelessWidget {
 }
 
 class MyStats extends StatelessWidget {
-  const MyStats({this.business,this.city,this.email,this.phone,@required this.name,this.shop})
+  const MyStats({this.business,this.city,this.email,this.phone,@required this.name,this.shop,this.photo})
   :assert(business != null),
   assert(city != null),
-  assert(email != null),
   assert(phone != null);
   final String business;
   final String city;
@@ -165,6 +199,7 @@ class MyStats extends StatelessWidget {
   final String phone;
   final String email;
   final String shop;
+  final String photo;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -182,8 +217,10 @@ class MyStats extends StatelessWidget {
               clipper: BottomLineClipper(),
               child: Container(                
                 //color: Colors.deepPurpleAccent,
+                height: 220,
+                width: double.infinity,
                 child: Image.network(
-                      "https://cdn.vox-cdn.com/thumbor/wI3iu8sNbFJSQB4yMLsoPMNzIHU=/0x0:3368x3368/1200x800/filters:focal(1188x715:1726x1253)/cdn.vox-cdn.com/uploads/chorus_image/image/62994726/AJ_Finn_author_photo_color_photo_courtesy_of_the_author.0.jpg",
+                      "https://qph.fs.quoracdn.net/main-qimg-88acf2e17201a239a333cbc78bef1be5",
                       fit: BoxFit.cover,
                   ),
               ),              
@@ -192,7 +229,6 @@ class MyStats extends StatelessWidget {
               margin: EdgeInsets.only(top: 220), 
               padding: EdgeInsets.all(8),              
               child: Column(
-
                  crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -200,9 +236,9 @@ class MyStats extends StatelessWidget {
                   SizedBox(height: 10,),
                   Text("in $city",style: title),
                   SizedBox(height: 10,),
-                  Text(email,style: Theme.of(context).textTheme.subhead),
+                  Text("Indulged in $business",style: Theme.of(context).textTheme.subhead),
                   Text(phone,style: Theme.of(context).textTheme.subhead,),
-                  Text('Rating: 🌟️🌟️🌟️🌟️🌟️') ,SizedBox(height: 15)         ,                      
+                  Text('Rating: 🌟️🌟️🌟️🌟️🌟️') ,SizedBox(height: 15),                      
                 ],
               ),
             ),
@@ -212,12 +248,12 @@ class MyStats extends StatelessWidget {
              left: 280,             
              child: FloatingActionButton(
                onPressed: (){ 
-                 Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen(business: business,city: city,name: name,shop: shop,)));
+                 Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrationScreen(business: business,city: city,name: name,shop: shop,photo: photo,)));
                },
                backgroundColor: Colors.white70,
                mini: true,
                child: Icon(Icons.edit),foregroundColor: Colors.teal[800],),
-               ), 
+               ),
           ],
         ),
       ),

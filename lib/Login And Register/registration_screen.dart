@@ -5,12 +5,13 @@ import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  RegistrationScreen({this.name, this.city, this.business, this.shop});
+  RegistrationScreen({this.name, this.city, this.business, this.shop,this.photo});
   
   final String name;
   final String city;
   final String business;
   final String shop;
+  final String photo;
   static String id = 'RegistrationScreen';
 
   @override
@@ -26,7 +27,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String labelFirstName = "FirstName";
   String labelCity = "Enter City you have shop in";
   String labelShopName = "Enter Shop Name";
-  String photoUrl; //TODO: work on it
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +44,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: CircleAvatar(
                         minRadius: 30,
                         maxRadius: 60,
-                        backgroundImage: NetworkImage(
-                            'https://cdn.vox-cdn.com/thumbor/wI3iu8sNbFJSQB4yMLsoPMNzIHU=/0x0:3368x3368/1200x800/filters:focal(1188x715:1726x1253)/cdn.vox-cdn.com/uploads/chorus_image/image/62994726/AJ_Finn_author_photo_color_photo_courtesy_of_the_author.0.jpg'))),
+                        backgroundImage: (widget.photo == null || widget.photo == '') ? AssetImage('assets/defaultUser.png'): NetworkImage(
+                          widget.photo,                      
+                  ))),
                 SizedBox(height: 48.0),
                 TextFormField(
                     initialValue: widget.name,
