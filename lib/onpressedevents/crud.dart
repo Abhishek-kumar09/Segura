@@ -29,7 +29,7 @@ class CRUD {
   }
 
   static void setProfile(String name, String city, String business,
-      String altPhone, String imageURL, String email) async {
+      String shop, String imageURL, String email) async {
     final phone = await AuthCheck.getPhone();
     final DocumentReference doc = Firestore.instance
         .collection('/owner/$phone/ownerDetails')
@@ -37,7 +37,7 @@ class CRUD {
     doc.setData({
       'name': name,
       'city': city,
-      'altphone': altPhone,
+      'shop': shop,
       'business': business,
       'imageURL': imageURL,
       'earning': 0,

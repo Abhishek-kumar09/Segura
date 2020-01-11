@@ -2,9 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
+import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
 import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
-import 'package:segura_manegerial/Main%20Page/my_profile.dart';
+
+TextStyle otpStyle = TextStyle(
+    fontSize: 34,
+    letterSpacing: 15,
+    fontWeight: FontWeight.bold,
+    color: Color(0xff54B24D));
+
+TextStyle phoneInput = TextStyle(
+    color: Colors.blue, fontWeight: FontWeight.bold,letterSpacing: 2);
 
 class PhoneAuth extends StatelessWidget {
   @override
@@ -58,60 +67,74 @@ class _MyAppPageState extends State<MyAppPage> {
   }
 
   Future<bool> smsOTPDialog(BuildContext context) {
-    return showDialog(
+    return showModalBottomSheet(
         context: context,
-        barrierDismissible: false,
+        isScrollControlled: true,
+        // barrierDismissible: false,
         builder: (BuildContext context) {
-          return new AlertDialog(
-            shape: Border(
-                bottom: BorderSide(
-                    style: BorderStyle.solid, color: Colors.blue, width: 5)),
-            backgroundColor: Colors.lightBlue[100],
-            title: Text('Enter SMS Code'),
-            content: Container(
-              height: (errorMessage != null || errorMessage != '') ? 150 : 110,
-              child: Column(children: [
-                (errorMessage != ''
-                    ? Center(
-                        child: Icon(
-                        Icons.warning,
-                        color: Colors.yellow,
-                        size: 39,
-                      ))
-                    : Container()),
-                TextField(
-                  textAlign: TextAlign.center,
-                  onChanged: (value) {
-                    this.smsOTP = value;
-                  },
+          return Padding(
+            padding: MediaQuery.of(context).viewInsets,
+            child: Container(
+              color: Colors.white,
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                        height: 120,
+                        color: Colors.white,
+                        child: Image.asset('assets/otp-sms.png')),
+                    (errorMessage != ''
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              errorMessage,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        : Container()),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: TextFormField(
+                        keyboardType: TextInputType.phone,
+                        autofocus: true,
+                        textAlign: TextAlign.center,
+                        maxLength: 6,
+                        style: otpStyle,
+                        cursorColor: Color(0xff54B24D),
+                        onChanged: (value) {
+                          this.smsOTP = value;
+                        },
+                      ),
+                    ),
+                    FlatButton(
+                      child: Text('Done',style: TextStyle(color: Color(0xff54B24D)),),
+                      onPressed: () {
+                        _auth.currentUser().then((user) {
+                          if (user != null) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        MainPage(phone: user.phoneNumber)));
+                            print('user!=null is executed');
+                          } else {
+                            print('user == null is executed');
+                            signIn();
+                          }
+                        });
+                      },
+                    )
+                  ],
                 ),
-                (errorMessage != ''
-                    ? Text(
-                        errorMessage,
-                        style: TextStyle(color: Colors.red),
-                      )
-                    : Container())
-              ]),
+              ),
             ),
-            contentPadding: EdgeInsets.all(10),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Done'),
-                onPressed: () {
-                  _auth.currentUser().then((user) {
-                    if (user != null) {
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => MainPage(phone: user.phoneNumber)));
-                          print('user!=null is executed');
-                    } else {
-                      print('user == null is executed');
-                      signIn();
-                    }
-                  });
-                },
-              )
-            ],
           );
         });
   }
@@ -125,17 +148,17 @@ class _MyAppPageState extends State<MyAppPage> {
       final AuthResult user = await _auth.signInWithCredential(credential);
       final FirebaseUser currentUser = await _auth.currentUser();
       assert(user.user.uid == currentUser.uid);
-      if(user.additionalUserInfo.isNewUser) {
+      if (user.additionalUserInfo.isNewUser) {
         print('Its a new User');
         Navigator.of(context).pop();
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => EditProfile(user: currentUser)));
-        } else{ 
-          print('Old User');
-          Navigator.of(context).pop();
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => MainPage(phone: currentUser.phoneNumber)));
-        }      
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => EditProfile(user: currentUser)));
+      } else {
+        print('Old User');
+        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => MainPage(phone: currentUser.phoneNumber)));
+      }
     } catch (e) {
       handleError(e);
     }
@@ -168,7 +191,7 @@ class _MyAppPageState extends State<MyAppPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(      
+      child: Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -176,24 +199,25 @@ class _MyAppPageState extends State<MyAppPage> {
               Image.asset('assets/seguraWithText.jpeg'),
               Padding(
                 padding: EdgeInsets.all(8),
-                child:                     
-                    Container(
-                      height: 45,
-                      width: 270,
-                      child: TextFormField(
-                      keyboardType: TextInputType.phone,
-                        decoration: 
-                        buildLoginInputDecoration("10 Digit Mobile no.", Icons.phone),
-                        // InputDecoration(                       
-                        //   enabled: true,
-                        //   hintText: '10 Digit Phone Number',
-                        //   hintStyle: subTextStyle(),
-                        //   counterStyle: bigNumeric,
-                        //   ),
-                        onChanged: (value) {
-                          this.phoneNo = "+91$value";
-                        },
-                      ),                    
+                child: Container(
+                  height: 100,
+                  width: 350,
+                  child: TextFormField(                    
+                    maxLength: 10,
+                    style: phoneInput,
+                    keyboardType: TextInputType.phone,
+                    decoration: buildLoginInputDecoration(
+                        "10 Digit Mobile No.", Icons.phone),
+                    // InputDecoration(
+                    //   enabled: true,
+                    //   hintText: '10 Digit Phone Number',
+                    //   hintStyle: subTextStyle(),
+                    //   counterStyle: bigNumeric,
+                    //   ),
+                    onChanged: (value) {
+                      this.phoneNo = "+91$value";
+                    },
+                  ),
                 ),
               ),
               (errorMessage != ''
@@ -205,14 +229,12 @@ class _MyAppPageState extends State<MyAppPage> {
               SizedBox(
                 height: 10,
               ),
-              RaisedButton(
-                onPressed: () {
+              RoundedButton(
+                onpressed: () {
                   verifyPhone();
                 },
-                child: Text('Verify'),
-                textColor: Colors.white,
-                elevation: 7,
-                color: Colors.blue,
+                text: "Send OTP",
+                colour: Colors.blue,
               )
             ],
           ),
@@ -221,3 +243,55 @@ class _MyAppPageState extends State<MyAppPage> {
     );
   }
 }
+
+// return new AlertDialog(
+//             shape: Border(
+//                 bottom: BorderSide(
+//                     style: BorderStyle.solid, color: Colors.blue, width: 5)),
+//             backgroundColor: Colors.lightBlue[100],
+//             title: Text('Enter SMS Code'),
+//             content: Container(
+//               height: (errorMessage != null || errorMessage != '') ? 150 : 110,
+//               child: Column(children: [
+//                 (errorMessage != ''
+//                     ? Center(
+//                         child: Icon(
+//                         Icons.warning,
+//                         color: Colors.yellow,
+//                         size: 39,
+//                       ))
+//                     : Container()),
+//                 TextField(
+//                   textAlign: TextAlign.center,
+//                   onChanged: (value) {
+//                     this.smsOTP = value;
+//                   },
+//                 ),
+//                 (errorMessage != ''
+//                     ? Text(
+//                         errorMessage,
+//                         style: TextStyle(color: Colors.red),
+//                       )
+//                     : Container())
+//               ]),
+//             ),
+//             contentPadding: EdgeInsets.all(10),
+//             actions: <Widget>[
+//               FlatButton(
+//                 child: Text('Done'),
+//                 onPressed: () {
+//                   _auth.currentUser().then((user) {
+//                     if (user != null) {
+//                       Navigator.of(context).pop();
+//                       Navigator.of(context).pushReplacement(MaterialPageRoute(
+//                           builder: (context) => MainPage(phone: user.phoneNumber)));
+//                           print('user!=null is executed');
+//                     } else {
+//                       print('user == null is executed');
+//                       signIn();
+//                     }
+//                   });
+//                 },
+//               )
+//             ],
+//           );
