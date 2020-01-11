@@ -69,7 +69,7 @@ class _MyAppPageState extends State<MyAppPage> {
             backgroundColor: Colors.lightBlue[100],
             title: Text('Enter SMS Code'),
             content: Container(
-              height: 110,
+              height: (errorMessage != null || errorMessage != '') ? 150 : 110,
               child: Column(children: [
                 (errorMessage != ''
                     ? Center(
@@ -176,33 +176,24 @@ class _MyAppPageState extends State<MyAppPage> {
               Image.asset('assets/seguraWithText.jpeg'),
               Padding(
                 padding: EdgeInsets.all(8),
-                child: Row(
-                  children: <Widget>[
+                child:                     
                     Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 2,
-                                color: Colors.blue,
-                                style: BorderStyle.solid)),
-                        child: Text("+91",style: subTextStyle(),)),
-                    SizedBox(width: 5),
-                    Container(
-                      height: 24,
+                      height: 45,
                       width: 270,
-                      child: TextFormField(style: subTextStyle(),
+                      child: TextFormField(
                       keyboardType: TextInputType.phone,
-                        decoration: InputDecoration(                        
-                          enabled: true,
-                          hintText: '10 Digit Phone Number',
-                          hintStyle: subTextStyle(),
-                          counterStyle: bigNumeric,
-                          ),
+                        decoration: 
+                        buildLoginInputDecoration("10 Digit Mobile no.", Icons.phone),
+                        // InputDecoration(                       
+                        //   enabled: true,
+                        //   hintText: '10 Digit Phone Number',
+                        //   hintStyle: subTextStyle(),
+                        //   counterStyle: bigNumeric,
+                        //   ),
                         onChanged: (value) {
                           this.phoneNo = "+91$value";
                         },
-                      ),
-                    ),
-                  ],
+                      ),                    
                 ),
               ),
               (errorMessage != ''

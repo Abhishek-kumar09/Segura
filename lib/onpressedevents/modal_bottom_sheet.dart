@@ -124,18 +124,18 @@ class _ExtendCapacityState extends State<ExtendCapacity> {
       height: 200,
       child: Container(
         decoration: BoxDecoration(
-                border: Border.all(color: Colors.white10, width: 3),
+                border: Border.all(color: Colors.white60, width: 3),
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30)),
-                color: darkblue),
+                color: Colors.blue[200]),
               child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Slider(
               min: (widget.value - 30) > 0 ? widget.value -30 : 0,
               max: widget.value + 30,
-              activeColor: Colors.blue,
+              activeColor: Colors.blue[700],
               inactiveColor: Colors.grey,
               label: (d == null) ? widget.value.floor().toString(): d.floor().toString(), 
               divisions: 12,       

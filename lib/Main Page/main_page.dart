@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
 import 'package:segura_manegerial/Main%20Page/my_orders.dart';
 import 'package:segura_manegerial/Main%20Page/my_profile.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({@required this.phone});
@@ -25,6 +27,13 @@ class _MainPageState extends State<MainPage>
     )..addListener(() {});
   }
 
+  void onSelected(choice) async{
+  try{await FirebaseAuth.instance.signOut();
+  Navigator.of(context).pushNamedAndRemoveUntil(loginScreen, (Route<dynamic> route)=>false);}
+  catch (e){
+    Fluttertoast.showToast(msg: "Error while SignOut");
+  }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +46,13 @@ class _MainPageState extends State<MainPage>
           padding: const EdgeInsets.all(10.0),
           child: CircleAvatar(backgroundImage: AssetImage('assets/logo1.png'),backgroundColor: Colors.white,)
         ),
-        actions: [PopupMenuButton<Widget>(
-  itemBuilder: (BuildContext context) => <PopupMenuEntry<Widget>>[
-        const PopupMenuItem<Widget>(child: 
+        actions: [
+          PopupMenuButton<String>(
+            onSelected: onSelected,
+  itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+        const PopupMenuItem<String>(
+          value: "signOut",
+          child: 
           RowWithIcon(icon: Icons.person_outline,text: ' Sign Out',iconSize: 16,colour: Colors.black,)),
   ],
 )]   ,
@@ -73,6 +86,7 @@ class _MainPageState extends State<MainPage>
     );
   }  
 }
+
 
 
 

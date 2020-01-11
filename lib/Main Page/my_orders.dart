@@ -1,6 +1,8 @@
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
 import 'package:segura_manegerial/onpressedevents/extended_order_details.dart';
 import 'package:segura_manegerial/onpressedevents/modal_bottom_sheet.dart';
@@ -33,16 +35,27 @@ class MyOrders extends StatelessWidget {
               .collection('/owner/$phoneNumber/myOrders')
               .snapshots(),
           builder: (context, snapshot) {
+            if(snapshot.connectionState == ConnectionState.none) {
+              Fluttertoast.showToast(msg: "NO INTERNET");                            
+            } 
             if (!snapshot.hasData) {
               print('no');
               return Center(child: CircularProgressIndicator());
-            }            
+            } 
             final orderDetails = snapshot.data.documents;
+            
             if(orderDetails.length == 0) {
               return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Image.asset('assets/noOrder.jpeg'),
-                  Center(child: Text("Customers will soon reach\n        you through Segura",style:mainTextstyle()))
+                  Container(
+                    height: MediaQuery.of(context).size.height/3,
+                    child: Image.asset('assets/rsznoorder.jpg')),
+                  Center(
+                    child: Text("Customers will soon reach\n        you through Segura",style:TextStyle(
+                    color: Colors.grey,
+                    fontSize: 20
+                  )))
                 ],
               );
             }
