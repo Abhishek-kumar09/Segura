@@ -7,20 +7,16 @@ import 'Custom Function And Widgets/Functions.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  // SplashScreen(
-  //   backgroundColor: Colors.blue[900],seconds: 5,image: Image.asset('assets/logo1.png'),
-  // loadingText: Text('Welcome To Segura /n Your Luggage our Segurity'),
-  // loaderColor: Colors.amber,title: Text("Manager in Segura"),
-  // );
   void mainFunction() async {
-  final bool islogged = await AuthCheck.isLogged();
-  String phone = islogged ? await AuthCheck.getPhone() : '';
-  print(islogged);
-  runApp(MyApp(
-    initialRoute: islogged ? loginScreen : loginScreen,
-    phone: phone,
-  ));
+    final bool islogged = await AuthCheck.isLogged();
+    String phone = islogged ? await AuthCheck.getPhone() : '';
+    print(islogged);
+    runApp(MyApp(
+      initialRoute: islogged ? loginScreen : loginScreen,
+      phone: phone,
+    ));
   }
+
   mainFunction();
 }
 
@@ -28,7 +24,7 @@ class MyApp extends StatelessWidget {
   MyApp({@required this.initialRoute, this.phone});
   final String initialRoute;
   final String phone;
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,7 +37,7 @@ class MyApp extends StatelessWidget {
       initialRoute: initialRoute,
       routes: {
         mainScreen: (context) => MainPage(phone: phone),
-       homepage: (BuildContext context) => MyHome(),
+        homepage: (BuildContext context) => MyHome(),
         // editProfile: (context)=> EditProfile(),
         loginScreen: (context) => PhoneAuth()
       },

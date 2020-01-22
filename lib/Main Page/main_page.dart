@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
+import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
 import 'package:segura_manegerial/Main%20Page/my_orders.dart';
 import 'package:segura_manegerial/Main%20Page/my_profile.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:segura_manegerial/onpressedevents/crud.dart';
+import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({@required this.phone});
@@ -18,6 +21,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  FirebaseUser appuser;
   @override
   void initState() {
     super.initState();
@@ -25,6 +29,12 @@ class _MainPageState extends State<MainPage>
       vsync: this,
       length: 2,
     )..addListener(() {});
+    getUser();
+  }
+
+  void getUser() async {
+    appuser = await AuthCheck.getUser();
+    setState(() {});
   }
 
   void onSelected(choice) async{
@@ -81,7 +91,7 @@ class _MainPageState extends State<MainPage>
         controller: _tabController,
         children: <Widget>[
           MyOrders(phoneNumber: widget.phone,),
-          ProfileBuider(widget.phone)         
+          ProfileBuider(widget.phone,appuser)         
         ],
       ),
     );
@@ -92,8 +102,9 @@ class _MainPageState extends State<MainPage>
 
 
 class ProfileBuider extends StatelessWidget {
-  ProfileBuider(this.phoneNumber);
+  ProfileBuider(this.phoneNumber,this.user);
 final String phoneNumber;
+final FirebaseUser user;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -101,6 +112,11 @@ final String phoneNumber;
       builder: (context, snapshot) {
         if(!snapshot.hasData) {return Center(child: CircularProgressIndicator(backgroundColor: Colors.pink,));}
         final userdetails = snapshot.data.documents;
+        if(userdetails.length == 0) {
+          return Scaffold(
+            body: EditProfile(user: user),
+          );
+        }
         Widget myprofile;
         for(var userdetail in userdetails) {
         final name = userdetail.data['name'].toString();        

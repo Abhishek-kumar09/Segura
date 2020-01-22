@@ -50,7 +50,7 @@ class _MyProfileState extends State<MyProfile> {
                                     Container(
                                   height: 140,
                                   width: 140,
-                                  decoration: BoxDecoration(                                    
+                                  decoration: BoxDecoration(                                 
                                     image: DecorationImage(
                                         image: imageProvider,
                                         fit: BoxFit.cover,

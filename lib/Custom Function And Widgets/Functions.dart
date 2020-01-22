@@ -59,10 +59,10 @@ InputDecoration buildRegisterInputDecoration(String labelText) {
 }
 
 TextStyle mainTextstyle() =>
-    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 34);
+    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 30);
 
 TextStyle subTextStyle() => TextStyle(
-    color: Colors.blue[900], fontWeight: FontWeight.normal, fontSize: 26);
+    color: Colors.blue[900], fontWeight: FontWeight.w600, fontSize: 24);
 
 BoxDecoration boxDecoration() {
   return BoxDecoration(

@@ -32,7 +32,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ModalProgressHUD(
+      body: ModalProgressHUD(        
         inAsyncCall: showSpinner,
         child: Padding(
           padding: EdgeInsets.only(top: 10.0, left: 18.0, right: 18.0),

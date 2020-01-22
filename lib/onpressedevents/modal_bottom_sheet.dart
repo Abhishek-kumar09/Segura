@@ -35,6 +35,8 @@ class _AddOfflineCustomerState extends State<AddOfflineCustomer> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  Text("Offline Customer",style: mainTextstyle()),
+                  SizedBox(height: 10),
                   Text(
                     'Name',
                     style: mainTextstyle(),
