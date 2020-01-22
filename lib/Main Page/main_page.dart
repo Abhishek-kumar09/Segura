@@ -8,7 +8,6 @@ import 'package:segura_manegerial/Main%20Page/my_orders.dart';
 import 'package:segura_manegerial/Main%20Page/my_profile.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:segura_manegerial/onpressedevents/crud.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 
 class MainPage extends StatefulWidget {
