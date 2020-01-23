@@ -18,7 +18,7 @@ class CRUD {
         'customerPhone' : phoneNo,
         'noOfBags' : 1,
         'acceptStatus' :true,
-        'photoUrl' : "https://firebasestorage.googleapis.com/v0/b/seguraforowner.appspot.com/o/iron-man-1366x768-hd-4k-16426.jpg?alt=media&token=99a59d85-9f94-40c1-91f2-422d383e2baf",
+        'photoUrl' : "https://firebasestorage.googleapis.com/v0/b/seguraforowner.appspot.com/o/user-1633249_640.png?alt=media&token=78e04f09-77a5-4556-b833-d73c1904ea2c",
         'isDone' : false,
         'isPremium' : false,
         });

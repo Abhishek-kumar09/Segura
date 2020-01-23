@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/onpressedevents/crud.dart';
 import '../Custom Function And Widgets/Widgets.dart';
@@ -32,7 +33,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ModalProgressHUD(
+      body: ModalProgressHUD(        
         inAsyncCall: showSpinner,
         child: Padding(
           padding: EdgeInsets.only(top: 10.0, left: 18.0, right: 18.0),
@@ -44,8 +45,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: CircleAvatar(
                         minRadius: 30,
                         maxRadius: 60,
-                        backgroundImage: (widget.photo == null || widget.photo == '') ? AssetImage('assets/defaultUser.png'): NetworkImage(
-                          widget.photo,                      
+                        backgroundImage: (widget.photo == null || widget.photo == '') ? AssetImage('assets/defaultUser.png'): CachedNetworkImage(
+                          imageUrl: widget.photo,
                   ))),
                 SizedBox(height: 48.0),
                 TextFormField(

@@ -1,4 +1,5 @@
 # Miscellaneous
+android/app/src/main/AndroidManifest.xml
 *.class
 *.log
 *.pyc
@@ -8,6 +9,11 @@
 .buildlog/
 .history
 .svn/
+
+
+
+
+
 
 # IntelliJ related
 *.iml
@@ -28,7 +34,6 @@
 .pub-cache/
 .pub/
 /build/
-
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -37,6 +42,7 @@
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
+**/android/app/src/main/AndroidMenifest.xml
 
 # iOS/XCode related
 **/ios/**/*.mode1v3

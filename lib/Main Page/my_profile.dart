@@ -26,19 +26,12 @@ class MyProfile extends StatefulWidget {
 
 
 class _MyProfileState extends State<MyProfile> {
-  // @override
-  // void initState() {
-  //   RegistrationDataBase.getUserInfo();
-  //   super.initState();
-  // }
-  
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[           
-            SliverAppBar(
-                //pinned: true,
+            SliverAppBar(              
                 backgroundColor: Colors.teal[800],
                 expandedHeight: 200.0,
                 flexibleSpace: FlexibleSpaceBar(
@@ -50,7 +43,7 @@ class _MyProfileState extends State<MyProfile> {
                                     Container(
                                   height: 140,
                                   width: 140,
-                                  decoration: BoxDecoration(                                    
+                                  decoration: BoxDecoration(                                 
                                     image: DecorationImage(
                                         image: imageProvider,
                                         fit: BoxFit.cover,
@@ -77,9 +70,6 @@ class _MyProfileState extends State<MyProfile> {
                     onPressed: () async {                    
                       await CRUD.uploadImage();
                       setState(() {});
-                      // GoogleSignInAccount g =await Globalk.getGoogleUser();
-                      // print(g.email);
-                      //print(Globalk.firebaseUser);
                     },
                   ),
                 ]),

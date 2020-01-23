@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Functions.dart';
 import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
 import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
@@ -31,6 +33,7 @@ class MyAppPage extends StatefulWidget {
 }
 
 class _MyAppPageState extends State<MyAppPage> {
+  bool isLoading = false;
   String phoneNo;
   String smsOTP;
   String verificationId;
@@ -113,7 +116,7 @@ class _MyAppPageState extends State<MyAppPage> {
                         },
                       ),
                     ),
-                    FlatButton(
+                    FlatButton(                      
                       child: Text('Done',style: TextStyle(color: Color(0xff54B24D)),),
                       onPressed: () {
                         _auth.currentUser().then((user) {
@@ -128,6 +131,9 @@ class _MyAppPageState extends State<MyAppPage> {
                             print('user == null is executed');
                             signIn();
                           }
+                        }).catchError((error) {
+                          Fluttertoast.showToast(msg: error.toString());
+                          Navigator.of(context).pop();
                         });
                       },
                     )
@@ -191,52 +197,59 @@ class _MyAppPageState extends State<MyAppPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Image.asset('assets/seguraWithText.jpeg'),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: Container(
-                  height: 100,
-                  width: 350,
-                  child: TextFormField(                    
-                    maxLength: 10,
-                    style: phoneInput,
-                    keyboardType: TextInputType.phone,
-                    decoration: buildLoginInputDecoration(
-                        "10 Digit Mobile No.", Icons.phone),
-                    // InputDecoration(
-                    //   enabled: true,
-                    //   hintText: '10 Digit Phone Number',
-                    //   hintStyle: subTextStyle(),
-                    //   counterStyle: bigNumeric,
-                    //   ),
-                    onChanged: (value) {
-                      this.phoneNo = "+91$value";
-                    },
+      child: ModalProgressHUD(
+        inAsyncCall: isLoading,
+              child: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Image.asset('assets/seguraWithText.jpeg'),
+                Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Container(
+                    height: 100,
+                    width: 350,
+                    child: TextFormField(                    
+                      maxLength: 10,
+                      style: phoneInput,
+                      keyboardType: TextInputType.phone,
+                      decoration: buildLoginInputDecoration(
+                          "10 Digit Mobile No.", Icons.phone),
+                      // InputDecoration(
+                      //   enabled: true,
+                      //   hintText: '10 Digit Phone Number',
+                      //   hintStyle: subTextStyle(),
+                      //   counterStyle: bigNumeric,
+                      //   ),
+                      onChanged: (value) {
+                        this.phoneNo = "+91$value";
+                      },
+                    ),
                   ),
                 ),
-              ),
-              (errorMessage != ''
-                  ? Text(
-                      errorMessage,
-                      style: TextStyle(color: Colors.red),
-                    )
-                  : Container()),
-              SizedBox(
-                height: 10,
-              ),
-              RoundedButton(
-                onpressed: () {
-                  verifyPhone();
-                },
-                text: "Send OTP",
-                colour: Colors.blue,
-              )
-            ],
+                (errorMessage != ''
+                    ? Text(
+                        errorMessage,
+                        style: TextStyle(color: Colors.red),
+                      )
+                    : Container()),
+                SizedBox(
+                  height: 10,
+                ),
+                RoundedButton(
+                  onpressed: () {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    verifyPhone();
+                    
+                  },
+                  text: "Send OTP",
+                  colour: Colors.blue,
+                )
+              ],
+            ),
           ),
         ),
       ),

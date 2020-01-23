@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -84,8 +83,7 @@ class SingleOrderCard extends StatelessWidget {
   SingleOrderCard({Key key, this.name, this.phone, this.bagCount,this.isPremium,this.isDone,this.photo,this.acceptStatus})
       : assert(name != null),
         assert(phone != null);
-  //assert(bagCount != null);
-  
+
   final String phone;
   final String name;
   final int bagCount;
@@ -108,7 +106,7 @@ class SingleOrderCard extends StatelessWidget {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => ExtendedOrderDetail(name: name,noofBags: bagCount,phone: phone,isDone: isDone,isPremium: isPremium,photo: photo,acceptStatus: acceptStatus,)));
           },
-          leading: CircleAvatar(backgroundImage: CachedNetworkImageProvider(photo)),
+          leading: CircleAvatar(backgroundImage: CachedNetworkImageProvider(photo),backgroundColor: Colors.blue[100],),
           title: Text(name,style: TextStyle(color: Colors.white)),
           subtitle: Text(phone,style: TextStyle(color: Colors.white),),
           trailing: Text("$bagCount bags"),                 
