@@ -8,6 +8,14 @@ import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart
 import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
 
+
+TextStyle otpStyle2 = TextStyle(
+    fontSize: 24,
+    letterSpacing: 15,
+    fontWeight: FontWeight.bold,
+    color: Colors.blueAccent);
+
+
 TextStyle otpStyle = TextStyle(
     fontSize: 34,
     letterSpacing: 15,
