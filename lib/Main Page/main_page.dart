@@ -138,18 +138,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GradientAppBar(
-        gradient: LinearGradient(
-            colors: [Colors.blue[800], darkblue],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight),
-        elevation: 10,
-        primary: true,
-        centerTitle: true,
-        title: Text(
-          'SEGURA OWNER'
-        ),
-      ),
+      appBar: buildGradientAppBar(),
       drawer: Drawer(
         elevation: 20,
         child: Column(
@@ -217,6 +206,21 @@ class _MainPageState extends State<MainPage> {
       ),
       body: MyOrders(
         phoneNumber: widget.phone,
+      ),
+    );
+  }
+
+  GradientAppBar buildGradientAppBar() {
+    return GradientAppBar(
+      gradient: LinearGradient(
+          colors: [Colors.blue[800], darkblue],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight),
+      elevation: 10,
+      primary: true,
+      centerTitle: true,
+      title: Text(
+        'SEGURA OWNER'
       ),
     );
   }
