@@ -14,47 +14,49 @@ class MyOrders extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
+          onPressed: () {
             //showModalBottomSheet(context: context,builder: (context) => AddOfflineCustomer() );
             showModalBottomSheet<void>(
-  isScrollControlled: true,
-  context: context,
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(40.0),
-        topRight: Radius.circular(40.0)),
-  ),
-  builder: (BuildContext context) => AddOfflineCustomer()
-);
-        },
-        splashColor: Colors.teal[800],
-        backgroundColor: Colors.green,elevation: 10,child: Icon(Icons.add,color: Colors.green[900],size: iconSize),mini: true,tooltip: "Tap to add customers"),
-          body: StreamBuilder<QuerySnapshot>(
+                isScrollControlled: true,
+                context: context,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40.0),
+                      topRight: Radius.circular(40.0)),
+                ),
+                builder: (BuildContext context) => AddOfflineCustomer());
+          },
+          splashColor: Colors.white,
+          backgroundColor: Colors.blue,
+          elevation: 10,
+          child: Icon(Icons.add, color: Colors.green[900], size: iconSize),
+          mini: true,
+          tooltip: "Tap to add customers"),
+      body: StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance
               .collection('/owner/$phoneNumber/myOrders')
               .snapshots(),
           builder: (context, snapshot) {
-            if(snapshot.connectionState == ConnectionState.none) {
-              Fluttertoast.showToast(msg: "NO INTERNET");                            
-            } 
+            if (snapshot.connectionState == ConnectionState.none) {
+              Fluttertoast.showToast(msg: "NO INTERNET");
+            }
             if (!snapshot.hasData) {
               print('no');
               return Center(child: CircularProgressIndicator());
-            } 
+            }
             final orderDetails = snapshot.data.documents;
-            
-            if(orderDetails.length == 0) {
+
+            if (orderDetails.length == 0) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    height: MediaQuery.of(context).size.height/3,
-                    child: Image.asset('assets/rsznoorder.jpg')),
+                      height: MediaQuery.of(context).size.height / 3,
+                      child: Image.asset('assets/rsznoorder.jpg')),
                   Center(
-                    child: Text("Customers will soon reach\n        you through Segura",style:TextStyle(
-                    color: Colors.grey,
-                    fontSize: 20
-                  )))
+                      child: Text(
+                          "Customers will soon reach\n        you through Segura",
+                          style: TextStyle(color: Colors.grey, fontSize: 20)))
                 ],
               );
             }
@@ -80,7 +82,15 @@ class MyOrders extends StatelessWidget {
 }
 
 class SingleOrderCard extends StatelessWidget {
-  SingleOrderCard({Key key, this.name, this.phone, this.bagCount,this.isPremium,this.isDone,this.photo,this.acceptStatus})
+  SingleOrderCard(
+      {Key key,
+      this.name,
+      this.phone,
+      this.bagCount,
+      this.isPremium,
+      this.isDone,
+      this.photo,
+      this.acceptStatus})
       : assert(name != null),
         assert(phone != null);
 
@@ -96,23 +106,39 @@ class SingleOrderCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
-       // color: !(isPremium)?Colors.blue[900] : golden,
-       color: Colors.blue[900],
+        // color: !(isPremium)?Colors.blue[900] : golden,
+        color: Colors.blue,
         textStyle: TextStyle(color: Colors.white),
         borderOnForeground: true,
         borderRadius: BorderRadius.circular(252),
         elevation: 14,
         child: ListTile(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ExtendedOrderDetail(name: name,noofBags: bagCount,phone: phone,isDone: isDone,isPremium: isPremium,photo: photo,acceptStatus: acceptStatus,)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ExtendedOrderDetail(
+                          name: name,
+                          noofBags: bagCount,
+                          phone: phone,
+                          isDone: isDone,
+                          isPremium: isPremium,
+                          photo: photo,
+                          acceptStatus: acceptStatus,
+                        )));
           },
-          leading: CircleAvatar(backgroundImage: CachedNetworkImageProvider(photo),backgroundColor: Colors.blue[100],),
-          title: Text(name,style: TextStyle(color: Colors.white)),
-          subtitle: Text(phone,style: TextStyle(color: Colors.white),),
-          trailing: Text("$bagCount bags"),                 
+          leading: CircleAvatar(
+            backgroundImage: CachedNetworkImageProvider(photo),
+            backgroundColor: Colors.blue[100],
+          ),
+          title: Text(name, style: TextStyle(color: Colors.white)),
+          subtitle: Text(
+            phone,
+            style: TextStyle(color: Colors.white),
+          ),
+          trailing: Text("$bagCount bags"),
         ),
       ),
     );
   }
 }
-
