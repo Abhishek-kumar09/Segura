@@ -11,7 +11,8 @@ import 'Custom Function And Widgets/Functions.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,DeviceOrientation.portraitDown]);
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   void mainFunction() async {
     final bool islogged = await AuthCheck.isLogged();
     String phone = islogged ? await AuthCheck.getPhone() : '';
@@ -21,6 +22,7 @@ void main() {
       phone: phone,
     ));
   }
+
   mainFunction();
 }
 

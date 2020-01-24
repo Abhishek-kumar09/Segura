@@ -17,6 +17,6 @@ samples, guidance on mobile development, and a full API reference.
 ## Maintainers
 Abhishek Kumar <br>
 Harshit Dandriyal<br>
-Naman Sharma
+
 ## Your PR matters
 if you come up with the issues and suggestions, feel free to make PR.

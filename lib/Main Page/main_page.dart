@@ -1,4 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
+import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
+import 'package:segura_manegerial/Main%20Page/my_orders.dart';
+import 'package:segura_manegerial/Main%20Page/my_profile.dart';
+import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
@@ -10,6 +21,7 @@ import 'package:segura_manegerial/Main%20Page/my_profile.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
+import 'package:segura_manegerial/Profile_Page/Profile_Page.dart';
 
 // class MainPage extends StatefulWidget {
 //   MainPage({@required this.phone});
@@ -126,7 +138,6 @@ class _MainPageState extends State<MainPage> {
   void onSelected() async {
     try {
       await FirebaseAuth.instance.signOut();
-      // Alert(context: context,title: "Text('data')");
       Navigator.of(context).pushNamedAndRemoveUntil(
           loginScreen, (Route<dynamic> route) => false);
       Fluttertoast.showToast(msg: "Signed Out");
@@ -138,6 +149,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: buildGradientAppBar(),
       drawer: Drawer(
         elevation: 20,
@@ -153,6 +165,7 @@ class _MainPageState extends State<MainPage> {
                       colorFilter:
                           ColorFilter.mode(Colors.black54, BlendMode.darken))),
               accountEmail: Text(appuser.phoneNumber),
+
               accountName: Text('Segura'),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage(
@@ -161,7 +174,9 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             ListTile(
+
               title: Text('Orders'),
+
               onTap: () {
                 Navigator.of(context).pop();
               },
@@ -175,23 +190,28 @@ class _MainPageState extends State<MainPage> {
                     MaterialPageRoute(
                         builder: (context) =>
                             ProfileBuider(widget.phone, appuser)));
+
               },
             ),
             Divider(),
             ListTile(
               title: Text(
+
                 'Sign Out'
+
               ),
               onTap: () {
                 onSelected();
               },
             ),
             Divider(),
+
             ListTile(title: Text('FAQ')),
             Divider(),
             ListTile(
               title: Text(
                 'Close'
+
               ),
               onTap: () {
                 Navigator.of(context).pop();
@@ -208,6 +228,7 @@ class _MainPageState extends State<MainPage> {
         phoneNumber: widget.phone,
       ),
     );
+
   }
 
   GradientAppBar buildGradientAppBar() {
@@ -264,50 +285,6 @@ final FirebaseUser user;
         // return CircularProgressIndicator(backgroundColor: Colors.teal,);
       }
     );
+
   }
 }
-
-
-
-
-
-// Future<Widget> buildMyProfile() async {
-//   Widget builtWidgetProfile;
-//   final db = Firestore.instance;
-//    await db.collection('owner').document('+919354472907').get().then(
-//     (doc) {
-//       if(doc.exists) {
-//         final name = doc.data['name'].toString();        
-//         final business = doc.data['business'].toString();
-//         final photo = doc.data['photoURL'];
-//         final city = doc.data['city'];
-//         final bagCollected = doc.data['bagCollected'];
-//         final earnings = doc.data['earnings'];
-//         print(name);
-//         builtWidgetProfile = MyProfile(name: name,business: business,photo: photo,city: city,bagCollected: bagCollected,earnings: earnings,);       
-//       }
-//       return builtWidgetProfile;
-//     }
-//   ).catchError((e) {
-//     print(e);
-//     return CircularProgressIndicator();
-//   });
-//   return builtWidgetProfile;
-// }
-// class AA extends StatefulWidget {
-//   @override
-//   _AAState createState() => _AAState();
-// }
-
-// class _AAState extends State<AA> {
-//   @override
-//   void initState() async{
-//    await  buildMyProfile();
-//     super.initState();
-//   }
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(      
-//     );
-//   }
-// }
