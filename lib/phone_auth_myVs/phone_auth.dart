@@ -250,8 +250,7 @@ class _MyAppPageState extends State<MyAppPage> {
                     setState(() {
                       isLoading = true;
                     });
-                    verifyPhone();
-                    
+                    verifyPhone();                    
                   },
                   text: "Send OTP",
                   colour: Colors.blue,

@@ -8,6 +8,13 @@ import 'package:path/path.dart' as Path;
 import 'dart:io';
 class CRUD {
 
+  // static Future<String> getImageUrl(String phone) async {
+  //   final DocumentReference doc = Firestore.instance
+  //       .collection('/owner/$phone/ownerDetails')
+  //       .document('$phone');
+  //       doc.get()
+  // }
+
   static addOffineCustomer(String name,String phoneNo) async {
     try{final _phone = await AuthCheck.getPhone();
     final DocumentReference _doc = Firestore.instance
@@ -136,7 +143,7 @@ class CRUD {
   }
 
   static Future<String> getImageOnEditScreen() async {
-    String _url = 'fuck';
+    String _url = '';
         File _image;
         await ImagePicker.pickImage(source: ImageSource.gallery, imageQuality: 50)
         .then((image) {
@@ -159,12 +166,13 @@ class CRUD {
     final DocumentReference doc = Firestore.instance
         .collection('/owner/$phone/ownerDetails')
         .document('$phone');
-    doc.get().then((snapshot) {
+    await doc.get().then((snapshot) {
       if (snapshot.exists) {
         imageUrl = snapshot.data['imageURL'];
       }
     }).catchError((e) {
       print(e);
+      print("Error Corred");
     });}
     catch (e) {
       Fluttertoast.showToast(msg: "Error Handling Image");

@@ -36,7 +36,7 @@ class _MyProfileState extends State<MyProfile> {
                 expandedHeight: 200.0,
                 flexibleSpace: FlexibleSpaceBar(
                     title: Text("${widget.name}"),
-                    background: !(widget.photo == null || widget.photo == '') ? CachedNetworkImage(
+                    background: ! (widget.photo == null || widget.photo == '') ? CachedNetworkImage(
                                 imageUrl: widget.photo,
                                 fit: BoxFit.cover,
                                 imageBuilder: (context, imageProvider) =>

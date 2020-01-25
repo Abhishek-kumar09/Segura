@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -12,103 +13,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
 import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
 import 'package:segura_manegerial/Main%20Page/my_orders.dart';
 import 'package:segura_manegerial/Main%20Page/my_profile.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:segura_manegerial/onpressedevents/crud.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
-import 'package:segura_manegerial/Profile_Page/Profile_Page.dart';
-
-// class MainPage extends StatefulWidget {
-//   MainPage({@required this.phone});
-//   final String phone;
-//   @override
-//   _MainPageState createState() => _MainPageState();
-// }
-
-// class _MainPageState extends State<MainPage>
-//     with SingleTickerProviderStateMixin {
-//   TabController _tabController;
-//   FirebaseUser appuser;
-//   @override
-//   void initState() {
-//     super.initState();
-//     _tabController = TabController(
-//       vsync: this,
-//       length: 2,
-//     )..addListener(() {});
-//     getUser();
-//   }
-
-//   void getUser() async {
-//     appuser = await AuthCheck.getUser();
-//     setState(() {});
-//   }
-
-//   void onSelected(choice) async{
-//   try{await FirebaseAuth.instance.signOut();
-//   Navigator.of(context).pushNamedAndRemoveUntil(loginScreen, (Route<dynamic> route)=>false);
-//   Fluttertoast.showToast(msg: "Signed Out");}
-//   catch (e){
-//     Fluttertoast.showToast(msg: "Error while SignOut");
-//   }
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: GradientAppBar(
-//         gradient: LinearGradient(colors: [Colors.blue[800],darkblue],begin: Alignment.topLeft,end: Alignment.bottomRight),
-//         elevation: 10,
-//         // centerTitle: true,
-//         leading: Padding(          
-//           padding: const EdgeInsets.all(10.0),
-//           child: CircleAvatar(backgroundImage: AssetImage('assets/logo1.png'),backgroundColor: Colors.white,)
-//         ),
-//         actions: [
-//           PopupMenuButton<String>(
-//             onSelected: onSelected,
-//   itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-//         const PopupMenuItem<String>(
-//           value: "signOut",
-//           child: 
-//           RowWithIcon(icon: Icons.person_outline,text: ' Sign Out',iconSize: 16,colour: Colors.black,)),
-//   ],
-// )]   ,
-//         primary: true,
-//         title: Text('SEGURA OWNER',),
-//         bottom: TabBar(          
-//           tabs: <Widget>[
-//             Tab(child: Text('MY ORDERS')),
-//             Tab(child: Text('MYSELF'))
-//           ],
-//           indicatorColor: Colors.blue[700], controller: _tabController,
-//           indicatorSize: TabBarIndicatorSize.tab,
-//           indicatorWeight: 6,
-//           unselectedLabelColor: Colors.lightBlueAccent,
-//           unselectedLabelStyle:
-//               TextStyle(fontWeight: FontWeight.bold, shadows: [
-//             Shadow(
-//               color: Colors.black38,
-//               blurRadius: 2,
-//             )
-//           ]),
-//         ),
-//       ),
-//       body: TabBarView(
-//         controller: _tabController,
-//         children: <Widget>[
-//           MyOrders(phoneNumber: widget.phone,),
-//           ProfileBuider(widget.phone,appuser)         
-//         ],
-//       ),
-//     );
-//   }  
-// }
+import 'package:segura_manegerial/Custom Function And Widgets/fab_and_gradientappbar.dart';
+String photoUrl;
 
 class MainPage extends StatefulWidget {
   MainPage({@required this.phone});
@@ -119,20 +32,20 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   // TabController _tabController;
+
   FirebaseUser appuser;
   @override
   void initState() {
     super.initState();
-    // _tabController = TabController(
-    //   vsync: this,
-    //   length: 2,
-    // )..addListener(() {});
     getUser();
   }
 
   void getUser() async {
     appuser = await AuthCheck.getUser();
-    setState(() {});
+    await CRUD.getUploadedImageUrl().then((url) {
+      photoUrl = url;
+      setState(() {});
+    });
   }
 
   void onSelected() async {
@@ -146,9 +59,12 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
+//Drawers---------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      floatingActionButton: addCustomerFAB(context),
 
       appBar: buildGradientAppBar(),
       drawer: Drawer(
@@ -164,16 +80,17 @@ class _MainPageState extends State<MainPage> {
                       fit: BoxFit.cover,
                       colorFilter:
                           ColorFilter.mode(Colors.black54, BlendMode.darken))),
-              accountEmail: Text(appuser.phoneNumber),
+              accountEmail: Text(widget.phone),
 
               accountName: Text('Segura'),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage(
-                  'assets/seguraLight.jpeg',
-                ),
-              ),
+                  backgroundImage: (photoUrl == null || photoUrl == '')
+                      ? AssetImage('assets/t1.jpg')
+                      : CachedNetworkImageProvider(photoUrl)),
             ),
             ListTile(
+
+              leading: Icon(Icons.loyalty),
 
               title: Text('Orders'),
 
@@ -183,6 +100,7 @@ class _MainPageState extends State<MainPage> {
             ),
             Divider(),
             ListTile(
+              leading: Icon(Icons.account_circle),
               title: Text('Profile'),
               onTap: () {
                 Navigator.push(
@@ -195,24 +113,21 @@ class _MainPageState extends State<MainPage> {
             ),
             Divider(),
             ListTile(
-              title: Text(
 
-                'Sign Out'
+              leading: Icon(Icons.power_settings_new),
+              title: Text('Sign Out'),
 
-              ),
               onTap: () {
                 onSelected();
               },
             ),
             Divider(),
 
-            ListTile(title: Text('FAQ')),
+            ListTile(leading: Icon(Icons.import_contacts), title: Text('FAQ')),
             Divider(),
             ListTile(
-              title: Text(
-                'Close'
+              title: Text('Close'),
 
-              ),
               onTap: () {
                 Navigator.of(context).pop();
               },
@@ -224,67 +139,111 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
-      body: MyOrders(
-        phoneNumber: widget.phone,
-      ),
-    );
 
-  }
+      body: StreamBuilder<QuerySnapshot>(
+          stream: Firestore.instance
+              .collection('/owner/${widget.phone}/myOrders')
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.none) {
+              Fluttertoast.showToast(msg: "NO INTERNET");
+            }
+            if (!snapshot.hasData) {
+              print('no');
+              return Center(child: CircularProgressIndicator());
+            }
+            final orderDetails = snapshot.data.documents;
 
-  GradientAppBar buildGradientAppBar() {
-    return GradientAppBar(
-      gradient: LinearGradient(
-          colors: [Colors.blue[800], darkblue],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight),
-      elevation: 10,
-      primary: true,
-      centerTitle: true,
-      title: Text(
-        'SEGURA OWNER'
-      ),
+            if (orderDetails.length == 0) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                      height: MediaQuery.of(context).size.height / 3,
+                      child: Image.asset('assets/rsznoorder.jpg')),
+                  Center(
+                      child: Text(
+                          "Customers will soon reach\n        you through Segura",
+                          style: TextStyle(color: Colors.grey, fontSize: 20)))
+                ],
+              );
+            }
+            List<SingleOrderCard> list = [];
+            for (var order in orderDetails) {
+              final nameWidget = SingleOrderCard(
+                name: order.data['customerName'],
+                phone: order.data['customerPhone'],
+                bagCount: order.data['noOfBags'],
+                isPremium: order.data['isPremium'],
+                isDone: order.data['isDone'],
+                photo: order.data['photoUrl'],
+                acceptStatus: order.data['acceptStatus'],
+              );
+              list.add(nameWidget);
+            }
+            return ListView(
+              children: list,
+            );
+          }),
+
     );
   }
 }
 
-
-
 class ProfileBuider extends StatelessWidget {
-  ProfileBuider(this.phoneNumber,this.user);
-final String phoneNumber;
-final FirebaseUser user;
+  ProfileBuider(this.phoneNumber, this.user);
+  final String phoneNumber;
+  final FirebaseUser user;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('/owner/$phoneNumber/ownerDetails').snapshots(),      
-      builder: (context, snapshot) {
-        if(!snapshot.hasData) {return Center(child: CircularProgressIndicator(backgroundColor: Colors.pink,));}
-        final userdetails = snapshot.data.documents;
-        if(userdetails.length == 0) {
+        stream: Firestore.instance
+            .collection('/owner/$phoneNumber/ownerDetails')
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+                child: CircularProgressIndicator(
+              backgroundColor: Colors.pink,
+            ));
+          }
+          final userdetails = snapshot.data.documents;
+          if (userdetails.length == 0) {
+            return Scaffold(
+              body: EditProfile(user: user),
+            );
+          }
+          Widget myprofile;
+          for (var userdetail in userdetails) {
+            final name = userdetail.data['name'].toString();
+            final business = userdetail.data['business'].toString();
+            final photo = userdetail.data['imageURL'];
+            final city = userdetail.data['city'];
+            final bagCollected = userdetail.data['bagsCollected'];
+            final earnings = userdetail.data['earning'];
+            final phone = userdetail.data['phone'];
+            final email = userdetail.data['email'];
+            final shop = userdetail.data['shop'];
+            final capacity = userdetail.data['capacity'];
+            myprofile = MyProfile(
+              name: name,
+              photo: photo,
+              business: business,
+              city: city,
+              bagCollected: bagCollected,
+              earnings: earnings,
+              phone: phone,
+              email: email,
+              shop: shop,
+              capacity: capacity,
+            );
+          }
           return Scaffold(
-            body: EditProfile(user: user),
-          );
-        }
-        Widget myprofile;
-        for(var userdetail in userdetails) {
-        final name = userdetail.data['name'].toString();        
-        final business = userdetail.data['business'].toString();
-        final photo = userdetail.data['imageURL'];
-        final city = userdetail.data['city'];
-        final bagCollected = userdetail.data['bagsCollected'];
-        final earnings = userdetail.data['earning'];
-        final phone = userdetail.data['phone'];
-        final email = userdetail.data['email'];
-        final shop = userdetail.data['shop'];
-        final capacity = userdetail.data['capacity'];
-        myprofile =  MyProfile(name: name,photo: photo,business: business,city: city,bagCollected: bagCollected,earnings: earnings,phone: phone,email:email,shop: shop,capacity: capacity,);
-        }
-        return Scaffold(
             body: myprofile,
-        );
-        // return CircularProgressIndicator(backgroundColor: Colors.teal,);
-      }
-    );
+
+          );
+          // return CircularProgressIndicator(backgroundColor: Colors.teal,);
+        });
 
   }
 }
