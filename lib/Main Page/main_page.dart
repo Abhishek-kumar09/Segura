@@ -1,9 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
 import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
 import 'package:segura_manegerial/Main%20Page/my_orders.dart';
 import 'package:segura_manegerial/Main%20Page/my_profile.dart';
@@ -111,10 +110,6 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    // _tabController = TabController(
-    //   vsync: this,
-    //   length: 2,
-    // )..addListener(() {});
     getUser();
   }
 
@@ -134,7 +129,7 @@ class _MainPageState extends State<MainPage> {
       Fluttertoast.showToast(msg: "Error while SignOut");
     }
   }
-
+//Drawers---------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -155,8 +150,8 @@ class _MainPageState extends State<MainPage> {
               accountEmail: Text(appuser.phoneNumber),
               accountName: Text('Segura'),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage(
-                  'assets/seguraLight.jpeg',
+                backgroundImage: CachedNetworkImageProvider(
+                  'assets/t1.jpg'                  
                 ),
               ),
             ),
