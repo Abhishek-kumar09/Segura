@@ -1,5 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/Widgets.dart';
+import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
+import 'package:segura_manegerial/Main%20Page/my_orders.dart';
+import 'package:segura_manegerial/Main%20Page/my_profile.dart';
+import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:segura_manegerial/Login%20And%20Register/edit_profile.dart';
@@ -10,7 +21,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:segura_manegerial/onpressedevents/crud.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/fab_and_gradientappbar.dart';
-
 String photoUrl;
 
 class MainPage extends StatefulWidget {
@@ -41,7 +51,6 @@ class _MainPageState extends State<MainPage> {
   void onSelected() async {
     try {
       await FirebaseAuth.instance.signOut();
-      // Alert(context: context,title: "Text('data')");
       Navigator.of(context).pushNamedAndRemoveUntil(
           loginScreen, (Route<dynamic> route) => false);
       Fluttertoast.showToast(msg: "Signed Out");
@@ -54,7 +63,9 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       floatingActionButton: addCustomerFAB(context),
+
       appBar: buildGradientAppBar(),
       drawer: Drawer(
         elevation: 20,
@@ -70,6 +81,7 @@ class _MainPageState extends State<MainPage> {
                       colorFilter:
                           ColorFilter.mode(Colors.black54, BlendMode.darken))),
               accountEmail: Text(widget.phone),
+
               accountName: Text('Segura'),
               currentAccountPicture: CircleAvatar(
                   backgroundImage: (photoUrl == null || photoUrl == '')
@@ -77,8 +89,11 @@ class _MainPageState extends State<MainPage> {
                       : CachedNetworkImageProvider(photoUrl)),
             ),
             ListTile(
+
               leading: Icon(Icons.loyalty),
+
               title: Text('Orders'),
+
               onTap: () {
                 Navigator.of(context).pop();
               },
@@ -93,21 +108,26 @@ class _MainPageState extends State<MainPage> {
                     MaterialPageRoute(
                         builder: (context) =>
                             ProfileBuider(widget.phone, appuser)));
+
               },
             ),
             Divider(),
             ListTile(
+
               leading: Icon(Icons.power_settings_new),
               title: Text('Sign Out'),
+
               onTap: () {
                 onSelected();
               },
             ),
             Divider(),
+
             ListTile(leading: Icon(Icons.import_contacts), title: Text('FAQ')),
             Divider(),
             ListTile(
               title: Text('Close'),
+
               onTap: () {
                 Navigator.of(context).pop();
               },
@@ -119,6 +139,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
+
       body: StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance
               .collection('/owner/${widget.phone}/myOrders')
@@ -164,6 +185,7 @@ class _MainPageState extends State<MainPage> {
               children: list,
             );
           }),
+
     );
   }
 }
@@ -218,8 +240,10 @@ class ProfileBuider extends StatelessWidget {
           }
           return Scaffold(
             body: myprofile,
+
           );
           // return CircularProgressIndicator(backgroundColor: Colors.teal,);
         });
+
   }
 }
