@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 const double iconSize = 32;
@@ -66,6 +68,9 @@ TextStyle subTextStyle() => TextStyle(
 
 BoxDecoration boxDecoration() {
   return BoxDecoration(
+    image: DecorationImage(
+      image: AssetImage('assets/t2.jpg'),fit: BoxFit.cover,colorFilter: ColorFilter.mode(Colors.white, BlendMode.softLight)
+    ),
     boxShadow: [BoxShadow(color: Colors.black, blurRadius: 10)],
     border: Border.all(color: Colors.blue, style: BorderStyle.solid, width: 2),
     borderRadius: BorderRadius.only(

@@ -96,6 +96,8 @@ class _MainPageState extends State<MainPage> {
               },
             ),
             Divider(),
+            ListTile(leading: Icon(Icons.import_contacts), title: Text('FAQ')),
+            Divider(),
             ListTile(
               leading: Icon(Icons.power_settings_new),
               title: Text('Sign Out'),
@@ -103,8 +105,7 @@ class _MainPageState extends State<MainPage> {
                 onSelected();
               },
             ),
-            Divider(),
-            ListTile(leading: Icon(Icons.import_contacts), title: Text('FAQ')),
+            
             Divider(),
             ListTile(
               title: Text('Close'),
@@ -134,18 +135,7 @@ class _MainPageState extends State<MainPage> {
             final orderDetails = snapshot.data.documents;
 
             if (orderDetails.length == 0) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                      height: MediaQuery.of(context).size.height / 3,
-                      child: Image.asset('assets/rsznoorder.jpg')),
-                  Center(
-                      child: Text(
-                          "Customers will soon reach\n        you through Segura",
-                          style: TextStyle(color: Colors.grey, fontSize: 20)))
-                ],
-              );
+              return Nocustomer();
             }
             List<SingleOrderCard> list = [];
             for (var order in orderDetails) {
@@ -157,13 +147,38 @@ class _MainPageState extends State<MainPage> {
                 isDone: order.data['isDone'],
                 photo: order.data['photoUrl'],
                 acceptStatus: order.data['acceptStatus'],
-              );
+              );              
               list.add(nameWidget);
+              if(list.length == 0) {
+                  return Nocustomer();
+              }              
             }
             return ListView(
               children: list,
             );
           }),
+    );
+  }
+}
+
+class Nocustomer extends StatelessWidget {
+  const Nocustomer({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+            height: MediaQuery.of(context).size.height / 3,
+            child: Image.asset('assets/rsznoorder.jpg')),
+        Center(
+            child: Text(
+                "Customers will soon reach\n        you through Segura",
+                style: TextStyle(color: Colors.grey, fontSize: 20)))
+      ],
     );
   }
 }

@@ -28,8 +28,8 @@ class SingleOrderCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
-        // color: !(isPremium)?Colors.blue[900] : golden,
-        color: Colors.blue[900],
+        // color: !(isPremium)?Colors.blue[900] : golden,        
+        color: (isDone) ? Colors.green[500] : Colors.blue[900],
         textStyle: TextStyle(color: Colors.white),
         borderOnForeground: true,
         borderRadius: BorderRadius.circular(252),
@@ -58,7 +58,7 @@ class SingleOrderCard extends StatelessWidget {
             phone,
             style: TextStyle(color: Colors.white),
           ),
-          trailing: Text("$bagCount bags"),
+          trailing: (isDone) ? Text("Completed") : Text("$bagCount bag"),
         ),
       ),
     );
