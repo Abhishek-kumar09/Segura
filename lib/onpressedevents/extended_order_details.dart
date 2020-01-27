@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Functions.dart';
 import 'package:segura_manegerial/Custom Function And Widgets/Widgets.dart';
+import 'package:segura_manegerial/onpressedevents/crud.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ExtendedOrderDetail extends StatefulWidget {
@@ -24,6 +25,7 @@ class ExtendedOrderDetail extends StatefulWidget {
   @override
   _ExtendedOrderDetailState createState() => _ExtendedOrderDetailState();
 }
+bool done = false;
 
 const TextStyle fielStyle = TextStyle(
     fontSize: 20,
@@ -32,6 +34,12 @@ const TextStyle fielStyle = TextStyle(
     fontWeight: FontWeight.bold);
 
 class _ExtendedOrderDetailState extends State<ExtendedOrderDetail> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    done = (widget.isDone) ? true : false;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,52 +71,75 @@ class _ExtendedOrderDetailState extends State<ExtendedOrderDetail> {
               width: double.infinity,
               height: double.infinity,
               decoration: boxDecoration(),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: 10,),
-                  CustomerDetails("Name",widget.name),
-                  // (widget.noofBags == 1) ? Text('${widget.noofBags} Bags') : Text('${widget.noofBags} Bag 👜️ '),
-                  Divider(),CustomerDetails("No. of Bags Placed",widget.noofBags.toString() + "bag"),Divider(),
-                  CustomerDetails("Order Status",(widget.acceptStatus) ? "Accepted" : "Please Accept the Order"),Divider(),
-                  CustomerDetails("Completion Status",(widget.isDone) ? "Completed": "Not Completed"),Divider(),
-                  // Text(
-                  //   '${widget.noofBags} Bags 💼️ ',
-                  //   style: subTextStyle(),
-                  // ),
-                  // (widget.acceptStatus)
-                  //     ? Text(
-                  //         'Order Status : The Order is Placed',
-                  //         style: subTextStyle(),
-                  //       )
-                  //     : Text("please accept the order ", style: subTextStyle()),
-                  // (widget.isDone)
-                  //     ? RowWithIcon(
-                  //         iconSize: iconSize,
-                  //         icon: Icons.done,
-                  //         text: "The Order is Successfully accomplished",
-                  //         colour: Colors.green,
-                  //       )
-                  //     : Text('The Order awaits customer'),
-                  Padding(
-                    padding: EdgeInsets.only(top: 60,left: 40,right: 0),
-                    child: MaterialButton(
-                      padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
-                      color: Colors.green,
-                      shape: RoundedRectangleBorder(borderRadius:  BorderRadius.circular(15)),
-                      onPressed: () => launch('tel:${widget.phone}'),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.call,
-                              color: Colors.white,
-                              semanticLabel: "Call the Customer",
-                              size: iconSize),
-                              Text("   Call ${widget.name}" ,style: TextStyle(color: Colors.white70,))
-                        ],
-                      ),
+              child: ListView(
+                  children: <Widget>[
+                    SizedBox(height: 10,),
+                    CustomerDetails("Name",widget.name),
+                    // (widget.noofBags == 1) ? Text('${widget.noofBags} Bags') : Text('${widget.noofBags} Bag 👜️ '),
+                    Divider(),CustomerDetails("No. of Bags Placed",widget.noofBags.toString() + "bag"),Divider(),
+                    CustomerDetails("Order Status",(widget.acceptStatus) ? "Accepted" : "Please Accept the Order"),Divider(),
+                    CustomerDetails("Completion Status",(done) ? "Completed": "Not Completed"),
+                    // Text(
+                    //   '${widget.noofBags} Bags 💼️ ',
+                    //   style: subTextStyle(),
+                    // ),
+                    // (widget.acceptStatus)
+                    //     ? Text(
+                    //         'Order Status : The Order is Placed',
+                    //         style: subTextStyle(),
+                    //       )
+                    //     : Text("please accept the order ", style: subTextStyle()),
+                    // (widget.isDone)
+                    //     ? RowWithIcon(
+                    //         iconSize: iconSize,
+                    //         icon: Icons.done,
+                    //         text: "The Order is Successfully accomplished",
+                    //         colour: Colors.green,
+                    //       )
+                    //     : Text('The Order awaits customer'),
+                    Padding(
+                      padding: EdgeInsets.only(top: 40,left: 0,right: 40),
+                      child: MaterialButton(
+                        padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+                        color: Colors.blue,
+                        shape: RoundedRectangleBorder(borderRadius:  BorderRadius.circular(15)),
+                        onPressed: () {
+                          CRUD.updateOrder(widget.phone);
+                          setState(() {
+                            done = true;
+                          });
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.done,
+                                color: Colors.white,
+                                semanticLabel: "Call the Customer",
+                                size: iconSize),
+                                Text((done)? "    You Successfully Greeted a Customer" : "   Return bag to ${widget.name}" ,style: TextStyle(color: Colors.white70,))
+                          ],
+                        ),
+                      ),                    
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: EdgeInsets.only(top: 10,left: 40,right: 0),
+                      child: MaterialButton(
+                        padding: EdgeInsets.symmetric(horizontal: 20,vertical: 8),
+                        color: Colors.green,
+                        shape: RoundedRectangleBorder(borderRadius:  BorderRadius.circular(15)),
+                        onPressed: () => launch('tel:${widget.phone}'),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.call,
+                                color: Colors.white,
+                                semanticLabel: "Call the Customer",
+                                size: iconSize),
+                                Text("   Call ${widget.name}" ,style: TextStyle(color: Colors.white70,))
+                          ],
+                        ),
+                      ),                    
+                    ),
+                  ],
+                
               )),
         ],
       ),
@@ -130,9 +161,9 @@ class CustomerDetails extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-        Text(category,style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 24,shadows: [Shadow(color: Colors.black,blurRadius: 1)])),      
+        Text(category,style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold, fontSize: 24,)),      
         Text(detail,style: TextStyle(
-    color: Colors.yellowAccent[100], fontWeight: FontWeight.w600, fontSize: 24,shadows: [Shadow(color: Colors.black,blurRadius: 10)])),
+    color: Colors.blue[900], fontWeight: FontWeight.w600, fontSize: 24)),
       ],),
     );
   }

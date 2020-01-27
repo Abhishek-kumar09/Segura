@@ -102,7 +102,7 @@ class CRUD {
           'business': business,
           'shop': shop,
         })
-        .timeout(Duration(seconds: 5))
+        .timeout(Duration(seconds: 6))
         .whenComplete(() {
           print("data updated");
         })
@@ -110,6 +110,15 @@ class CRUD {
           print(e);
         });
   }
+
+  static void updateOrder(String phone) async {
+    final myphone = await AuthCheck.getPhone();
+    final DocumentReference doc = Firestore.instance
+        .collection('/owner/$myphone/myOrders')
+        .document('$phone');
+        doc.updateData({'isDone' : true}).catchError((e){Fluttertoast.showToast(msg : e.code.toString());}).whenComplete((){Fluttertoast.showToast(msg : "Order Completed Successfully"
+        );});
+        }
 
   void delete() async {
     final phone = await AuthCheck.getPhone();

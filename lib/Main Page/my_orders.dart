@@ -27,9 +27,8 @@ class SingleOrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Material(
-        // color: !(isPremium)?Colors.blue[900] : golden,        
-        color: (isDone) ? Colors.green[500] : Colors.blue[900],
+      child: Material(      
+        color: (isDone) ? Colors.green[800] : Colors.blue[900],
         textStyle: TextStyle(color: Colors.white),
         borderOnForeground: true,
         borderRadius: BorderRadius.circular(252),
