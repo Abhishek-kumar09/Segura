@@ -25,6 +25,9 @@ FloatingActionButton addCustomerFAB(BuildContext context) {
       tooltip: "Tap to add customers");
 }
 
+
+
+
 GradientAppBar buildGradientAppBar() {
   return GradientAppBar(
     gradient: LinearGradient(

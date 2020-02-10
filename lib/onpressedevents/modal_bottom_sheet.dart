@@ -8,6 +8,8 @@ import 'package:segura_manegerial/Custom%20Function%20And%20Widgets/flutter_otp.
 import 'package:segura_manegerial/onpressedevents/crud.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:segura_manegerial/phone_auth_myVs/phone_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:math';
 
 class AddOfflineCustomer extends StatefulWidget {
   @override
@@ -15,10 +17,14 @@ class AddOfflineCustomer extends StatefulWidget {
 }
 
 class _AddOfflineCustomerState extends State<AddOfflineCustomer> {
+
   bool isloading = false;
   bool isOtpdialog = false;
+  // FlutterOtp otp = new FlutterOtp();
 
-  FlutterOtp otp = new FlutterOtp();
+
+
+
 
   String _addedCustomer, _customerPhone, _otpinput;
   @override
@@ -111,15 +117,61 @@ class _AddOfflineCustomerState extends State<AddOfflineCustomer> {
       ),
     );
   }
+  // String phoneNumber;
+    _onpressed() {
+    if (_addedCustomer == null ||
+        _addedCustomer == "" ||
+        _customerPhone == "" ||
+        _customerPhone == null ||
+        _customerPhone.length != 10) {
+      Fluttertoast.showToast(msg: "Please fill the Inputs correctly!");
+    } else {
+      setState(() {
+          String url = "https://api.textlocal.in/send/?apiKey=YIu9croexWE-quVs6QDj6EZzbNVKCZRNe9JnZhcP2k&sender=TXTLCL&numbers=91"+_customerPhone+"&message=Welcome to Segura!" + 
+  "Your OTP for luggage verification is "+ otp1.toString()+
+  // "OTP for bag received is" +otp2.toString()+".<PROVIDE THIS OTP AT TIME OF RECEIVING BAG>"+
+  ". Thanks for using Segura!";     
+        httpComplete(url);
+        print(url);
+        isOtpdialog = true;
+      });
+    }
+  }
+
+      //--------------------------------------------------
+   static  int generateOtp() => 1000 + Random().nextInt(9999-1000);
+   static int otp1 = generateOtp();
+   static int otp2 = generateOtp();
+
+   void httpComplete(String s) async{
+     http.Response response = await http.get(
+      Uri.encodeFull(s),
+    ).catchError((e){Fluttertoast.showToast(msg: " Internal Error Ocurred");});  
+    print(response.body);
+   }
+
+  // String s = "https://api.textlocal.in/send/?apiKey=YIu9croexWE-quVs6QDj6EZzbNVKCZRNe9JnZhcP2k&sender=TXTLCL&numbers=91"+phoneNumber+"&message=Welcome to Segura!" + 
+  // "Your OTP for luggage verification is "+ otp1.toString()+
+  // // "OTP for bag received is" +otp2.toString()+".<PROVIDE THIS OTP AT TIME OF RECEIVING BAG>"+
+  // ". Thanks for using Segura!&test=true";
+
+  //   void getData() async {
+  //   http.Response response = await http.get(
+  //     Uri.encodeFull(s),
+  //   );
+  //   print(response.body);
+  //   print(s);
+  //   }
+    //----------------------------
 
   _onVerifyOtp() async {
     try {
-      if (otp.resultChecker(int.parse(_otpinput))) {
+      if (otp1 == int.parse(_otpinput)) {
         try {
           final result = await InternetAddress.lookup('google.com');
           if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
             print('connected');
-            CRUD.addOffineCustomer(_addedCustomer, _customerPhone);
+            CRUD.addOffineCustomer(_addedCustomer, _customerPhone,otp2);
             Timer(Duration(milliseconds: 500), () {
               setState(() {
                 isloading = false;
@@ -145,20 +197,9 @@ class _AddOfflineCustomerState extends State<AddOfflineCustomer> {
     }
   }
 
-  _onpressed() {
-    if (_addedCustomer == null ||
-        _addedCustomer == "" ||
-        _customerPhone == "" ||
-        _customerPhone == null ||
-        _customerPhone.length != 10) {
-      Fluttertoast.showToast(msg: "Please fill the Inputs correctly!");
-    } else {
-      otp.sendOtp(_customerPhone);
-      setState(() {
-        isOtpdialog = true;
-      });
-    }
-  }
+
+
+
 }
 
 class ExtendCapacity extends StatefulWidget {
@@ -217,3 +258,8 @@ class _ExtendCapacityState extends State<ExtendCapacity> {
     );
   }
 }
+
+
+
+
+

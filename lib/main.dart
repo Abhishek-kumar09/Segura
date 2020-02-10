@@ -1,13 +1,10 @@
-
-// void main() => runApp(HomeScreen());
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
 import 'package:segura_manegerial/onpressedevents/firebaseauth.dart';
 import 'package:segura_manegerial/phone_auth_myVs/phone_auth.dart';
 import 'Custom Function And Widgets/Functions.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,3 +44,5 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+

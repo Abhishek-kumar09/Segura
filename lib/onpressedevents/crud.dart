@@ -15,7 +15,7 @@ class CRUD {
   //       doc.get()
   // }
 
-  static addOffineCustomer(String name,String phoneNo) async {
+  static addOffineCustomer(String name,String phoneNo,int otp) async {
     try{final _phone = await AuthCheck.getPhone();
     final DocumentReference _doc = Firestore.instance
     .collection('/owner/$_phone/myOrders').document(phoneNo);
@@ -28,6 +28,7 @@ class CRUD {
         'photoUrl' : "https://firebasestorage.googleapis.com/v0/b/seguraforowner.appspot.com/o/user-1633249_640.png?alt=media&token=78e04f09-77a5-4556-b833-d73c1904ea2c",
         'isDone' : false,
         'isPremium' : false,
+        'otp' : otp,
         });
     }) ;}
     catch(e) {
@@ -35,6 +36,30 @@ class CRUD {
     }
   }
 
+    //   await _doc.get().then((snapshot) {
+    //   if (snapshot.exists) {
+    //     int otp = snapshot.data['otp'];
+    //     if(otp == otp2) 
+    //     return true;
+    //   }
+    // }
+
+  static Future<bool> checkOTP(String customerPhone,int otp2) async {
+    bool ret = false;
+    final _phone = await AuthCheck.getPhone();
+     final DocumentReference _doc = Firestore.instance
+    .collection('/owner/$_phone/myOrders').document(customerPhone);
+    await _doc.get().then((snapshot){
+      if(snapshot.exists) {
+        int otp = snapshot.data['otp'];
+        if(otp == otp2) {
+          ret = true;
+        }
+      }
+    });
+    return ret;
+  }
+ 
   static void setProfile(String name, String city, String business,
       String shop, String imageURL, String email) async {
     final phone = await AuthCheck.getPhone();
