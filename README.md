@@ -1,6 +1,9 @@
 # Segura
 
-A new Flutter project.
+A new Flutter project. **MOCK APP**
+
+# Segura : The Luggage Company
+A Flutter apllication with firebase integration to manage all the users, their authentications and realtime db sync. Integrated with SMS API to sent message from third party to another phone secretely in the form of a custom generated OTP. 
 
 ## Getting Started
 
