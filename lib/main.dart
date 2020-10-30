@@ -1,7 +1,3 @@
-
-// void main() => runApp(HomeScreen());
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:segura_manegerial/Main%20Page/main_page.dart';
@@ -43,7 +39,6 @@ class MyApp extends StatelessWidget {
       initialRoute: initialRoute,
       routes: {
         mainScreen: (context) => MainPage(phone: phone),
-        // editProfile: (context)=> EditProfile(),
         loginScreen: (context) => PhoneAuth()
       },
     );
